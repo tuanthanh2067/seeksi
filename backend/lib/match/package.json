@@ -1,0 +1,16 @@
+{
+  "name": "@seeksi/match",
+  "version": "0.0.1",
+  "description": "The matching algorithm for Seeksi dating app",
+  "main": "dist/simulation.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "tsc",
+    "start": "node dist/simulation.js"
+  },
+  "author": "Seeksi Team",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
