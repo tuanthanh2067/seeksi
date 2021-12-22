@@ -1,8 +1,8 @@
 export default class Location {
-  _city: string;
-  _province: string;
-  _longitude: number;
-  _latitude: number;
+  public _city: string;
+  public _province: string;
+  public _longitude: number;
+  public _latitude: number;
 
   constructor(
     city: string,
@@ -19,10 +19,11 @@ export default class Location {
   /**
    * Calculate the distance to another location based on Haversine formula.
    * 
-   * @param another the location to which the distance is calculated
+k   * @param another the location to which the distance is calculated
    * @link https://en.wikipedia.org/wiki/Haversine_formula
    */
   getDistance(another: Location): number {
     // TODO: Implement this function
+    return 0;
   }
 }

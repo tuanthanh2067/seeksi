@@ -5,15 +5,16 @@ enum Gender {
 }
 
 export default class Preference {
-  _gender: string;
-  _distance: number;
-  _minAge: number;
-  _maxAge: number;
-  _longTerm: boolean;
-  _shortTerm: boolean;
+  public _distance: number;
+  public _longTerm: boolean;
+  public _shortTerm: boolean;
+  public _gender: Gender;
+
+  private _minAge: number;
+  private _maxAge: number;
 
   constructor(
-    gender: string,
+    gender: Gender,
     distance: number,
     minAge: number,
     maxAge: number,
@@ -26,5 +27,29 @@ export default class Preference {
     this._maxAge = maxAge;
     this._longTerm = longTerm;
     this._shortTerm = shortTerm;
+  }
+  
+  get minAge(): number {
+    return this._minAge;
+  }
+
+  set minAge(age: number) {
+    if (this._maxAge < age) {
+      this._minAge = age;
+    } else {
+      throw "Mininum age is greater than maximum age!";
+    }
+  }
+
+  get maxAge(): number {
+    return this._maxAge;
+  }
+
+  set maxAge(age: number) {
+    if (age < this._minAge) {
+      this._minAge = age;
+    } else {
+      throw "Maximum age is less than minimum age!";
+    }
   }
 }

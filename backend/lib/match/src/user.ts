@@ -1,11 +1,6 @@
 import Location from "./location";
 import Preference from "./preference";
 
-enum Status {
-  PENDING,
-  LIKED,
-  REJECTED,
-}
 
 enum Sex {
   FEMALE,
@@ -13,20 +8,21 @@ enum Sex {
 }
 
 export default class User {
-  _id: string;
-  _firstName: string;
-  _lastName: string;
-  _dob: Date;
-  _sex: string;
-  _hobbies: [string];
-  _location: Location;
-  _preference: Preference;
+  public _firstName: string;
+  public _lastName: string;
+  
+  private _id: string;
+  private _dob: Date;
+  private _hobbies: Array<string>;
+  private _sex: Sex;
+  private _location: Location;
+  private _preference: Preference;
 
   constructor(data: any) {
     const { city, province, latitude, longitude } = data.location;
     const { gender, distance, minAge, maxAge, longTerm, shortTerm } =
       data.preference;
-    const sex = Sex[data.sex.toUpperCase()];
+    const sex: Sex = Sex[<keyof typeof Sex>data.sex.toUpperCase()];
 
     this._id = data.userId.$oid;
     this._firstName = data.first_name;
@@ -55,5 +51,8 @@ export default class User {
     // TODO: Check if another user's location matches distance preference
     // TODO: Check if another user's age matches age preference
     // TODO: Check if another user's relationship goal matches preference
+    return false;
   }
+
+  // TODO: Add getters & setters for private fields
 }
