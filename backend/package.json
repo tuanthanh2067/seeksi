@@ -1,0 +1,31 @@
+{
+  "name": "@seeksi/backend",
+  "version": "1.0.0",
+  "description": "Backend of Seeksi dating app",
+  "main": "src/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuanthanh2067/seeksi.git"
+  },
+  "author": "Seeksi Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tuanthanh2067/seeksi/issues"
+  },
+  "homepage": "https://github.com/tuanthanh2067/seeksi#readme",
+  "dependencies": {
+    "apollo-server": "^3.6.1",
+    "dotenv": "^12.0.3",
+    "graphql": "^16.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

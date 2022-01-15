@@ -1,7 +1,15 @@
 import logo from './logo.svg';
+import { useQuery } from '@apollo/client';
 import './App.css';
 
+import { GET_TRACKS } from './graphql/queries/example';
+
 function App() {
+  const { loading, error, data } = useQuery(GET_TRACKS);
+
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +26,13 @@ function App() {
           Learn React
         </a>
       </header>
+      <div>
+        <ul>
+        {data.tracksForHome.map(track => (
+          <li>{track.title}</li>
+        ))}
+        </ul>
+      </div>
     </div>
   );
 }
