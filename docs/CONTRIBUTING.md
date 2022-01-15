@@ -10,11 +10,12 @@ Please provide descriptive issues which follow our issue templates.
 
 ## Commit messages
 
-Use this structure `Verb + Noun`. For example: `Create sign-in form`.
+Use this structure `type: Verb + something`. For example: `docs: Fix Github Issue templates not working`.
 
 ## Branches
 
-When creating a branch, make sure you our convention for branch name which is `issue#id`. For example: `issue#123` for `123` is the issue number.
+When creating a branch, make sure you our convention for branch name which is `type/issue#-issue-name`
+For example: `feature/13-add-landing-page` or `bugfix/100-fix-button-on-landing-page`
 
 ## Pull request
 
