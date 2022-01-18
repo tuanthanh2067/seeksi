@@ -1,8 +1,13 @@
 const { ApolloServer } = require("apollo-server");
 
-const { typeDefs, resolvers } = require("./graphql");
+const { typeDefs, resolvers, datasources } = require("./graphql");
 
-const server = new ApolloServer({ typeDefs, resolvers });
+// set up data sources
+const dataSources = () => ({
+  userAPI: new datasources.UserAPI(),
+});
+
+const server = new ApolloServer({ typeDefs, resolvers, dataSources });
 
 server.listen().then(({ url }) => {
   console.log(`

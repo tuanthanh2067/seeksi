@@ -1,3 +1,3 @@
 module.exports.queries = `
-  user(id: String!) : User,
+  userByEmail(email: String!) : User,
 `;
