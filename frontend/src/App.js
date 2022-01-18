@@ -1,7 +1,5 @@
-import logo from './logo.svg';
+import logo from './assets/logo.svg';
 import { useQuery } from '@apollo/client';
-import './App.css';
-
 import { GET_TRACKS } from './graphql/queries/example';
 
 function App() {
@@ -28,9 +26,9 @@ function App() {
       </header>
       <div>
         <ul>
-        {data.tracksForHome.map(track => (
-          <li>{track.title}</li>
-        ))}
+          {data.tracksForHome.map((track) => (
+            <li>{track.title}</li>
+          ))}
         </ul>
       </div>
     </div>
