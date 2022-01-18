@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/tuanthanh2067/seeksi#readme",
   "dependencies": {
-    "apollo-datasource-mongodb": "^0.5.2",
     "apollo-server": "^3.6.1",
     "dotenv": "^12.0.3",
     "graphql": "^16.2.0"
