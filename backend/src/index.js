@@ -1,8 +1,13 @@
 const { ApolloServer } = require("apollo-server");
-const typeDefs = require("./typeDefs");
-const resolvers = require("./resolvers");
 
-const server = new ApolloServer({ typeDefs, mocks: resolvers });
+const { typeDefs, resolvers, datasources } = require("./graphql");
+
+// set up data sources
+const dataSources = () => ({
+  userAPI: new datasources.UserAPI(),
+});
+
+const server = new ApolloServer({ typeDefs, resolvers, dataSources });
 
 server.listen().then(({ url }) => {
   console.log(`
