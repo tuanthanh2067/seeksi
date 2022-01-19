@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo
+    container_name: seeksi-db
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: seeksi
+    volumes:
+      - data-volume:/data/db
+      - ./scripts/db:/scripts
+      - ./scripts/db/init:/docker-entrypoint-initdb.d
+    networks:
+      - seeksi-network
+  dashboard:
+    image: mongo-express
+    container_name: mongo-dashboard
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: seeksi-db
+    depends_on:
+      - mongo
+    networks:
+      - seeksi-network
+  server:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: seeksi-server
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+    volumes:
+      - ./backend:/app
+    networks:
+      - seeksi-network
+  client:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: seeksi-client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - server
+    networks:
+      - seeksi-network
+networks:
+  seeksi-network:
+    driver: bridge
+volumes:
+  data-volume:
