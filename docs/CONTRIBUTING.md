@@ -29,9 +29,13 @@ After creating a pull request, and you should request a code review from one of 
 
 ## Get started
 
-1. Clone the project using this url: https://github.com/tuanthanh2067/seeksi.git (`git clone https://github.com/tuanthanh2067/seeksi.git`)
+1. Install [Docker](https://docs.docker.com/get-docker/) & [Docker Compose](https://docs.docker.com/compose/install/)
 
-2. Go to `backend` and `frontend` folders and run `npm install` to install necessary packages.
+2. Clone the project using this url: https://github.com/tuanthanh2067/seeksi.git (`git clone https://github.com/tuanthanh2067/seeksi.git`)
+
+3. Change working directory to the project directory: `cd seeksi`
+
+4. Run Docker Compose: `docker-compose up -d`
 
 ## Create a new PR in our project
 
@@ -56,3 +60,28 @@ Because your branch can be out of date when working, so rebasing is important.
 2. Check out to main branch using `git checkout main`, and then `git pull origin main` to get new code from main branch
 
 3. And then you can go back to your branch `git checkout <your-branch-name>`, and then `git rebase main`. So you're ready to continue working on your branch with your new code added to your current branch.
+
+## Database
+
+Our project takes advantage of container technology to bundle our application with a MongoDB database for local development & testing. This helps our contributors work on the same mock data on their separate database that are built the same as others.
+
+<img src="https://i.ibb.co/bgXtPpd/Screen-Shot-2022-01-19-at-6-26-27-PM.png" alt="Screen-Shot-2022-01-19-at-6-26-27-PM" border="0">
+
+- `seeksi-client`: the frontend container
+- `seeksi-server`: the backend container
+- `seeksi-db`: the database container
+- `mongo-dashboard`: the admin dashboard interface container
+
+Thanks to Docker, you can use the database out of the box and get started quickly without worrying too much about database configuration. Wanna learn more about Docker? [Docker docs](https://docs.docker.com/get-started/overview/) is an excellent guide for that.
+
+### CRUD operations
+
+Once all the containers are built, you can open the admin dashboard (`http://localhost:8081/`) in your web browser. You can create/view/modify/remove the databases, collections, and documents from there.
+
+### Reset
+
+In the even that you want to reset your local database to the default state, please follow these steps:
+
+1. `docker ps`
+2. Find the Container ID of `seeksi-db`
+3. `docker exec -it <your-mongo-container-id> mongosh -f scripts/mongo-reset.js`
