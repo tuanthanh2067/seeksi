@@ -1,0 +1,68 @@
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+
+const { imageSchema } = require("../share/Image");
+const { locationSchema } = require("../share/Location");
+const { preferenceSchema } = require("./Preference");
+
+const userSchema = new Schema({
+  userID: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: { type: String, required: true },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  bio: {
+    type: String,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  dob: {
+    type: Date,
+    required: true,
+  },
+  sex: {
+    type: String,
+    required: true,
+  },
+  location: {
+    type: locationSchema,
+  },
+  hobbies: {
+    type: [String],
+  },
+  preference: {
+    type: preferenceSchema,
+  },
+  photos: {
+    type: [imageSchema],
+  },
+  role: {
+    type: String,
+    required: true,
+    default: "user",
+  },
+  isDisabled: {
+    type: Boolean,
+    default: false,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+const User = mongoose.model("Users", userSchema);
+
+module.exports = User;
