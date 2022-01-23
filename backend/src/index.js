@@ -1,5 +1,4 @@
 const { ApolloServer } = require("apollo-server");
-
 const { typeDefs, resolvers, datasources } = require("./graphql");
 
 // set up data sources
