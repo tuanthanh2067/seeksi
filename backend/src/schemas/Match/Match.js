@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const matchSchema = new Schema({
-  pairId: {
+  pairID: {
     type: [String],
   },
   isUnmatched: {
