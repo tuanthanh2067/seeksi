@@ -4,10 +4,6 @@ const { Schema } = mongoose;
 import { gameQuestionSchema } from "./GameQuestion";
 
 const gameRoomSchema = new Schema({
-  gameRoomID: {
-    type: String,
-    unique: true,
-  },
   questions: {
     type: [gameQuestionSchema],
   },

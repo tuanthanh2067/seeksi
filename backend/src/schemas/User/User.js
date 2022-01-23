@@ -6,11 +6,6 @@ const { locationSchema } = require("../share/Location");
 const { preferenceSchema } = require("./Preference");
 
 const userSchema = new Schema({
-  userID: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   firstName: {
     type: String,
     required: true,

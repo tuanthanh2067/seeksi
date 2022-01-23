@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const hobbySchema = new Schema({
-  hobbyID: {
-    type: String,
-    unique: true,
-  },
   name: {
     type: String,
   },

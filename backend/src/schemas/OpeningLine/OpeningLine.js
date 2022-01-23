@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const openingLineSchema = new Schema({
-  lineID: {
-    type: String,
-    unique: true,
-  },
   content: {
     type: String,
   },

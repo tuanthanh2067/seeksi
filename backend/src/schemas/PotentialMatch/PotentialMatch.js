@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const potentialMatch = new Schema({
-  potentialMatchID: {
-    type: String,
-  },
   pairId: {
     type: [String],
   },
