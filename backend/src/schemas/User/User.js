@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const { imageSchema } = require("../share/Image");
 const { locationSchema } = require("../share/Location");
 const { preferenceSchema } = require("./Preference");
+const { hobbySchema } = require("../Hobby/Hobby");
 
 const userSchema = new Schema({
   firstName: {
@@ -35,7 +36,7 @@ const userSchema = new Schema({
     type: locationSchema,
   },
   hobbies: {
-    type: [String],
+    type: [hobbySchema],
   },
   preference: {
     type: preferenceSchema,
