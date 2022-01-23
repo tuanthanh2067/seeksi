@@ -8,7 +8,7 @@ const preferenceSchema = new Schema({
     required: true,
   },
   distance: {
-    type: String,
+    type: Number,
   },
   minAge: {
     type: Number,
