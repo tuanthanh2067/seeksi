@@ -33,10 +33,13 @@ services:
     container_name: seeksi-server
     ports:
       - "4000:4000"
+    environment:
+      MONGODB_CONNECTION: mongodb://mongo:27017/seeksi
     depends_on:
       - mongo
     volumes:
       - ./backend:/app
+      - /app/node_modules
     networks:
       - seeksi-network
   client:
@@ -46,8 +49,11 @@ services:
     container_name: seeksi-client
     ports:
       - "3000:3000"
+    environment:
+      REACT_APP_GRAPHQL_URI: http://localhost:4000
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - server
     networks:
