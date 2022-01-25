@@ -10,10 +10,10 @@ const locationSchema = new Schema({
     type: String,
   },
   longitude: {
-    type: String,
+    type: Number,
   },
   latitude: {
-    type: String,
+    type: Number,
   },
 });
 

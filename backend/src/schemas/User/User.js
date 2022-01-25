@@ -36,7 +36,7 @@ const userSchema = new Schema({
     type: locationSchema,
   },
   hobbies: {
-    type: [hobbySchema],
+    type: [String],
   },
   preference: {
     type: preferenceSchema,
