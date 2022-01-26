@@ -5,17 +5,15 @@ const queries = {
 };
 
 const mutations = {
-  createUser: (root, args) => {
-    const newUser = {
-      id: "54321",
-      email: args.email,
-      password: args.password,
-      loggedIn: false,
+  createUser: async (_, args, { dataSources }) => {
+    return await dataSources.userAPI.createUser({
       firstName: args.firstName,
       lastName: args.lastName,
-    };
-
-    return newUser;
+      email: args.email,
+      password: args.password,
+      dob: "Sun Dec 17 1995 03:24:00 GMT",
+      sex: "male",
+    });
   },
 };
 
