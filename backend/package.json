@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/tuanthanh2067/seeksi#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.0",
     "apollo-server": "^3.6.1",
     "dotenv": "^12.0.3",
     "graphql": "^16.2.0",
