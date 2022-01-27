@@ -11,6 +11,7 @@ module.exports.types = `
     location: Location
     hobbies: [String]
     preference: Preference
+    avatar: Image
     photo: [Image]
     role: String!
     isDisabled: Boolean

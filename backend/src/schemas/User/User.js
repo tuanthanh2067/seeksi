@@ -41,7 +41,10 @@ const userSchema = new Schema({
   preference: {
     type: preferenceSchema,
   },
-  photos: {
+  avatar: {
+    type: imageSchema,
+  },
+  photo: {
     type: [imageSchema],
   },
   role: {
