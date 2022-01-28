@@ -24,7 +24,7 @@ class UserAPI extends DataSource {
     return user;
   }
 
-  async createUser({ firstName, lastName, email, password, dob, sex }) {
+  async signup({ firstName, lastName, email, password, dob, sex }) {
     const user = await User.findOne({ email: email });
 
     if (user) {

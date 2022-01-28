@@ -5,14 +5,14 @@ const queries = {
 };
 
 const mutations = {
-  createUser: async (_, args, { dataSources }) => {
-    return await dataSources.userAPI.createUser({
+  signup: async (_, args, { dataSources }) => {
+    return await dataSources.userAPI.signup({
       firstName: args.firstName,
       lastName: args.lastName,
       email: args.email,
       password: args.password,
-      dob: "Sun Dec 17 1995 03:24:00 GMT",
-      sex: "male",
+      dob: args.dob,
+      sex: args.sex,
     });
   },
 };
