@@ -4,7 +4,7 @@ db.createCollection("users", { capped: false });
 
 db.users.insertMany([
   {
-    userId: { $oid: "61e75f2bfc13ae336b000000" },
+    _id: ObjectId("61e75f2bfc13ae336b000000"),
     firstName: "Franchot",
     lastName: "MacKeague",
     email: "fmackeague0@imageshack.us",
@@ -62,7 +62,7 @@ db.users.insertMany([
     password: "BcA8PL",
   },
   {
-    userId: { $oid: "61e75f2bfc13ae336b000001" },
+    _id: ObjectId("61e75f2bfc13ae336b000001"),
     firstName: "Hillier",
     lastName: "Sewley",
     email: "hsewley1@disqus.com",
@@ -116,7 +116,7 @@ db.users.insertMany([
     password: "4EDjLeJpkx",
   },
   {
-    userId: { $oid: "61e75f2bfc13ae336b000002" },
+    _id: ObjectId("61e75f2bfc13ae336b000002"),
     firstName: "Doyle",
     lastName: "Kemish",
     email: "dkemish2@kickstarter.com",
@@ -165,7 +165,7 @@ db.users.insertMany([
     password: "Mq1vMqRrtTH",
   },
   {
-    userId: { $oid: "61e75f2bfc13ae336b000003" },
+    _id: ObjectId("61e75f2bfc13ae336b000003"),
     firstName: "Wilfred",
     lastName: "Purkins",
     email: "wpurkins3@pen.io",
@@ -210,7 +210,7 @@ db.users.insertMany([
     password: "afi9uNuS",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000004" },
+    _id: ObjectId("61e75f2cfc13ae336b000004"),
     firstName: "Elna",
     lastName: "Marcroft",
     email: "emarcroft4@forbes.com",
@@ -266,7 +266,7 @@ db.users.insertMany([
     password: "eaMBCOrtqj01",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000005" },
+    _id: ObjectId("61e75f2cfc13ae336b000005"),
     firstName: "Jade",
     lastName: "Whitebread",
     email: "jwhitebread5@nsw.gov.au",
@@ -314,7 +314,7 @@ db.users.insertMany([
     password: "wJ3dr36",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000006" },
+    _id: ObjectId("61e75f2cfc13ae336b000006"),
     firstName: "Onida",
     lastName: "Simpson",
     email: "osimpson6@nba.com",
@@ -377,7 +377,7 @@ db.users.insertMany([
     password: "qwrC9SIlV2c",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000007" },
+    _id: ObjectId("61e75f2cfc13ae336b000007"),
     firstName: "Brendon",
     lastName: "Seaborne",
     email: "bseaborne7@bloglines.com",
@@ -440,7 +440,7 @@ db.users.insertMany([
     password: "eKH1t1MwApC",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000008" },
+    _id: ObjectId("61e75f2cfc13ae336b000008"),
     firstName: "George",
     lastName: "Bayfield",
     email: "gbayfield8@alibaba.com",
@@ -494,7 +494,7 @@ db.users.insertMany([
     password: "rOZCsCgXR",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000009" },
+    _id: ObjectId("61e75f2cfc13ae336b000009"),
     firstName: "Orazio",
     lastName: "Gristwood",
     email: "ogristwood9@google.cn",
@@ -539,7 +539,7 @@ db.users.insertMany([
     password: "Lms5h5sUjVh",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b00000a" },
+    _id: ObjectId("61e75f2cfc13ae336b00000a"),
     firstName: "Jacinta",
     lastName: "Verick",
     email: "jvericka@weather.com",
@@ -611,7 +611,7 @@ db.users.insertMany([
     password: "Qe7iMQbSs",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b00000b" },
+    _id: ObjectId("61e75f2cfc13ae336b00000b"),
     firstName: "Ferrell",
     lastName: "Reah",
     email: "freahb@youtube.com",
@@ -650,7 +650,7 @@ db.users.insertMany([
     password: "4At1vm2ycgRG",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b00000c" },
+    _id: ObjectId("61e75f2cfc13ae336b00000c"),
     firstName: "Raye",
     lastName: "Streatfeild",
     email: "rstreatfeildc@washington.edu",
@@ -713,7 +713,7 @@ db.users.insertMany([
     password: "vkSL22a",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b00000d" },
+    _id: ObjectId("61e75f2cfc13ae336b00000d"),
     firstName: "Jeffry",
     lastName: "Floweth",
     email: "jflowethd@pen.io",
@@ -770,7 +770,7 @@ db.users.insertMany([
     password: "mDNI20Zp",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b00000e" },
+    _id: ObjectId("61e75f2cfc13ae336b00000e"),
     firstName: "Rollins",
     lastName: "Woodham",
     email: "rwoodhame@admin.ch",
@@ -833,7 +833,7 @@ db.users.insertMany([
     password: "ccJlx8WI",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b00000f" },
+    _id: ObjectId("61e75f2cfc13ae336b00000f"),
     firstName: "Gris",
     lastName: "Philipeau",
     email: "gphilipeauf@bluehost.com",
@@ -896,7 +896,7 @@ db.users.insertMany([
     password: "4tSGcxs",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000010" },
+    _id: ObjectId("61e75f2cfc13ae336b000010"),
     firstName: "Phaidra",
     lastName: "Lopez",
     email: "plopezg@archive.org",
@@ -960,7 +960,7 @@ db.users.insertMany([
     password: "nkkL8jLfwnmg",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000011" },
+    _id: ObjectId("61e75f2cfc13ae336b000011"),
     firstName: "Artie",
     lastName: "Dutt",
     email: "adutth@goo.gl",
@@ -1011,7 +1011,7 @@ db.users.insertMany([
     password: "IVHQKugeXd",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000012" },
+    _id: ObjectId("61e75f2cfc13ae336b000012"),
     firstName: "Michael",
     lastName: "Wraxall",
     email: "mwraxalli@spotify.com",
@@ -1069,7 +1069,7 @@ db.users.insertMany([
     password: "5cte9d",
   },
   {
-    userId: { $oid: "61e75f2cfc13ae336b000013" },
+    _id: ObjectId("61e75f2cfc13ae336b000013"),
     firstName: "Ernest",
     lastName: "Lodemann",
     email: "elodemannj@dion.ne.jp",

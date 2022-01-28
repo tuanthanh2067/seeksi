@@ -4,18 +4,18 @@ db.createCollection("chat_rooms", { capped: false });
 
 db.chat_rooms.insertMany([
   {
-    roomID: { $oid: "61e760eefc13ae08fd000153" },
+    _id: ObjectId("61e760eefc13ae08fd000153"),
     pairID: [
-      { $oid: "6199d9abf6a0af305d000285" },
-      { $oid: "6199d9abf6a0af305d000286" },
+      ObjectId("6199d9abf6a0af305d000285"),
+      ObjectId("6199d9abf6a0af305d000286"),
     ],
     history: {
       key: "f1a62655-3fb4-4055-910c-229d8ebc439e",
       messages: [
         {
-          messageID: { $oid: "61e760eefc13ae08fd000154" },
+          messageID: ObjectId("61e760eefc13ae08fd000154"),
           createdAt: { $date: "2002-04-10T02:26:59.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af305d000285" },
+          sendBy: ObjectId("6199d9abf6a0af305d000285"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -26,9 +26,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000155" },
+          messageID: ObjectId("61e760eefc13ae08fd000155"),
           createdAt: { $date: "2015-06-09T05:52:35.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af305d000286" },
+          sendBy: ObjectId("6199d9abf6a0af305d000286"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -39,9 +39,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000156" },
+          messageID: ObjectId("61e760eefc13ae08fd000156"),
           createdAt: { $date: "2008-06-03T22:48:41.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af305d000285" },
+          sendBy: ObjectId("6199d9abf6a0af305d000285"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -52,9 +52,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000157" },
+          messageID: ObjectId("61e760eefc13ae08fd000157"),
           createdAt: { $date: "1999-12-09T23:23:00.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af305d000286" },
+          sendBy: ObjectId("6199d9abf6a0af305d000286"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -65,9 +65,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000158" },
+          messageID: ObjectId("61e760eefc13ae08fd000158"),
           createdAt: { $date: "1996-10-21T20:59:34.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af305d000285" },
+          sendBy: ObjectId("6199d9abf6a0af305d000285"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -79,22 +79,22 @@ db.chat_rooms.insertMany([
         },
       ],
     },
-    gameRoomID: { $oid: "6199d9fbf6a0af30a0000288" },
+    gameRoomID: ObjectId("6199d9fbf6a0af30a0000288"),
     isDisabled: true,
   },
   {
-    roomID: { $oid: "61e760eefc13ae08fd000159" },
+    _id: ObjectId("61e760eefc13ae08fd000159"),
     pairID: [
-      { $oid: "6199d9abf6a0af3047000286" },
-      { $oid: "6199d9abf6a0af3047000287" },
+      ObjectId("6199d9abf6a0af3047000286"),
+      ObjectId("6199d9abf6a0af3047000287"),
     ],
     history: {
       key: "8a5455b9-3cae-4652-a075-bceb716f141a",
       messages: [
         {
-          messageID: { $oid: "61e760eefc13ae08fd00015a" },
+          messageID: ObjectId("61e760eefc13ae08fd00015a"),
           createdAt: { $date: "1994-05-31T02:03:37.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af3047000286" },
+          sendBy: ObjectId("6199d9abf6a0af3047000286"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -105,9 +105,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd00015b" },
+          messageID: ObjectId("61e760eefc13ae08fd00015b"),
           createdAt: { $date: "1994-12-31T05:23:17.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af3047000286" },
+          sendBy: ObjectId("6199d9abf6a0af3047000286"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -119,22 +119,22 @@ db.chat_rooms.insertMany([
         },
       ],
     },
-    gameRoomID: { $oid: "6199d9fbf6a0af305d000288" },
+    gameRoomID: ObjectId("6199d9fbf6a0af305d000288"),
     isDisabled: false,
   },
   {
-    roomID: { $oid: "61e760eefc13ae08fd00015c" },
+    _id: ObjectId("61e760eefc13ae08fd00015c"),
     pairID: [
-      { $oid: "6199d9abf6a0af3064000283" },
-      { $oid: "6199d9abf6a0af3064000284" },
+      ObjectId("6199d9abf6a0af3064000283"),
+      ObjectId("6199d9abf6a0af3064000284"),
     ],
     history: {
       key: "1d60d842-07e8-4c3d-b263-8da148b65b54",
       messages: [
         {
-          messageID: { $oid: "61e760eefc13ae08fd00015d" },
+          messageID: ObjectId("61e760eefc13ae08fd00015d"),
           createdAt: { $date: "2003-02-04T15:05:03.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af3064000283" },
+          sendBy: ObjectId("6199d9abf6a0af3064000283"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -145,9 +145,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd00015e" },
+          messageID: ObjectId("61e760eefc13ae08fd00015e"),
           createdAt: { $date: "2012-10-17T22:01:47.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af3064000283" },
+          sendBy: ObjectId("6199d9abf6a0af3064000283"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -158,9 +158,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd00015f" },
+          messageID: ObjectId("61e760eefc13ae08fd00015f"),
           createdAt: { $date: "1996-07-19T11:42:14.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af3064000284" },
+          sendBy: ObjectId("6199d9abf6a0af3064000284"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -171,9 +171,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000160" },
+          messageID: ObjectId("61e760eefc13ae08fd000160"),
           createdAt: { $date: "2013-01-19T15:08:11.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af3064000284" },
+          sendBy: ObjectId("6199d9abf6a0af3064000284"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -185,22 +185,22 @@ db.chat_rooms.insertMany([
         },
       ],
     },
-    gameRoomID: { $oid: "6199d9fbf6a0af308e000285" },
+    gameRoomID: ObjectId("6199d9fbf6a0af308e000285"),
     isDisabled: true,
   },
   {
-    roomID: { $oid: "61e760eefc13ae08fd000161" },
+    _id: ObjectId("61e760eefc13ae08fd000161"),
     pairID: [
-      { $oid: "6199d9abf6a0af30a0000285" },
-      { $oid: "6199d9abf6a0af30a0000286" },
+      ObjectId("6199d9abf6a0af30a0000285"),
+      ObjectId("6199d9abf6a0af30a0000286"),
     ],
     history: {
       key: "45c4f046-5acb-4aea-bb87-7072deed5e62",
       messages: [
         {
-          messageID: { $oid: "61e760eefc13ae08fd000162" },
+          messageID: ObjectId("61e760eefc13ae08fd000162"),
           createdAt: { $date: "2018-12-21T10:08:18.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af30a0000286" },
+          sendBy: ObjectId("6199d9abf6a0af30a0000286"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -211,9 +211,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000163" },
+          messageID: ObjectId("61e760eefc13ae08fd000163"),
           createdAt: { $date: "1991-04-29T20:53:46.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af30a0000285" },
+          sendBy: ObjectId("6199d9abf6a0af30a0000285"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -224,9 +224,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000164" },
+          messageID: ObjectId("61e760eefc13ae08fd000164"),
           createdAt: { $date: "1992-10-11T23:56:43.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af30a0000285" },
+          sendBy: ObjectId("6199d9abf6a0af30a0000285"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -237,9 +237,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000165" },
+          messageID: ObjectId("61e760eefc13ae08fd000165"),
           createdAt: { $date: "1996-05-27T11:04:52.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af30a0000286" },
+          sendBy: ObjectId("6199d9abf6a0af30a0000286"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -251,22 +251,22 @@ db.chat_rooms.insertMany([
         },
       ],
     },
-    gameRoomID: { $oid: "6199d9fbf6a0af3064000286" },
+    game_id: ObjectId("6199d9fbf6a0af3064000286"),
     isDisabled: true,
   },
   {
-    roomID: { $oid: "61e760eefc13ae08fd000166" },
+    _id: ObjectId("61e760eefc13ae08fd000166"),
     pairID: [
-      { $oid: "6199d9abf6a0af308e000282" },
-      { $oid: "6199d9abf6a0af308e000283" },
+      ObjectId("6199d9abf6a0af308e000282"),
+      ObjectId("6199d9abf6a0af308e000283"),
     ],
     history: {
       key: "76dd8171-c868-479d-9746-b5962f4ecdb0",
       messages: [
         {
-          messageID: { $oid: "61e760eefc13ae08fd000167" },
+          messageID: ObjectId("61e760eefc13ae08fd000167"),
           createdAt: { $date: "1998-02-11T10:08:34.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af308e000283" },
+          sendBy: ObjectId("6199d9abf6a0af308e000283"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -277,9 +277,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000168" },
+          messageID: ObjectId("61e760eefc13ae08fd000168"),
           createdAt: { $date: "1993-10-21T16:34:29.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af308e000282" },
+          sendBy: ObjectId("6199d9abf6a0af308e000282"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -290,9 +290,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd000169" },
+          messageID: ObjectId("61e760eefc13ae08fd000169"),
           createdAt: { $date: "1991-06-07T13:09:41.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af308e000282" },
+          sendBy: ObjectId("6199d9abf6a0af308e000282"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -303,9 +303,9 @@ db.chat_rooms.insertMany([
           },
         },
         {
-          messageID: { $oid: "61e760eefc13ae08fd00016a" },
+          messageID: ObjectId("61e760eefc13ae08fd00016a"),
           createdAt: { $date: "1995-01-16T10:11:20.000Z" },
-          sendBy: { $oid: "6199d9abf6a0af308e000283" },
+          sendBy: ObjectId("6199d9abf6a0af308e000283"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
           photo: {
@@ -317,7 +317,7 @@ db.chat_rooms.insertMany([
         },
       ],
     },
-    gameRoomID: { $oid: "6199d9fbf6a0af3047000289" },
+    gameRoomID: ObjectId("6199d9fbf6a0af3047000289"),
     isDisabled: false,
   },
 ]);
