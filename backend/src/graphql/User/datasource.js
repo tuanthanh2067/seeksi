@@ -13,15 +13,15 @@ class UserAPI extends DataSource {
    * @returns {Object}
    *
    */
-  async findUser(email) {
-    return {
-      id: "12345",
-      email: email,
-      password: "Pa$$w0rd!",
-      loggedIn: false,
-      firstName: "Some",
-      lastName: "User",
-    };
+  async findUserByEmail(email) {
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      // spit out an error
+      console.log("There is no such user!");
+    }
+
+    return user;
   }
 
   async createUser({ firstName, lastName, email, password, dob, sex }) {

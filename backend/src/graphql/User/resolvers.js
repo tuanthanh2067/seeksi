@@ -1,6 +1,6 @@
 const queries = {
   userByEmail: async (_, args, { dataSources }) => {
-    return await dataSources.userAPI.findUser(args.email);
+    return await dataSources.userAPI.findUserByEmail(args.email);
   },
 };
 
