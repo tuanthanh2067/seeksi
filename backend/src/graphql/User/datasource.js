@@ -1,6 +1,14 @@
 const { DataSource } = require("apollo-datasource");
+const { UserInputError } = require("apollo-server-core");
+const bcrypt = require("bcryptjs");
+require("dotenv").config();
 
 const User = require("../../schemas/User/User");
+const {
+  validateEmail,
+  validatePassword,
+  validateSex,
+} = require("../../utils/validatiion");
 
 class UserAPI extends DataSource {
   constructor() {
@@ -29,14 +37,24 @@ class UserAPI extends DataSource {
 
     if (user) {
       // spit out an error
-      console.log("user is already existed");
+      throw new UserInputError("User is already existed");
     }
 
+    // validation
+    if (!validateEmail(email)) throw new UserInputError("Email is not valid");
+    if (!validatePassword(password))
+      throw new UserInputError("Password must be between 12 and 30 characters");
+    if (!validateSex(sex)) throw new UserInputError("Sex is not valid");
+    // TODO: validate birthday
+
+    const saltRound = parseInt(process.env.SALT_ROUND) || 12;
+
+    const hash = await bcrypt.hash(password, saltRound);
     const newUser = new User({
       email: email,
       firstName: firstName,
       lastName: lastName,
-      password: password,
+      password: hash,
       dob: dob,
       sex: sex,
     });
