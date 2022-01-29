@@ -10,7 +10,7 @@ const LandingPage = () => {
         className="bg-cover bg-center bg-black/50 bg-blend-overlay h-screen"
         style={{ backgroundImage: `url(${Background})` }}
       >
-        <div className="container mx-auto py-4">
+        <div className="container mx-auto py-5 md:p-5">
           <div className="flex items-center justify-between px-4">
             <div className="w-28">
               <img src={Logo} alt="logo" />
@@ -30,7 +30,7 @@ const LandingPage = () => {
             </p>
             <RoundedButton
               btnName={"CREATE ACCOUNT"}
-              fontSize={"text-xl"}
+              fontSize={"text-lg lg:text-xl"}
               paddingLR={"px-10"}
             />
           </div>
@@ -47,7 +47,7 @@ const LandingPage = () => {
                 <p className="text-primary font-bold pb-2 mb-3 border-b-2 border-b-primary">
                   Heading 1
                 </p>
-                <p>
+                <p className="font-semibold">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                   sodales ligula a dui tincidunt ultricies. Curabitur cursus
                   tortor sit amet enim molestie ornare. Sed eu blandit nibh. Ut
@@ -58,7 +58,7 @@ const LandingPage = () => {
                 <p className="text-primary font-bold pb-2 mb-3 border-b-2 border-b-primary">
                   Heading 1
                 </p>
-                <p>
+                <p className="font-semibold">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                   sodales ligula a dui tincidunt ultricies. Curabitur cursus
                   tortor sit amet enim molestie ornare. Sed eu blandit nibh. Ut
@@ -69,7 +69,7 @@ const LandingPage = () => {
                 <p className="text-primary font-bold pb-2 mb-3 border-b-2 border-b-primary">
                   Heading 1
                 </p>
-                <p>
+                <p className="font-semibold">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                   sodales ligula a dui tincidunt ultricies. Curabitur cursus
                   tortor sit amet enim molestie ornare. Sed eu blandit nibh. Ut
@@ -80,7 +80,7 @@ const LandingPage = () => {
                 <p className="text-primary font-bold pb-2 mb-3 border-b-2 border-b-primary">
                   Heading 1
                 </p>
-                <p>
+                <p className="font-semibold">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                   sodales ligula a dui tincidunt ultricies. Curabitur cursus
                   tortor sit amet enim molestie ornare. Sed eu blandit nibh. Ut
