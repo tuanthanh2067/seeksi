@@ -11,10 +11,13 @@ module.exports = {
         green: "#00BA66", // matching answer text color
         purple: "#662E63", // game background color
       },
+      boxShadow: {
+        inner: "inset 0 4px 4px 0 rgba(0, 0, 0, 0.25)",
+      },
     },
     fontFamily: {
       monts: ["Montserrat", "sans-serif"],
     },
+    plugins: [],
   },
-  plugins: [],
 };
