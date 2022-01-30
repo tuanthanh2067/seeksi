@@ -1,8 +1,10 @@
 module.exports.mutations = `
-  createUser(
-    email: String!
-    password: String!
+  signup(
     firstName: String!
     lastName: String!
-  ): User
+    email: String!
+    password: String!
+    dob: String!
+    sex: String!
+  ): AuthPayload
 `;
