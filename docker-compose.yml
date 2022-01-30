@@ -35,6 +35,13 @@ services:
       - "4000:4000"
     environment:
       MONGODB_CONNECTION: mongodb://mongo:27017/seeksi
+      SALT_ROUND:
+      TOKEN_SIZE:
+      JWT_SECRET:
+      JWT_EXPIRE_IN:
+      SENDGRID_API_KEY:
+      SENDGRID_EMAIL:
+      PASSWORD_RESET_TEMPLATE_ID:
     depends_on:
       - mongo
     volumes:
