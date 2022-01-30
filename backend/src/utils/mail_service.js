@@ -23,7 +23,7 @@ module.exports = {
         console.error("Error with sendgrid mail service", error);
       });
   },
-  sendPasswordReset: async (requester, token) => {
+  sendPasswordResetMail: async (requester, token) => {
     try {
       const data = {
         to: requester.email,

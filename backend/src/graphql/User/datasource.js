@@ -97,7 +97,7 @@ class UserAPI extends DataSource {
       throw new Error("User doesn't exist.");
     }
 
-    const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT));
+    const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUND));
     const hash = await bcrypt.hash(password, salt);
 
     user.password = hash;

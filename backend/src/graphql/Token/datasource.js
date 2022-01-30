@@ -2,51 +2,55 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const { DataSource } = require("apollo-datasource");
 
-const ResetPasswordToken = require("../../schemas/Token/ResetPasswordToken");
+const Token = require("../../schemas/Token/Token");
 
 require("dotenv").config();
 
-class ResetPasswordAPI extends DataSource {
+class TokenAPI extends DataSource {
   constructor() {
     super();
   }
 
-  async findTokenByUserId(userId) {
+  async findToken(userId, tokenType) {
     if (!userId) {
       return null;
     }
 
-    return await ResetPasswordToken.findOne({ userId });
+    return await Token.findOne({ userId, tokenType });
   }
 
-  async isTokenValid(userId, token) {
-    const resetPasswordToken = await this.findTokenByUserId(userId);
+  async isResetTokenValid(userId, token) {
+    const resetToken = await this.findToken(userId, Token.TokenType.PASSWORD_RESET);
 
-    if (!resetPasswordToken) {
+    if (!resetToken) {
       return false;
     }
 
-    const isTokenValid = await bcrypt.compare(token, resetPasswordToken.token);
+    const isTokenValid = await bcrypt.compare(token, resetToken.token);
 
     if (!isTokenValid) {
       return false;
     }
 
-    await resetPasswordToken.deleteOne();
+    await resetToken.deleteOne();
 
     return true;
   }
 
-  async createToken(user) {
+  async createResetToken(user) {
     try {
-      await this.deleteAllTokensByUser(user._id);
+      await Token.deleteMany({ 
+        userId: user._id,
+        tokenType: Token.TokenType.PASSWORD_RESET
+      });
 
       const tokenString = crypto.randomBytes(parseInt(process.env.TOKEN_SIZE)).toString("hex");
       
-      const hash = await bcrypt.hash(tokenString, parseInt(process.env.BCRYPT_SALT));
+      const hash = await bcrypt.hash(tokenString, parseInt(process.env.SALT_ROUND));
 
-      const token = new ResetPasswordToken({
+      const token = new Token({
         userId: user._id,
+        tokenType: Token.TokenType.PASSWORD_RESET,
         token: hash,
         createdAt: Date.now(),
       });
@@ -58,19 +62,6 @@ class ResetPasswordAPI extends DataSource {
       throw err;
     }
   }
-
-  async deleteAllTokensByUser(userId) {
-    try {
-      await ResetPasswordToken.deleteMany({ userId });
-
-      return {
-        success: true,
-        message: `All password reset tokens associated with user ID {${userId}} were successfully removed!`,
-      };
-    } catch (err) {
-      throw err;
-    }
-  }
 }
 
-module.exports.ResetPasswordAPI = ResetPasswordAPI;
+module.exports.TokenAPI = TokenAPI;

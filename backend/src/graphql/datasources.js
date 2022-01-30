@@ -3,5 +3,5 @@ const { Token } = require("./Token");
 
 module.exports = {
   UserAPI: User.UserAPI,
-  ResetPasswordAPI: Token.ResetPasswordAPI,
+  TokenAPI: Token.TokenAPI,
 };

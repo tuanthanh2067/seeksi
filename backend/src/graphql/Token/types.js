@@ -1,6 +1,5 @@
 module.exports.types = `
-  type PasswordResetResponse implements MutationResponse {
-    code: String!
+  type TokenResponse implements MutationResponse {
     success: Boolean!
     message: String!
   }
