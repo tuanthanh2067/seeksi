@@ -18,6 +18,15 @@ const mutations = {
       token: token,
     };
   },
+  
+  //login resolver ,takes user email and password
+  login: async (_,args, {dataSources}) =>{
+    const token = await dataSources.userAPI.login(args.email,args.password);
+    return {
+      token: token
+    }
+  }
+
 };
 
 module.exports.resolvers = {

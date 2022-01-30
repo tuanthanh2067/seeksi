@@ -32,6 +32,18 @@ class UserAPI extends DataSource {
 
     return user;
   }
+  //login function, if user credentials are valid, return jwt token
+  async login(email, password){
+    const user = await User.findOne({ email: email });
+    if(user){
+      const validPassowrd = await bcrypt.compare(password, user.password);
+      if(validPassowrd){
+        return createToken(user.id, user.email, user.role);
+      }
+    }
+    //currently only returns this err message
+    return "User or password not found";
+  }
 
   async signup({ firstName, lastName, email, password, dob, sex }) {
     try {
