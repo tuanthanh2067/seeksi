@@ -6,5 +6,5 @@ module.exports.mutations = `
     password: String!
     dob: String!
     sex: String!
-  ): User
+  ): AuthPayload
 `;

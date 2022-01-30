@@ -6,7 +6,7 @@ const queries = {
 
 const mutations = {
   signup: async (_, args, { dataSources }) => {
-    return await dataSources.userAPI.signup({
+    const token = await dataSources.userAPI.signup({
       firstName: args.firstName,
       lastName: args.lastName,
       email: args.email,
@@ -14,6 +14,9 @@ const mutations = {
       dob: args.dob,
       sex: args.sex,
     });
+    return {
+      token: token,
+    };
   },
 };
 
