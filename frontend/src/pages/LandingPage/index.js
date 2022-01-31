@@ -43,7 +43,7 @@ const LandingPage = () => {
               Features
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-              <div className="bg-white rounded-md px-3 py-4 h-64">
+              <div className="bg-white rounded-md px-3 py-4">
                 <p className="text-primary font-bold pb-2 mb-3 border-b-2 border-b-primary">
                   Heading 1
                 </p>
@@ -54,7 +54,7 @@ const LandingPage = () => {
                   maximus mattis magna.
                 </p>
               </div>
-              <div className="bg-white rounded-md px-3 py-4 h-64">
+              <div className="bg-white rounded-md px-3 py-4">
                 <p className="text-primary font-bold pb-2 mb-3 border-b-2 border-b-primary">
                   Heading 1
                 </p>
@@ -65,7 +65,7 @@ const LandingPage = () => {
                   maximus mattis magna.
                 </p>
               </div>
-              <div className="bg-white rounded-md px-3 py-4 h-64">
+              <div className="bg-white rounded-md px-3 py-4">
                 <p className="text-primary font-bold pb-2 mb-3 border-b-2 border-b-primary">
                   Heading 1
                 </p>
@@ -76,7 +76,7 @@ const LandingPage = () => {
                   maximus mattis magna.
                 </p>
               </div>
-              <div className="bg-white rounded-md px-3 py-4 h-64">
+              <div className="bg-white rounded-md px-3 py-4">
                 <p className="text-primary font-bold pb-2 mb-3 border-b-2 border-b-primary">
                   Heading 1
                 </p>
