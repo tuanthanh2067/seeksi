@@ -1,9 +1,17 @@
+import React, { useState } from "react";
 import RoundedButton from "../../components/Buttons/RoundedButton";
-
 import Logo from "../../assets/logo.png";
 import Background from "../../assets/banner.png";
+import Signup from "../Modal/Signup";
+import Signin from "../Modal/Signin";
 
 const LandingPage = () => {
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [showSignInModal, setShowSignInModal] = useState(false);
+
+  const handleSignUpModal = () => setShowSignUpModal(false);
+  const handleSignInModal = () => setShowSignInModal(false);
+
   return (
     <>
       <div
@@ -22,6 +30,9 @@ const LandingPage = () => {
               borderColor={"border-white"}
               textColor={"text-primary"}
               hover={"hover:bg-primary hover:text-white hover:border-primary"}
+              handleClick={() => {
+                setShowSignInModal(true);
+              }}
             />
           </div>
           <div className="px-4 mt-48">
@@ -32,9 +43,34 @@ const LandingPage = () => {
               btnName={"CREATE ACCOUNT"}
               fontSize={"text-lg lg:text-xl"}
               paddingLR={"px-10"}
+              handleClick={() => {
+                setShowSignUpModal(true);
+              }}
             />
           </div>
         </div>
+        {showSignInModal ? (
+          <div
+            onClick={(e) => {
+              if (e.currentTarget.firstChild === e.target) {
+                handleSignInModal();
+              }
+            }}
+          >
+            <Signin handleShow={handleSignInModal} />
+          </div>
+        ) : null}
+        {showSignUpModal ? (
+          <div
+            onClick={(e) => {
+              if (e.currentTarget.firstChild === e.target) {
+                handleSignUpModal();
+              }
+            }}
+          >
+            <Signup handleShow={handleSignUpModal} />
+          </div>
+        ) : null}
       </div>
       <div className="bg-light-gray">
         <div className="container mx-auto pt-4 pb-16">
