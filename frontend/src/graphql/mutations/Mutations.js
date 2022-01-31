@@ -17,7 +17,15 @@ export const USER_REGISTER_MUTATION = gql`
       dob: $dob
       sex: $sex
     ) {
-      firstName
+      token
+    }
+  }
+`;
+
+export const USER_LOGIN_MUTATION = gql`
+  mutation loginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      token
     }
   }
 `;
