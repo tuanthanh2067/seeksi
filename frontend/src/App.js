@@ -1,6 +1,8 @@
 // import { useQuery } from "@apollo/client";
 // import { GET_TRACKS } from "./graphql/queries/example";
-import LandingPage from "./pages/LandingPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import LandingPage from "./pages/LandingPage/index";
 
 function App() {
   // const { loading, error, data } = useQuery(GET_TRACKS);
@@ -34,7 +36,13 @@ function App() {
   //   </div>
   // );
 
-  return <LandingPage />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
