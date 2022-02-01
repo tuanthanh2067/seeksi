@@ -3,6 +3,7 @@ const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
 const express = require("express");
 const http = require("http");
 const Mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 const { typeDefs, resolvers, datasources } = require("./graphql");
@@ -28,12 +29,41 @@ Mongoose.connect(process.env.MONGODB_CONNECTION, {
 
 async function startApolloSever() {
   const app = express();
+
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer({
     typeDefs,
     resolvers,
     dataSources,
+    context: ({ req }) => {
+      const header = req.headers.authorization;
+      let auth = {
+        isAuth: false,
+      };
+      if (!header) {
+        return { auth };
+      }
+
+      const token = header.split(" ");
+      if (!token) {
+        return { auth };
+      }
+
+      let decodeToken;
+
+      try {
+        decodeToken = jwt.verify(token[1], process.env.JWT_SECRET);
+      } catch (err) {
+        return { auth };
+      }
+
+      auth = {
+        isAuth: true,
+        ...decodeToken,
+      };
+      return { auth };
+    },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 

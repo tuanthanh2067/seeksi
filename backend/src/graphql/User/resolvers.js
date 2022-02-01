@@ -1,6 +1,15 @@
+const { AuthenticationError } = require("apollo-server-core");
+
 const queries = {
   userByEmail: async (_, args, { dataSources }) => {
     return await dataSources.userAPI.findUserByEmail(args.email);
+  },
+
+  me: async (_, args, { dataSources, auth }) => {
+    if (!auth.isAuth) {
+      throw new AuthenticationError("User is not authenticated");
+    }
+    return await dataSources.userAPI.findUserByEmail(auth.email);
   },
 };
 
