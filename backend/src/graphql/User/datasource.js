@@ -11,6 +11,8 @@ const {
   validateSex,
 } = require("../../utils/validatiion");
 
+require("dotenv").config();
+
 class UserAPI extends DataSource {
   constructor() {
     super();
@@ -86,6 +88,23 @@ class UserAPI extends DataSource {
       console.error(err);
       throw err;
     }
+  }
+
+  async resetPassword({ userId, password }) {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User doesn't exist.");
+    }
+
+    const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUND));
+    const hash = await bcrypt.hash(password, salt);
+
+    user.password = hash;
+
+    // TODO: Notify password change by email
+
+    return await user.save();
   }
 }
 

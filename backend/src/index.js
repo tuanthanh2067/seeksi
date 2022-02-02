@@ -11,6 +11,7 @@ const { typeDefs, resolvers, datasources } = require("./graphql");
 // set up data sources
 const dataSources = () => ({
   userAPI: new datasources.UserAPI(),
+  tokenAPI: new datasources.TokenAPI(),
 });
 
 Mongoose.connect(process.env.MONGODB_CONNECTION, {
