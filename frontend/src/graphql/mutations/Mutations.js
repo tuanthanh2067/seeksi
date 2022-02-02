@@ -30,4 +30,11 @@ export const USER_REGISTER_MUTATION = gql`
   }
 `;
 
-
+export const FORGOT_PASSWORD_MUTATION = gql`
+  mutation requestResetPassword($email: String!) {
+    requestResetPassword(email: $email) {
+      success
+      message
+    }
+  }
+`;
