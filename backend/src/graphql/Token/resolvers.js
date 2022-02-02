@@ -1,4 +1,4 @@
-const { UserInputError } = require("apollo-server");
+const { UserInputError } = require("apollo-server-core");
 const { sendPasswordResetMail } = require("../../utils/mail_service");
 
 const queries = {};
@@ -11,7 +11,7 @@ const mutations = {
       if (!user) {
         throw new UserInputError("No account is associated with this email.");
       }
-      
+
       const resetToken = await dataSources.tokenAPI.createResetToken(user);
 
       await sendPasswordResetMail(user, resetToken);
@@ -27,22 +27,25 @@ const mutations = {
   },
   resetPassword: async (_, args, { dataSources }) => {
     try {
-      const valid = await dataSources.tokenAPI.isResetTokenValid(args.userId, args.token);
-      
+      const valid = await dataSources.tokenAPI.isResetTokenValid(
+        args.userId,
+        args.token
+      );
+
       if (!valid) {
         throw new UserInputError("Invalid or expired password reset token.");
       }
 
       await dataSources.userAPI.resetPassword(args);
-      
+
       return {
         success: true,
-        message: "Password has been successfully reset."
-      }
+        message: "Password has been successfully reset.",
+      };
     } catch (err) {
       throw err;
     }
-  }
+  },
 };
 
 module.exports.resolvers = {
