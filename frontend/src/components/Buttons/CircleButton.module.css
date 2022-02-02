@@ -1,0 +1,30 @@
+.iconContainer {
+	width: 60px;
+	height: 60px;
+	padding: 5px;
+}
+
+.iconContainer:active {
+	animation: press 0.3s;
+}
+
+@keyframes press {
+	0% {
+		transform: scale(1.25);
+	}
+	50% {
+		transform: scale(0.95);
+	}
+	to {
+		transform: scale(1.25);
+	}
+}
+@keyframes bounce {
+	50% {
+		transform: rotate(5deg) translate(20px, -50px);
+	}
+	to {
+		transform: scale(0.9) rotate(10deg) translate(50px, -80px);
+		opacity: 0;
+	}
+}

@@ -13,7 +13,7 @@ module.exports = {
       },
       boxShadow: {
         inner: "inset 0 4px 4px 0 rgba(0, 0, 0, 0.25)",
-        card: "4px 4px 25px 0 rgba(0, 0, 0, 0.4)",
+        card: "4px 4px 25px 0 rgba(0, 0, 0, 0.2)",
       },
     },
     fontFamily: {
