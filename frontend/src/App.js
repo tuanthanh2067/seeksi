@@ -3,6 +3,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage/index";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   // const { loading, error, data } = useQuery(GET_TRACKS);
@@ -40,6 +41,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </BrowserRouter>
   );
