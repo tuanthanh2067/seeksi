@@ -107,7 +107,6 @@ class UserAPI extends DataSource {
     return await user.save();
   }
 
-  //issue 63: looks for the user with the given userId, removes password before returning the object.
   async getUserProfileById(userId){
     try{
       const user = await User.findById(userId).exec();

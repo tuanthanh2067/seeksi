@@ -12,9 +12,11 @@ const queries = {
     return await dataSources.userAPI.findUserByEmail(auth.email);
   },
 
-  //do we need authorization here?
-  //issue 63: returns user profile identified by the provided userId
-  getUserProfileById: async(_, args, {dataSources})=>{
+  //returns user profile identified by the provided userId
+  getUserProfileById: async(_, args, {dataSources, auth})=>{
+    if (!auth.isAuth) {
+      throw new AuthenticationError("User is not authenticated");
+    }
     return dataSources.userAPI.getUserProfileById(args.userId);
   }
 };
