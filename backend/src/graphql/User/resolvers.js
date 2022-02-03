@@ -5,11 +5,11 @@ const queries = {
     return await dataSources.userAPI.findUserByEmail(args.email);
   },
 
-  me: async (_, args, { dataSources, auth }) => {
-    if (!auth.isAuth) {
+  me: async (_, args, { dataSources, req, isAuthenticated }) => {
+    if (!isAuthenticated(req.user)) {
       throw new AuthenticationError("User is not authenticated");
     }
-    return await dataSources.userAPI.findUserByEmail(auth.email);
+    return await dataSources.userAPI.findUserByEmail(req.user.email);
   },
 };
 
@@ -27,15 +27,14 @@ const mutations = {
       token: token,
     };
   },
-  
-  //login resolver ,takes user email and password
-  login: async (_,args, {dataSources}) =>{
-    const token = await dataSources.userAPI.login(args.email,args.password);
-    return {
-      token: token
-    }
-  }
 
+  //login resolver ,takes user email and password
+  login: async (_, args, { dataSources }) => {
+    const token = await dataSources.userAPI.login(args.email, args.password);
+    return {
+      token: token,
+    };
+  },
 };
 
 module.exports.resolvers = {
