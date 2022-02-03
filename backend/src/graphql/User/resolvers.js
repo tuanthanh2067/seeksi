@@ -11,6 +11,9 @@ const queries = {
     }
     return await dataSources.userAPI.findUserByEmail(auth.email);
   },
+
+  //do we need authorization here?
+  //returns user profile identified by the provided userId
   getUserProfileById: async(_, args, {dataSources})=>{
     return dataSources.userAPI.getUserProfileById(args.userId);
   }
