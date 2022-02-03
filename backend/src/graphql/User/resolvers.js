@@ -11,6 +11,9 @@ const queries = {
     }
     return await dataSources.userAPI.findUserByEmail(auth.email);
   },
+  getUserProfileById: async(_, args, {dataSources})=>{
+    return dataSources.userAPI.getUserProfileById(args.userId);
+  }
 };
 
 const mutations = {
