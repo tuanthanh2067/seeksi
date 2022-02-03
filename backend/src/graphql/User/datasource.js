@@ -1,5 +1,9 @@
 const { DataSource } = require("apollo-datasource");
-const { UserInputError, ApolloError } = require("apollo-server-core");
+const {
+  UserInputError,
+  ApolloError,
+  AuthenticationError,
+} = require("apollo-server-core");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
@@ -35,19 +39,18 @@ class UserAPI extends DataSource {
     return user;
   }
   //login function, if user credentials are valid, return jwt token
-  async login(email, password){
-    try{
+  async login(email, password) {
+    try {
       const user = await User.findOne({ email: email });
-      if(user){
+      if (user) {
         const validPassword = await bcrypt.compare(password, user.password);
-        if(validPassword){
+        if (validPassword) {
           return createToken(user.id, user.email, user.role);
         }
       }
       //currently only returns this err message
       throw new UserInputError("User or password not found");
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
       throw err;
     }
@@ -107,20 +110,46 @@ class UserAPI extends DataSource {
     return await user.save();
   }
 
-  async getUserProfileById(userId){
-    try{
+  async setUserLocation(
+    { city = "", province = "", longitude = 0, latitude = 0 },
+    userId
+  ) {
+    // location received can be either city and province || longitude and latitude
+
+    if (!city && !province && longitude === 0 && latitude === 0) {
+      throw new UserInputError("Invalid location or coordinates");
+    }
+
+    console.log(userId);
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new AuthenticationError("Can not find user");
+    }
+
+    user.location.city = city && user.location.city;
+    user.location.province = province && user.location.province;
+    user.location.longitude = longitude
+      ? longitude !== 0
+      : user.location.longitude;
+    user.location.latitude = latitude ? latitude !== 0 : user.location.latitude;
+
+    return await user.save();
+  }
+
+  async getUserProfileById(userId) {
+    try {
       const user = await User.findById(userId).exec();
-      if(user){
+      if (user) {
         user.password = "";
         return user;
-      }else{
+      } else {
         throw new UserInputError("user id not found");
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
       throw err;
     }
-
   }
 }
 
