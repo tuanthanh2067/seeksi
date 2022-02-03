@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 const User = require("../../schemas/User/User");
+const { locationSchema } = require("../../schemas/share/Location");
 const { createToken } = require("../../utils/jwt");
 const {
   validateEmail,
@@ -112,7 +113,7 @@ class UserAPI extends DataSource {
 
   async setUserLocation(
     { city = "", province = "", longitude = 0, latitude = 0 },
-    userId
+    userID
   ) {
     // location received can be either city and province || longitude and latitude
 
@@ -120,20 +121,25 @@ class UserAPI extends DataSource {
       throw new UserInputError("Invalid location or coordinates");
     }
 
-    console.log(userId);
-    const user = await User.findById(userId);
+    const user = await User.findById(userID);
 
     if (!user) {
       throw new AuthenticationError("Can not find user");
     }
 
-    user.location.city = city && user.location.city;
-    user.location.province = province && user.location.province;
-    user.location.longitude = longitude
-      ? longitude !== 0
-      : user.location.longitude;
-    user.location.latitude = latitude ? latitude !== 0 : user.location.latitude;
-
+    if (user.location) {
+      user.location.city = city || user.location.city;
+      user.location.province = province || user.location.province;
+      user.location.longitude = longitude ? longitude : user.location.longitude;
+      user.location.latitude = latitude ? latitude : user.location.latitude;
+    } else {
+      user.location = {
+        city: city,
+        province: province,
+        longitude: longitude,
+        latitude: latitude,
+      };
+    }
     return await user.save();
   }
 

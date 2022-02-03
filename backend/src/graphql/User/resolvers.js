@@ -48,7 +48,7 @@ const mutations = {
     if (isAuthenticated(req.user)) {
       const user = await dataSources.userAPI.setUserLocation(
         args,
-        req.user.userId
+        req.user.userID
       );
 
       return user;
