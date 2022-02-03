@@ -13,7 +13,7 @@ const queries = {
   },
 
   //do we need authorization here?
-  //returns user profile identified by the provided userId
+  //issue 63: returns user profile identified by the provided userId
   getUserProfileById: async(_, args, {dataSources})=>{
     return dataSources.userAPI.getUserProfileById(args.userId);
   }
