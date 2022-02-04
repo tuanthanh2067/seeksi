@@ -13,8 +13,8 @@ const queries = {
   },
 
   //returns user profile identified by the provided userId
-  getUserProfileById: async(_, args, {dataSources, auth})=>{
-    if (!auth.isAuth) {
+  getUserProfileById: async(_, args, {dataSources, req, isAuthenticated })=>{
+    if (!isAuthenticated(req.user)) {
       throw new AuthenticationError("User is not authenticated");
     }
     return dataSources.userAPI.getUserProfileById(args.userId);
