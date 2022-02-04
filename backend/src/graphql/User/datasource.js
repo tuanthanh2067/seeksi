@@ -8,8 +8,10 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 const User = require("../../schemas/User/User");
-const { locationSchema } = require("../../schemas/share/Location");
+
 const { createToken } = require("../../utils/jwt");
+const geocoder = require("../../utils/geo_location");
+
 const {
   validateEmail,
   validatePassword,
@@ -127,12 +129,7 @@ class UserAPI extends DataSource {
       throw new AuthenticationError("Can not find user");
     }
 
-    if (user.location) {
-      user.location.city = city || user.location.city;
-      user.location.province = province || user.location.province;
-      user.location.longitude = longitude ? longitude : user.location.longitude;
-      user.location.latitude = latitude ? latitude : user.location.latitude;
-    } else {
+    if (!user.location) {
       user.location = {
         city: city,
         province: province,
@@ -140,6 +137,18 @@ class UserAPI extends DataSource {
         latitude: latitude,
       };
     }
+
+    if (city !== "" && province !== "") {
+      const res = await geocoder.geocode(`${city} ${province}`);
+      longitude = res[0].longitude;
+      latitude = res[0].latitude;
+    }
+
+    user.location.city = city || user.location.city;
+    user.location.province = province || user.location.province;
+    user.location.longitude = longitude ? longitude : user.location.longitude;
+    user.location.latitude = latitude ? latitude : user.location.latitude;
+
     return await user.save();
   }
 
