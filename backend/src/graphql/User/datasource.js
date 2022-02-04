@@ -106,6 +106,22 @@ class UserAPI extends DataSource {
 
     return await user.save();
   }
+
+  async getUserProfileById(userId){
+    try{
+      const user = await User.findById(userId).exec();
+      if(user){
+        user.password = "";
+        return user;
+      }else{
+        throw new UserInputError("user id not found");
+      }
+    }catch(err){
+      console.log(err);
+      throw err;
+    }
+
+  }
 }
 
 module.exports.UserAPI = UserAPI;

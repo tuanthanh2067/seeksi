@@ -11,6 +11,14 @@ const queries = {
     }
     return await dataSources.userAPI.findUserByEmail(req.user.email);
   },
+
+  //returns user profile identified by the provided userId
+  getUserProfileById: async(_, args, {dataSources, req, isAuthenticated })=>{
+    if (!isAuthenticated(req.user)) {
+      throw new AuthenticationError("User is not authenticated");
+    }
+    return dataSources.userAPI.getUserProfileById(args.userId);
+  }
 };
 
 const mutations = {
