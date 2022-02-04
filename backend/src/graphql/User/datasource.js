@@ -42,10 +42,12 @@ class UserAPI extends DataSource {
         const validPassword = await bcrypt.compare(password, user.password);
         if(validPassword){
           return createToken(user.id, user.email, user.role);
+        }else{
+          throw new UserInputError("Password is not correct");
         }
       }
       //currently only returns this err message
-      throw new UserInputError("User or password not found");
+      throw new UserInputError("Email does not exist");
     }
     catch(err){
       console.log(err);
