@@ -35,21 +35,20 @@ class UserAPI extends DataSource {
     return user;
   }
   //login function, if user credentials are valid, return jwt token
-  async login(email, password){
-    try{
+  async login(email, password) {
+    try {
       const user = await User.findOne({ email: email });
-      if(user){
+      if (user) {
         const validPassword = await bcrypt.compare(password, user.password);
-        if(validPassword){
+        if (validPassword) {
           return createToken(user.id, user.email, user.role);
-        }else{
+        } else {
           throw new UserInputError("Password is not correct");
         }
       }
       //currently only returns this err message
       throw new UserInputError("Email does not exist");
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
       throw err;
     }
@@ -109,20 +108,19 @@ class UserAPI extends DataSource {
     return await user.save();
   }
 
-  async getUserProfileById(userId){
-    try{
+  async getUserProfileById(userId) {
+    try {
       const user = await User.findById(userId).exec();
-      if(user){
+      if (user) {
         user.password = "";
         return user;
-      }else{
+      } else {
         throw new UserInputError("user id not found");
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
       throw err;
     }
-
   }
 }
 
