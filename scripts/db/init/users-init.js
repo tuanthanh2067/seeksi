@@ -8,7 +8,7 @@ db.users.insertMany([
     firstName: "Franchot",
     lastName: "MacKeague",
     email: "fmackeague0@imageshack.us",
-    dob: { $date: "2019-07-28T08:01:10.000Z" },
+    dob: ISODate("2019-07-28T08:01:10.000Z"),
     sex: "Male",
     location: {
       city: "Nambak Tengah",
@@ -66,7 +66,7 @@ db.users.insertMany([
     firstName: "Hillier",
     lastName: "Sewley",
     email: "hsewley1@disqus.com",
-    dob: { $date: "2005-05-02T16:44:22.000Z" },
+    dob: ISODate("2005-05-02T16:44:22.000Z"),
     sex: "Female",
     location: {
       city: "Zhangshui",
@@ -120,7 +120,7 @@ db.users.insertMany([
     firstName: "Doyle",
     lastName: "Kemish",
     email: "dkemish2@kickstarter.com",
-    dob: { $date: "2002-08-23T05:06:00.000Z" },
+    dob: ISODate("2002-08-23T05:06:00.000Z"),
     sex: "Male",
     location: {
       city: "Biljača",
@@ -169,7 +169,7 @@ db.users.insertMany([
     firstName: "Wilfred",
     lastName: "Purkins",
     email: "wpurkins3@pen.io",
-    dob: { $date: "2009-10-03T18:32:54.000Z" },
+    dob: ISODate("2009-10-03T18:32:54.000Z"),
     sex: "Female",
     location: {
       city: "Hualfín",
@@ -214,7 +214,7 @@ db.users.insertMany([
     firstName: "Elna",
     lastName: "Marcroft",
     email: "emarcroft4@forbes.com",
-    dob: { $date: "2017-09-27T11:31:32.000Z" },
+    dob: ISODate("2017-09-27T11:31:32.000Z"),
     sex: "Male",
     location: {
       city: "Pau",
@@ -270,7 +270,7 @@ db.users.insertMany([
     firstName: "Jade",
     lastName: "Whitebread",
     email: "jwhitebread5@nsw.gov.au",
-    dob: { $date: "2014-10-17T16:49:10.000Z" },
+    dob: ISODate("2014-10-17T16:49:10.000Z"),
     sex: "Female",
     location: {
       city: "Al Badārī",
@@ -318,7 +318,7 @@ db.users.insertMany([
     firstName: "Onida",
     lastName: "Simpson",
     email: "osimpson6@nba.com",
-    dob: { $date: "2005-04-11T17:21:45.000Z" },
+    dob: ISODate("2005-04-11T17:21:45.000Z"),
     sex: "Female",
     location: {
       city: "‘Ābūd",
@@ -381,7 +381,7 @@ db.users.insertMany([
     firstName: "Brendon",
     lastName: "Seaborne",
     email: "bseaborne7@bloglines.com",
-    dob: { $date: "2002-01-31T15:24:38.000Z" },
+    dob: ISODate("2002-01-31T15:24:38.000Z"),
     sex: "Female",
     location: {
       city: "Colcabamba",
@@ -444,7 +444,7 @@ db.users.insertMany([
     firstName: "George",
     lastName: "Bayfield",
     email: "gbayfield8@alibaba.com",
-    dob: { $date: "2009-01-20T05:07:27.000Z" },
+    dob: ISODate("2009-01-20T05:07:27.000Z"),
     sex: "Female",
     location: {
       city: "Jetafe",
@@ -498,7 +498,7 @@ db.users.insertMany([
     firstName: "Orazio",
     lastName: "Gristwood",
     email: "ogristwood9@google.cn",
-    dob: { $date: "2016-07-25T07:43:45.000Z" },
+    dob: ISODate("2016-07-25T07:43:45.000Z"),
     sex: "Male",
     location: {
       city: "Luoyang",
@@ -543,7 +543,7 @@ db.users.insertMany([
     firstName: "Jacinta",
     lastName: "Verick",
     email: "jvericka@weather.com",
-    dob: { $date: "2014-11-16T21:51:53.000Z" },
+    dob: ISODate("2014-11-16T21:51:53.000Z"),
     sex: "Male",
     location: {
       city: "Bayshint",
@@ -615,7 +615,7 @@ db.users.insertMany([
     firstName: "Ferrell",
     lastName: "Reah",
     email: "freahb@youtube.com",
-    dob: { $date: "2001-11-14T19:43:42.000Z" },
+    dob: ISODate("2001-11-14T19:43:42.000Z"),
     sex: "Female",
     location: {
       city: "Nîmes",
@@ -654,7 +654,7 @@ db.users.insertMany([
     firstName: "Raye",
     lastName: "Streatfeild",
     email: "rstreatfeildc@washington.edu",
-    dob: { $date: "2002-11-28T07:25:36.000Z" },
+    dob: ISODate("2002-11-28T07:25:36.000Z"),
     sex: "Female",
     location: {
       city: "Bum Bum",
@@ -717,7 +717,7 @@ db.users.insertMany([
     firstName: "Jeffry",
     lastName: "Floweth",
     email: "jflowethd@pen.io",
-    dob: { $date: "2021-07-07T08:48:40.000Z" },
+    dob: ISODate("2021-07-07T08:48:40.000Z"),
     sex: "Female",
     location: {
       city: "Vila de Rei",
@@ -774,7 +774,7 @@ db.users.insertMany([
     firstName: "Rollins",
     lastName: "Woodham",
     email: "rwoodhame@admin.ch",
-    dob: { $date: "2021-08-18T05:04:18.000Z" },
+    dob: ISODate("2021-08-18T05:04:18.000Z"),
     sex: "Male",
     location: {
       city: "Karpushikha",
@@ -837,7 +837,7 @@ db.users.insertMany([
     firstName: "Gris",
     lastName: "Philipeau",
     email: "gphilipeauf@bluehost.com",
-    dob: { $date: "2005-03-11T00:49:45.000Z" },
+    dob: ISODate("2005-03-11T00:49:45.000Z"),
     sex: "Male",
     location: {
       city: "Blainville",
@@ -900,7 +900,7 @@ db.users.insertMany([
     firstName: "Phaidra",
     lastName: "Lopez",
     email: "plopezg@archive.org",
-    dob: { $date: "2006-07-24T23:14:40.000Z" },
+    dob: ISODate("2006-07-24T23:14:40.000Z"),
     sex: "Male",
     location: {
       city: "Taksimo",
@@ -964,7 +964,7 @@ db.users.insertMany([
     firstName: "Artie",
     lastName: "Dutt",
     email: "adutth@goo.gl",
-    dob: { $date: "2007-08-11T16:43:21.000Z" },
+    dob: ISODate("2007-08-11T16:43:21.000Z"),
     sex: "Female",
     location: {
       city: "Baikui",
@@ -1015,7 +1015,7 @@ db.users.insertMany([
     firstName: "Michael",
     lastName: "Wraxall",
     email: "mwraxalli@spotify.com",
-    dob: { $date: "2009-06-18T05:58:19.000Z" },
+    dob: ISODate("2009-06-18T05:58:19.000Z"),
     sex: "Agender",
     location: {
       city: "Buyun",
@@ -1073,7 +1073,7 @@ db.users.insertMany([
     firstName: "Ernest",
     lastName: "Lodemann",
     email: "elodemannj@dion.ne.jp",
-    dob: { $date: "2016-04-24T21:30:43.000Z" },
+    dob: ISODate("2016-04-24T21:30:43.000Z"),
     sex: "Female",
     location: {
       city: "Shatian",

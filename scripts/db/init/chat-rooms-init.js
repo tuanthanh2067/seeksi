@@ -14,7 +14,7 @@ db.chat_rooms.insertMany([
       messages: [
         {
           messageID: ObjectId("61e760eefc13ae08fd000154"),
-          createdAt: { $date: "2002-04-10T02:26:59.000Z" },
+          createdAt: ISODate("2002-04-10T02:26:59.000Z"),
           sendBy: ObjectId("6199d9abf6a0af305d000285"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -27,7 +27,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000155"),
-          createdAt: { $date: "2015-06-09T05:52:35.000Z" },
+          createdAt: ISODate("2015-06-09T05:52:35.000Z"),
           sendBy: ObjectId("6199d9abf6a0af305d000286"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -40,7 +40,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000156"),
-          createdAt: { $date: "2008-06-03T22:48:41.000Z" },
+          createdAt: ISODate("2008-06-03T22:48:41.000Z"),
           sendBy: ObjectId("6199d9abf6a0af305d000285"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -53,7 +53,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000157"),
-          createdAt: { $date: "1999-12-09T23:23:00.000Z" },
+          createdAt: ISODate("1999-12-09T23:23:00.000Z"),
           sendBy: ObjectId("6199d9abf6a0af305d000286"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -66,7 +66,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000158"),
-          createdAt: { $date: "1996-10-21T20:59:34.000Z" },
+          createdAt: ISODate("1996-10-21T20:59:34.000Z"),
           sendBy: ObjectId("6199d9abf6a0af305d000285"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -93,7 +93,7 @@ db.chat_rooms.insertMany([
       messages: [
         {
           messageID: ObjectId("61e760eefc13ae08fd00015a"),
-          createdAt: { $date: "1994-05-31T02:03:37.000Z" },
+          createdAt: ISODate("1994-05-31T02:03:37.000Z"),
           sendBy: ObjectId("6199d9abf6a0af3047000286"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -106,7 +106,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd00015b"),
-          createdAt: { $date: "1994-12-31T05:23:17.000Z" },
+          createdAt: ISODate("1994-12-31T05:23:17.000Z"),
           sendBy: ObjectId("6199d9abf6a0af3047000286"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -133,7 +133,7 @@ db.chat_rooms.insertMany([
       messages: [
         {
           messageID: ObjectId("61e760eefc13ae08fd00015d"),
-          createdAt: { $date: "2003-02-04T15:05:03.000Z" },
+          createdAt: ISODate("2003-02-04T15:05:03.000Z"),
           sendBy: ObjectId("6199d9abf6a0af3064000283"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -146,7 +146,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd00015e"),
-          createdAt: { $date: "2012-10-17T22:01:47.000Z" },
+          createdAt: ISODate("2012-10-17T22:01:47.000Z"),
           sendBy: ObjectId("6199d9abf6a0af3064000283"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -159,7 +159,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd00015f"),
-          createdAt: { $date: "1996-07-19T11:42:14.000Z" },
+          createdAt: ISODate("1996-07-19T11:42:14.000Z"),
           sendBy: ObjectId("6199d9abf6a0af3064000284"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -172,7 +172,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000160"),
-          createdAt: { $date: "2013-01-19T15:08:11.000Z" },
+          createdAt: ISODate("2013-01-19T15:08:11.000Z"),
           sendBy: ObjectId("6199d9abf6a0af3064000284"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -199,7 +199,7 @@ db.chat_rooms.insertMany([
       messages: [
         {
           messageID: ObjectId("61e760eefc13ae08fd000162"),
-          createdAt: { $date: "2018-12-21T10:08:18.000Z" },
+          createdAt: ISODate("2018-12-21T10:08:18.000Z"),
           sendBy: ObjectId("6199d9abf6a0af30a0000286"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -212,7 +212,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000163"),
-          createdAt: { $date: "1991-04-29T20:53:46.000Z" },
+          createdAt: ISODate("1991-04-29T20:53:46.000Z"),
           sendBy: ObjectId("6199d9abf6a0af30a0000285"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -225,7 +225,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000164"),
-          createdAt: { $date: "1992-10-11T23:56:43.000Z" },
+          createdAt: ISODate("1992-10-11T23:56:43.000Z"),
           sendBy: ObjectId("6199d9abf6a0af30a0000285"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -238,7 +238,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000165"),
-          createdAt: { $date: "1996-05-27T11:04:52.000Z" },
+          createdAt: ISODate("1996-05-27T11:04:52.000Z"),
           sendBy: ObjectId("6199d9abf6a0af30a0000286"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -265,7 +265,7 @@ db.chat_rooms.insertMany([
       messages: [
         {
           messageID: ObjectId("61e760eefc13ae08fd000167"),
-          createdAt: { $date: "1998-02-11T10:08:34.000Z" },
+          createdAt: ISODate("1998-02-11T10:08:34.000Z"),
           sendBy: ObjectId("6199d9abf6a0af308e000283"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -278,7 +278,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000168"),
-          createdAt: { $date: "1993-10-21T16:34:29.000Z" },
+          createdAt: ISODate("1993-10-21T16:34:29.000Z"),
           sendBy: ObjectId("6199d9abf6a0af308e000282"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -291,7 +291,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd000169"),
-          createdAt: { $date: "1991-06-07T13:09:41.000Z" },
+          createdAt: ISODate("1991-06-07T13:09:41.000Z"),
           sendBy: ObjectId("6199d9abf6a0af308e000282"),
           isSeen: true,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
@@ -304,7 +304,7 @@ db.chat_rooms.insertMany([
         },
         {
           messageID: ObjectId("61e760eefc13ae08fd00016a"),
-          createdAt: { $date: "1995-01-16T10:11:20.000Z" },
+          createdAt: ISODate("1995-01-16T10:11:20.000Z"),
           sendBy: ObjectId("6199d9abf6a0af308e000283"),
           isSeen: false,
           content: "4d22094f3af4b0c5afb8eff1980c9b5fc5b41404",
