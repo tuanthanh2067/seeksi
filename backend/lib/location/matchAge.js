@@ -30,15 +30,15 @@ function isCompatibleByAge(user, partner) {
   }
 
   if (
-    user.preference.minAge >= partnerBirthday ||
-    user.preference.maxAge <= partnerBirthday
+    user.preference.minAge > partnerBirthday ||
+    user.preference.maxAge < partnerBirthday
   ) {
     return false;
   }
 
   if (
-    partner.preference.minAge >= userBirthday ||
-    partner.preference.maxAge <= userBirthday
+    partner.preference.minAge > userBirthday ||
+    partner.preference.maxAge < userBirthday
   ) {
     return false;
   }
@@ -48,12 +48,18 @@ function isCompatibleByAge(user, partner) {
 
 function calculateAge(birthday) {
   const userDOB = new Date(birthday);
-  const diff = Date.now() - userDOB.getTime();
-  const age = new Date(diff);
+  const today = new Date();
 
-  return Math.abs(age.getUTCFullYear() - 1970);
+  let age = today.getFullYear() - userDOB.getFullYear();
+  const month = today.getMonth() - userDOB.getMonth();
+
+  if (month < 0 || (month === 0 && today.getDate() < userDOB.getDate())) {
+    age--;
+  }
+  return age;
 }
 
 module.exports = {
   isCompatibleByAge,
+  calculateAge,
 };
