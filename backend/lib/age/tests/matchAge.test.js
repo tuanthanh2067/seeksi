@@ -98,7 +98,7 @@ describe("match age test block", () => {
     }).toThrow(/User's birthday not found/);
   });
 
-  test("user's dob not found", () => {
+  test("user's age range preference not found", () => {
     user = {
       dob: "2000-03-05T23:09:16Z",
       preference: null,
