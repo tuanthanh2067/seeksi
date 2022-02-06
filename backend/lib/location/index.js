@@ -1,4 +1,4 @@
-const Match = require("./match");
+const Match = require("./matchDistance");
 
 module.exports = {
   Match

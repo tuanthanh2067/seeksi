@@ -1,5 +1,5 @@
 const { distanceTo } = require("geolocation-utils");
-const { isCompatibleByDistance } = require("../match");
+const { isCompatibleByDistance } = require("../matchDistance");
 
 test('two users compatible by distance preference', () => {
   const user = {
