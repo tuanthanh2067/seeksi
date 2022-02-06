@@ -5,9 +5,10 @@ const { distanceTo } = require("geolocation-utils");
  *
  * Two users must have `latitude` & `longitude` in their `location`
  * attribute.
- * 
+ *
  * @param {Object} user a user with distance preference
  * @param {Object} partner another user with distance preference
+ * @returns {Boolean}
  */
 function isCompatibleByDistance(user, partner) {
   if (!user.location?.longitude || !user.location?.latitude) {
@@ -18,19 +19,20 @@ function isCompatibleByDistance(user, partner) {
   }
 
   const userDistancePref = user.preference?.distance || Number.MAX_SAFE_INTEGER;
-  const partnerDistancePref = partner.preference?.distance || Number.MAX_SAFE_INTEGER;
-  const distance = Math.ceil(distanceTo(
-    { lat: user.location.latitude, lon: user.location.longitude },
-    { lat: partner.location.latitude, lon: partner.location.longitude }
-  ) / 1000);
+  const partnerDistancePref =
+    partner.preference?.distance || Number.MAX_SAFE_INTEGER;
+  const distance = Math.ceil(
+    distanceTo(
+      { lat: user.location.latitude, lon: user.location.longitude },
+      { lat: partner.location.latitude, lon: partner.location.longitude }
+    ) / 1000
+  );
 
   const roundToNearestTen = (number) => Math.ceil(number / 10) * 10;
 
   return (
-    roundToNearestTen(userDistancePref) >=
-      roundToNearestTen(distance) &&
-    roundToNearestTen(partnerDistancePref) >=
-      roundToNearestTen(distance)
+    roundToNearestTen(userDistancePref) >= roundToNearestTen(distance) &&
+    roundToNearestTen(partnerDistancePref) >= roundToNearestTen(distance)
   );
 }
 
