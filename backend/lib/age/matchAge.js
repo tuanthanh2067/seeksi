@@ -1,11 +1,10 @@
 /**
- * Check if two users prefer each other by their distance preference.
+ * Check if two users prefer each other by their age preference.
  *
- * Two users must have `latitude` & `longitude` in their `location`
- * attribute.
+ * Two users must have set their age preference and their age
  *
- * @param {Object} user a user with distance preference
- * @param {Object} partner another user with distance preference
+ * @param {Object} user a user with age preference
+ * @param {Object} partner another user with age preference
  * @returns {Boolean}
  */
 
