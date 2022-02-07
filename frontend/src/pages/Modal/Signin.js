@@ -10,7 +10,7 @@ const Signin = (props) => {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
   const [showSignInModal, setShowSignInModal] = useState(true);
-  const [login, { error }] = useMutation(USER_LOGIN_MUTATION);
+  const [login] = useMutation(USER_LOGIN_MUTATION);
   const clearErr = () => setErr("");
 
   const handleClick = () => {
@@ -24,12 +24,14 @@ const Signin = (props) => {
           email: email,
           password: password,
         },
+        onError: (error) => {
+          setErr(error);
+        },
+        onCompleted: (data) => {
+          localStorage.setItem("token", data.login.token);
+          props.handleShow();
+        },
       });
-      if (error) {
-        setErr(error);
-      } else {
-        props.handleShow();
-      }
     }
   };
 
