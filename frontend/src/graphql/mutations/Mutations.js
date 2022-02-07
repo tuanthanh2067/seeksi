@@ -38,3 +38,16 @@ export const FORGOT_PASSWORD_MUTATION = gql`
     }
   }
 `;
+
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation resetPassword(
+    $userId: String!
+    $token: String!
+    $password: String!
+  ) {
+    resetPassword(userId: $userId, token: $token, password: $password) {
+      success
+      message
+    }
+  }
+`;

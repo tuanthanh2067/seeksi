@@ -3,7 +3,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage/index";
+<<<<<<< HEAD
 import ProfilePage from "./pages/ProfilePage";
+=======
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import Match from "./pages/Match/Match";
+>>>>>>> main
 
 function App() {
   // const { loading, error, data } = useQuery(GET_TRACKS);
@@ -40,7 +45,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ProfilePage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/match" element={<Match />} />
       </Routes>
     </BrowserRouter>
   );

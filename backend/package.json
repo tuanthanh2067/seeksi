@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node src/index",
     "dev": "nodemon src/index"
   },
@@ -28,11 +28,14 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^12.0.3",
     "express": "^4.17.2",
+    "geolocation-utils": "^1.2.5",
     "graphql": "^16.3.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.1.7"
+    "mongoose": "^6.1.7",
+    "node-geocoder": "^3.28.0"
   },
   "devDependencies": {
+    "jest": "^27.4.7",
     "nodemon": "^2.0.15"
   }
 }

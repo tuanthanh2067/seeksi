@@ -43,6 +43,17 @@ const mutations = {
       token: token,
     };
   },
+
+  setLocation: async (_, args, { dataSources, req, isAuthenticated }) => {
+    if (isAuthenticated(req.user)) {
+      const user = await dataSources.userAPI.setUserLocation(
+        args,
+        req.user.userID
+      );
+
+      return user;
+    }
+  },
 };
 
 module.exports.resolvers = {
