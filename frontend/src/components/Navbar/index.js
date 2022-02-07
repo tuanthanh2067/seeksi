@@ -48,7 +48,7 @@ const Navbar = () => {
           } sm:flex items-center`}
         >
           <Link
-            to="/"
+            to="/profile"
             className=" block text-primary font-semibold text-lg lg:text-xl hover:underline"
           >
             Profile
