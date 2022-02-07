@@ -97,13 +97,14 @@ const Signup = (props) => {
           dob: new Date(`${year}, ${month}, ${date}`),
           sex: gender,
         },
+        onError: (error) => {
+          setErr(error);
+        },
+        onCompleted: (data) => {
+          localStorage.setItem("token", data.signup.token);
+          props.handleShow();
+        },
       });
-
-      if (error) {
-        setErr(error);
-      } else {
-        props.handleShow();
-      }
     }
   };
 

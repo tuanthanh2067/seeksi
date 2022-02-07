@@ -4,10 +4,31 @@ import "./styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+
+const httpLink = createHttpLink({
+  uri: process.env.REACT_APP_GRAPHQL_URI,
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("token");
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
 
 const apolloClient = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_URI,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
