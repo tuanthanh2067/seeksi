@@ -9,7 +9,7 @@ const OvalImage = (props) => {
       >
         Remove
       </button>
-      <img src={props.src} alt={"avt"} className="w-full h-full" />
+      <img src={props.src} alt={"avt"} className="object-contain" />
     </div>
   );
 };

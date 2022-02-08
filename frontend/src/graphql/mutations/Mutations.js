@@ -51,3 +51,35 @@ export const RESET_PASSWORD_MUTATION = gql`
     }
   }
 `;
+
+export const EDIT_PROFILE_MUTATION = gql`
+  mutation editUser(
+    $city: String!
+    $province: String!
+    $dob: String!
+    $sex: String!
+    $genderPref: String!
+    $hobbies: [String]!
+    $bio: String!
+    $distance: Int!
+    $minAge: Int!
+    $maxAge: Int!
+  ) {
+    editUser(
+      city: $city
+      province: $province
+      dob: $dob
+      sex: $sex
+      genderPref: $genderPref
+      hobbies: $hobbies
+      bio: $bio
+      distance: $distance
+      minAge: $minAge
+      maxAge: $maxAge
+    ) {
+      code
+      success
+      message
+    }
+  }
+`;
