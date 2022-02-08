@@ -1,4 +1,67 @@
-const queries = {};
+const { distanceTo } = require("geolocation-utils");
+
+const MatchStatus = require("../../enum/MatchStatus");
+const { MatchAge } = require("../../../lib/age");
+
+const queries = {
+  getPotentialPartners: async (
+    _,
+    args,
+    { dataSources, req, userAuthentication }
+  ) => {
+    userAuthentication(req.user);
+
+    const { userId } = req.user;
+    const { offset, limit } = args;
+    const { docs } = await dataSources.PotentialMatchAPI.findByUserId(
+      userId,
+      offset,
+      limit
+    );
+
+    const findPartnerIndex = (match) => {
+      const userIndex = match.pairID.findIndex(
+        (user) => user._id.toString() === userId
+      );
+
+      return 1 - userIndex;
+    };
+    const getPartnerCardInfo = (match) => {
+      const partnerIndex = findPartnerIndex(match);
+      const user = match.pairID[1 - partnerIndex];
+      let partner = match.pairID[partnerIndex];
+
+      partner.id = partner._id;
+      partner.age = MatchAge.calculateAge(partner.dob.toISOString());
+      partner.distance = Math.ceil(
+        distanceTo(
+          { lat: user.location.latitude, lon: user.location.longitude },
+          { lat: partner.location.latitude, lon: partner.location.longitude }
+        ) / 1000
+      );
+
+      delete partner._id;
+      delete partner.dob;
+      delete partner.location;
+
+      return partner;
+    };
+    const isRejectedPair = (match) =>
+      !match.status.includes(MatchStatus.REJECTED);
+    const isLikedByPartner = (match) => {
+      const partnerIndex = findPartnerIndex(match);
+
+      return match.status[partnerIndex] === MatchStatus.LIKED ? 1 : -1;
+    };
+
+    const potentialPartners = docs
+      .filter(isRejectedPair)
+      .sort(isLikedByPartner)
+      .map(getPartnerCardInfo);
+
+    return potentialPartners;
+  },
+};
 
 const mutations = {
   sendMatchRequest: async (
