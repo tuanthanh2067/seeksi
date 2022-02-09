@@ -7,6 +7,7 @@ const { Preference } = require("./Preference");
 const { Image } = require("./Image");
 const { AuthPayload } = require("./AuthPayload");
 const { Token } = require("./Token");
+const { Hobby } = require("./Hobby");
 
 const typeDefs = gql`
   ${interfaces.types}
@@ -21,6 +22,7 @@ const typeDefs = gql`
   type Query {
     ${User.queries}
     ${Token.queries}
+    ${Hobby.queries}
   }
   
   type Mutation {

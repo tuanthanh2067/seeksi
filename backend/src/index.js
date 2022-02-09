@@ -14,6 +14,7 @@ const middleware = require("./middleware/index");
 const dataSources = () => ({
   userAPI: new datasources.UserAPI(),
   tokenAPI: new datasources.TokenAPI(),
+  hobbyAPI: new datasources.HobbyAPI(),
 });
 
 Mongoose.connect(process.env.MONGODB_CONNECTION, {
