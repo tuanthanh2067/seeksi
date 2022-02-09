@@ -3,6 +3,7 @@ const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
 const express = require("express");
 const http = require("http");
 const Mongoose = require("mongoose");
+const cloudinary = require("cloudinary");
 
 require("dotenv").config();
 const { typeDefs, resolvers, datasources } = require("./graphql");
@@ -14,6 +15,12 @@ const middleware = require("./middleware/index");
 const dataSources = () => ({
   userAPI: new datasources.UserAPI(),
   tokenAPI: new datasources.TokenAPI(),
+});
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 Mongoose.connect(process.env.MONGODB_CONNECTION, {
