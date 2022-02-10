@@ -15,6 +15,7 @@ const middleware = require("./middleware/index");
 const dataSources = () => ({
   userAPI: new datasources.UserAPI(),
   tokenAPI: new datasources.TokenAPI(),
+  hobbyAPI: new datasources.HobbyAPI(),
 });
 
 cloudinary.config({
