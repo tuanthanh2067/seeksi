@@ -37,9 +37,8 @@ module.exports.auth = (req) => {
   return auth;
 };
 
-module.exports.isAuthenticated = (user) => {
+module.exports.userAuthentication = (user) => {
   if (!user.isAuth) {
     throw new AuthenticationError("User is not authenticated");
   }
-  return true;
 };
