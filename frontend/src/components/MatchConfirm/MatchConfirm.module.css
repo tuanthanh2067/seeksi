@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css?family=Righteous");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat");
+
+#match {
+  display: hidden;
+}
+
+.neons {
+  margin-top: 15vh;
+  margin-bottom: 20vh;
+  text-align: center;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  z-index: 100;
+}
+
+.overlay {
+  height: 65vh;
+  width: 100vw;
+  background-blend-mode: overlay;
+  background-color: white;
+  opacity: 80%;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success {
+  color: #fff;
+  text-shadow: 0 0 10px #f06c9b;
+  font-size: 3rem;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Righteous";
+  /* -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate; */
+  animation: glow 1.3s ease-in-out infinite, zoom 1.3s ease-in-out;
+}
+
+.error {
+  color: black;
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+  font-family: "Montserrat", "sans-serif";
+  animation: zoom 0.5s ease-in-out;
+}
+
+@keyframes glow {
+  0% {
+    color: #fff;
+    text-shadow: 0 0 10px #ff3f82, 0 0 40px #ff3f82, 0 0 50px #ff3f82,
+      0 0 60px #ff3f82, 0 0 70px #ff3f82, 0 0 80px #ff3f82, 0 0 90px #ff3f82,
+      0 1 95px #ff3f82;
+  }
+
+  50% {
+    /* color: #fff; */
+    text-shadow: 0 0 20px #ff3f82, 0 0 30px #ff3f82, 0 0 40px #ff3f82,
+      0 0 50px #ff3f82, 0 0 60px #ff3f82, 0 0 70px #ff3f82, 0 0 80px #ff3f82,
+      0 0 90px #ff3f82;
+  }
+
+  100% {
+    color: #fff;
+    text-shadow: 0 0 30px #ff3f82, 0 0 40px #ff3f82, 0 0 50px #ff3f82,
+      0 0 60px #ff3f82, 0 0 70px #ff3f82, 0 0 80px #ff3f82, 0 0 90px #ff3f82,
+      0 1 95px #ff3f82;
+  }
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
