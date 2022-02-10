@@ -49,7 +49,7 @@ const mutations = {
 
     const user = await dataSources.userAPI.setUserLocation(
       args,
-      req.user.userID
+      req.user.userId
     );
 
     return user;
