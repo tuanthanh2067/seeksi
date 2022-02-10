@@ -51,6 +51,7 @@ function isCompatibleByGenderPreference(user, partner) {
   if (partPrefGender.indexOf(user.sex) < 0) {
     return false;
   }
+  return true;
 }
 
 module.exports = {
