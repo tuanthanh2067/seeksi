@@ -5,7 +5,6 @@ const {
   AuthenticationError,
 } = require("apollo-server-core");
 const bcrypt = require("bcryptjs");
-require("dotenv").config();
 
 const User = require("../../schemas/User/User");
 
@@ -39,7 +38,11 @@ class UserAPI extends DataSource {
       console.log("There is no such user!");
     }
 
-    return user;
+    return {
+      ...user._doc,
+      password: null,
+      dob: user.dob.toISOString(),
+    };
   }
   //login function, if user credentials are valid, return jwt token
   async login(email, password) {
@@ -155,17 +158,16 @@ class UserAPI extends DataSource {
   }
 
   async getUserProfileById(userId) {
-    try {
-      const user = await User.findById(userId).exec();
-      if (user) {
-        user.password = "";
-        return user;
-      } else {
-        throw new UserInputError("user id not found");
-      }
-    } catch (err) {
-      console.log(err);
-      throw err;
+    const user = await User.findById(userId).exec();
+
+    if (user) {
+      return {
+        ...user._doc,
+        password: null,
+        dob: user.dob.toISOString(),
+      };
+    } else {
+      throw new UserInputError("User not found");
     }
   }
 }
