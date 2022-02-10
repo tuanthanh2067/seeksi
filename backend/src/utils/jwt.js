@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const createToken = (id, email, role) => {
   const payload = {
-    userID: id,
+    userId: id,
     email: email,
     role: role,
   };

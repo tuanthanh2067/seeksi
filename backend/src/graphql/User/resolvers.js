@@ -5,20 +5,20 @@ const queries = {
     return await dataSources.userAPI.findUserByEmail(args.email);
   },
 
-  me: async (_, args, { dataSources, req, isAuthenticated }) => {
-    if (!isAuthenticated(req.user)) {
-      throw new AuthenticationError("User is not authenticated");
-    }
+  me: async (_, args, { dataSources, req, userAuthentication }) => {
+    userAuthentication(req.user);
     return await dataSources.userAPI.findUserByEmail(req.user.email);
   },
 
   //returns user profile identified by the provided userId
-  getUserProfileById: async(_, args, {dataSources, req, isAuthenticated })=>{
-    if (!isAuthenticated(req.user)) {
-      throw new AuthenticationError("User is not authenticated");
-    }
+  getUserProfileById: async (
+    _,
+    args,
+    { dataSources, req, userAuthentication }
+  ) => {
+    userAuthentication(req.user);
     return dataSources.userAPI.getUserProfileById(args.userId);
-  }
+  },
 };
 
 const mutations = {
@@ -44,15 +44,15 @@ const mutations = {
     };
   },
 
-  setLocation: async (_, args, { dataSources, req, isAuthenticated }) => {
-    if (isAuthenticated(req.user)) {
-      const user = await dataSources.userAPI.setUserLocation(
-        args,
-        req.user.userID
-      );
+  setLocation: async (_, args, { dataSources, req, userAuthentication }) => {
+    userAuthentication(req.user);
 
-      return user;
-    }
+    const user = await dataSources.userAPI.setUserLocation(
+      args,
+      req.user.userId
+    );
+
+    return user;
   },
 };
 
