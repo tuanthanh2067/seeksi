@@ -94,7 +94,7 @@ describe("match gender preference test block", () => {
       },
     };
     partner = {
-      sex: "others",
+      sex: "female",
       preference: {
         gender: "female",
       },
@@ -117,6 +117,43 @@ describe("match gender preference test block", () => {
       },
     };
     expect(() => {
+      isCompatibleByGenderPreference(user, partner).toBe(true);
+    });
+  });
+
+  test("user's sex is equal to partner gender preference and vice versa", () => {
+    user = {
+      sex: "male",
+      preference: {
+        gender: "everyone",
+      },
+    };
+    partner = {
+      sex: "female",
+      preference: {
+        gender: "female",
+      },
+    };
+    expect(() => {
+      //eventhough user likes everyone, but female partner only wants female => false
+      isCompatibleByGenderPreference(user, partner).toBe(false);
+    });
+  });
+  test("user's sex is equal to partner gender preference and vice versa", () => {
+    user = {
+      sex: "male",
+      preference: {
+        gender: "everyone",
+      },
+    };
+    partner = {
+      sex: "female",
+      preference: {
+        gender: "everyone",
+      },
+    };
+    expect(() => {
+      //both want everyone so it should return true
       isCompatibleByGenderPreference(user, partner).toBe(true);
     });
   });

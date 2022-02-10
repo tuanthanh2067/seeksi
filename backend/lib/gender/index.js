@@ -1,4 +1,4 @@
-const MatchAge = require("./matchGender");
+const MatchGender = require("./matchGender");
 
 module.exports = {
   MatchGender,

@@ -11,7 +11,12 @@ const validatePassword = (password) => {
 };
 
 const validateSex = (sex) => {
-  return sex === "male" || sex === "female" || sex === "others";
+  //only make and female for sex
+  return sex === "male" || sex === "female";
+};
+
+const validateGenderPreference = (gender) => {
+  return sex === "male" || sex === "female" || sex === "everyone";
 };
 
 module.exports = {

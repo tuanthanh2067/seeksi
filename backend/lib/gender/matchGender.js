@@ -24,15 +24,33 @@ function isCompatibleByGenderPreference(user, partner) {
   if (!partner.preference.gender) {
     throw new Error("Partner's gender preference not found");
   }
+
+  const prefEveryone = ["male", "female"];
+  const userPrefGender = [];
+  const partPrefGender = [];
+
+  if (user.preference.gender === "everyone") {
+    userPrefGender = prefEveryone.slice();
+  } else {
+    userPrefGender[0] = user.preference.gender;
+  }
+  if (partner.preference.gender === "everyone") {
+    partPrefGender = prefEveryone.slice();
+  } else {
+    partPrefGender[0] = partner.preference.gender;
+  }
+
+  //best way to handle this is to use Exclusion method.
+  //this only checks if user sex is not in the list of partner gender preference and vice versa.
+
   //user pref gender must match partner sex
-  if (user.preference.gender !== partner.sex) {
+  if (userPrefGender.indexOf(partner.sex) < 0) {
     return false;
   }
   //user sex must match partner pref gender
-  if (user.sex !== partner.preference.gender) {
+  if (partPrefGender.indexOf(user.sex) < 0) {
     return false;
   }
-  return true;
 }
 
 module.exports = {
