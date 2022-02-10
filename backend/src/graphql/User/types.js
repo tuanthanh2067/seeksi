@@ -5,7 +5,7 @@ module.exports.types = `
     lastName: String!
     email: String!
     bio: String
-    password: String!
+    password: String
     dob: String!
     sex: String!
     location: Location

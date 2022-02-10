@@ -11,11 +11,7 @@ const queries = {
   },
 
   //returns user profile identified by the provided userId
-  getUserProfileById: async (
-    _,
-    args,
-    { dataSources, req, userAuthentication }
-  ) => {
+  userById: async (_, args, { dataSources, req, userAuthentication }) => {
     userAuthentication(req.user);
     return dataSources.userAPI.getUserProfileById(args.userId);
   },
