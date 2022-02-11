@@ -1,6 +1,6 @@
-const { queries } = require("./queries.js");
-const { mutations } = require("./mutations.js.js");
-const { resolvers } = require("./resolvers.js");
+const { queries } = require("./queries");
+const { mutations } = require("./mutations");
+const { resolvers } = require("./resolvers");
 const { types } = require("./types");
 const { PotentialMatchAPI } = require("./datasource");
 

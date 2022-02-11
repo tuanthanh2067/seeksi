@@ -8,6 +8,7 @@ const { Image } = require("./Image");
 const { AuthPayload } = require("./AuthPayload");
 const { Token } = require("./Token");
 const { Hobby } = require("./Hobby");
+const { PotentialMatch } = require("./PotentialMatch");
 
 const typeDefs = gql`
   ${interfaces.types}
@@ -18,16 +19,19 @@ const typeDefs = gql`
   ${Image.types}
   ${AuthPayload.types}
   ${Token.types}
+  ${PotentialMatch.types}
   
   type Query {
     ${User.queries}
     ${Token.queries}
     ${Hobby.queries}
+    ${PotentialMatch.queries}
   }
   
   type Mutation {
     ${User.mutations}
     ${Token.mutations}
+    ${PotentialMatch.mutations}
   }
 `;
 
