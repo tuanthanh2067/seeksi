@@ -67,88 +67,83 @@ const ProfilePage = () => {
       )}
 
       {!loading && data && (
-        <main>
-          <section>
-            <div className="container mx-auto px-4 py-5 sm:p-5">
-              <div className="grid grid-cols-3 gap-5">
-                <div className="w-52 h-52 justify-self-center overflow-hidden rounded-full">
-                  <img
-                    src={data.userById.avatar.medium}
-                    alt="user avatar"
-                    className="object-contain"
-                  />
-                </div>
-                <div className="col-span-2 h-52 self-center flex flex-col justify-between">
-                  <div className="block text-lg">
-                    <p className="text-2xl text-primary font-bold">
-                      {data.userById.firstName} {data.userById.lastName}
-                    </p>
-                    <div className="flex gap-16 mt-2">
-                      <div className="flex gap-2">
-                        <div className="w-6 h-6">
-                          <img src={AgeLogo} alt="age logo" />
-                        </div>
-                        <p>{getAge(data.userById.dob)}</p>
+        <main className="mt-16">
+          <section className="container mx-auto px-4 py-5 sm:p-5">
+            <div className="flex flex-col lg:flex-row items-center justify-evenly">
+              <div className="w-36 h-36 sm:w-48 sm:h-48 overflow-hidden rounded-full">
+                <img
+                  src={data.userById.avatar.medium}
+                  alt="user avatar"
+                  className="object-contain"
+                />
+              </div>
+              <div className="mt-4 lg:mt-0">
+                <div className="flex flex-col items-center justify-center lg:items-start">
+                  <p className="text-lg text-primary font-bold">
+                    {data.userById.firstName} {data.userById.lastName}
+                  </p>
+                  <div className="grid grid-cols-3 w-full justify-items-center sm:justify-items-start mt-4 lg:mt-2">
+                    <div className="flex items-center justify-center">
+                      <div className="w-6 h-6 mr-1">
+                        <img src={AgeLogo} alt="age logo" />
                       </div>
-                      <div className="flex gap-2">
-                        <div className="w-6 h-6">
-                          <img src={GenderLogo} alt="gender logo" />
-                        </div>
-                        <p>{capitalizeFirstLetter(data.userById.sex)}</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <div className="w-6 h-6 flex justify-center">
-                          <img src={LocationLogo} alt="location logo" />
-                        </div>
-                        <p>
-                          {data.userById.location.city},{" "}
-                          {data.userById.location.province}
-                        </p>
-                      </div>
+                      <p>{getAge(data.userById.dob)}</p>
                     </div>
-                    <p className="mt-2">
-                      <span className="font-bold">Hobbies: </span>
-                      {data.userById.hobbies.join(", ")}
-                    </p>
-                    <p className="mt-2">{data.userById.bio}</p>
+                    <div className="flex items-center justify-center">
+                      <div className="w-6 h-6">
+                        <img src={GenderLogo} alt="gender logo" />
+                      </div>
+                      <p>{capitalizeFirstLetter(data.userById.sex)}</p>
+                    </div>
+                    <div className="flex items-center justify-center">
+                      <div className="w-6 h-6 mr-1">
+                        <img src={LocationLogo} alt="location logo" />
+                      </div>
+                      <p>
+                        {data.userById.location.city},{" "}
+                        {data.userById.location.province}
+                      </p>
+                    </div>
                   </div>
-                  {currentUserID === id && (
-                    <RoundedButton
-                      btnName="Edit Profile"
-                      bgColor={"bg-secondary"}
-                      borderColor={"border-secondary"}
-                      fontSize={"text-lg"}
-                      paddingLR={"px-6 w-2/3"}
-                      hover={
-                        "hover:bg-white hover:text-secondary hover:border-secondary"
-                      }
-                      handleClick={handleClick}
-                    />
-                  )}
+                  <p className="mt-4 lg:mt-2">
+                    <span className="font-bold">Hobbies: </span>
+                    {data.userById.hobbies.join(", ")}
+                  </p>
+                  <p className="mt-4 lg:mt-2">{data.userById.bio}</p>
                 </div>
+                {currentUserID === id && (
+                  <RoundedButton
+                    btnName="Edit Profile"
+                    bgColor={"bg-secondary"}
+                    borderColor={"border-secondary"}
+                    fontSize={"text-lg text-center"}
+                    paddingLR={"px-6 w-full"}
+                    paddingTB={"py-1 mt-4 lg:mt-2"}
+                    hover={
+                      "hover:bg-white hover:text-secondary hover:border-secondary"
+                    }
+                    handleClick={handleClick}
+                  />
+                )}
               </div>
             </div>
           </section>
-          <section className="mt-20">
-            <div className="container mx-auto py-5 md:p-5">
-              <LightGallery
-                speed={500}
-                plugins={[lgZoom]}
-                elementClassNames="grid grid-cols-3 gap-y-7"
-              >
-                {data.userById.photo.map((pic, key) => (
-                  <a
-                    href={`${pic.large}`}
-                    className="block justify-self-center w-80 h-80"
-                  >
-                    <img
-                      src={`${pic.large}`}
-                      className="object-cover object-center"
-                    />
-                  </a>
-                ))}
-              </LightGallery>
-            </div>
+          <section className="container mx-auto mt-16 px-5">
+            <LightGallery
+              speed={500}
+              plugins={[lgZoom]}
+              elementClassNames="grid grid-cols-2 sm:grid-cols-3 gap-2"
+            >
+              {data.userById.photo.map((pic, key) => (
+                <a href={`${pic.large}`} className="block justify-self-center">
+                  <img
+                    src={`${pic.large}`}
+                    className="object-cover object-center"
+                    alt=""
+                  />
+                </a>
+              ))}
+            </LightGallery>
           </section>
         </main>
       )}
