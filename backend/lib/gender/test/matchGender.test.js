@@ -1,7 +1,7 @@
 const { isCompatibleByGenderPreference } = require("../matchGender");
 
 describe("match gender preference test block", () => {
-  test("user's gender not found", () => {
+  test("user's sex not found", () => {
     user = {
       sex: "",
       preference: {
@@ -16,7 +16,7 @@ describe("match gender preference test block", () => {
     };
     expect(() => {
       isCompatibleByGenderPreference(user, partner);
-    }).toThrow(/User's gender not found/);
+    }).toThrow(/User's sex not found/);
   });
   test("partner's gender not found", () => {
     user = {
@@ -33,7 +33,7 @@ describe("match gender preference test block", () => {
     };
     expect(() => {
       isCompatibleByGenderPreference(user, partner);
-    }).toThrow(/Partner's gender not found/);
+    }).toThrow(/Partner's sex not found/);
   });
   test("user's gender preference not found", () => {
     user = {
@@ -69,7 +69,7 @@ describe("match gender preference test block", () => {
       isCompatibleByGenderPreference(user, partner);
     }).toThrow(/Partner's gender preference not found/);
   });
-  test("user's gender preference is not equal to partner sex", () => {
+  test("a female user that prefers male should not match a female partner that prefers female", () => {
     user = {
       sex: "female",
       preference: {
@@ -82,11 +82,9 @@ describe("match gender preference test block", () => {
         gender: "female",
       },
     };
-    expect(() => {
-      isCompatibleByGenderPreference(user, partner).toBe(false);
-    });
+    expect(isCompatibleByGenderPreference(user, partner)).toBe(false);
   });
-  test("user's sex is not equal to partner gender preference", () => {
+  test("a male user that prefers male should not match a female partner that prefers female", () => {
     user = {
       sex: "male",
       preference: {
@@ -99,11 +97,9 @@ describe("match gender preference test block", () => {
         gender: "female",
       },
     };
-    expect(() => {
-      isCompatibleByGenderPreference(user, partner).toBe(false);
-    });
+    expect(isCompatibleByGenderPreference(user, partner)).toBe(false);
   });
-  test("user's sex is equal to partner gender preference and vice versa", () => {
+  test("a male user that prefers female should match a female partner that prefers male", () => {
     user = {
       sex: "male",
       preference: {
@@ -116,12 +112,10 @@ describe("match gender preference test block", () => {
         gender: "male",
       },
     };
-    expect(() => {
-      isCompatibleByGenderPreference(user, partner).toBe(true);
-    });
+    expect(isCompatibleByGenderPreference(user, partner)).toBe(true);
   });
 
-  test("user's sex is equal to partner gender preference and vice versa", () => {
+  test("a male user that prefers everyone should not match a female partner that prefers female", () => {
     user = {
       sex: "male",
       preference: {
@@ -134,12 +128,10 @@ describe("match gender preference test block", () => {
         gender: "female",
       },
     };
-    expect(() => {
-      //eventhough user likes everyone, but female partner only wants female => false
-      isCompatibleByGenderPreference(user, partner).toBe(false);
-    });
+    //eventhough user likes everyone, but female partner only wants female => false
+    expect(isCompatibleByGenderPreference(user, partner)).toBe(false);
   });
-  test("user's sex is equal to partner gender preference and vice versa", () => {
+  test("both prefer everyone should match", () => {
     user = {
       sex: "male",
       preference: {
@@ -152,9 +144,7 @@ describe("match gender preference test block", () => {
         gender: "everyone",
       },
     };
-    expect(() => {
-      //both want everyone so it should return true
-      isCompatibleByGenderPreference(user, partner).toBe(true);
-    });
+    //both want everyone so it should return true
+    expect(isCompatibleByGenderPreference(user, partner)).toBe(true);
   });
 });

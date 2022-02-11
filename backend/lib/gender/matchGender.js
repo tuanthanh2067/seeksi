@@ -8,33 +8,36 @@
  * @returns {Boolean}
  */
 
+const MatchGenderEnum = require("../../src/enum/MatchGender");
+
 function isCompatibleByGenderPreference(user, partner) {
   //checks if user gender is set
-  if (!user.sex) {
-    throw new Error("User's gender not found");
+  console.log("user:" + user.sex + " partner: " + partner.sex);
+  if (!Object.values(MatchGenderEnum).includes(user.sex)) {
+    throw new Error("User's sex not found");
   }
-  if (!partner.sex) {
-    throw new Error("Partner's gender not found");
+  if (!Object.values(MatchGenderEnum).includes(partner.sex)) {
+    throw new Error("Partner's sex not found");
   }
   //checks if user gender preference is set
-  if (!user.preference.gender) {
+  if (!Object.values(MatchGenderEnum).includes(user.preference.gender)) {
     throw new Error("User's gender preference not found");
   }
 
-  if (!partner.preference.gender) {
+  if (!Object.values(MatchGenderEnum).includes(partner.preference.gender)) {
     throw new Error("Partner's gender preference not found");
   }
 
-  const prefEveryone = ["male", "female"];
-  const userPrefGender = [];
-  const partPrefGender = [];
+  const prefEveryone = [MatchGenderEnum.MALE, MatchGenderEnum.FEMALE];
+  let userPrefGender = [];
+  let partPrefGender = [];
 
-  if (user.preference.gender === "everyone") {
+  if (user.preference.gender === MatchGenderEnum.EVERYONE) {
     userPrefGender = prefEveryone.slice();
   } else {
     userPrefGender[0] = user.preference.gender;
   }
-  if (partner.preference.gender === "everyone") {
+  if (partner.preference.gender === MatchGenderEnum.EVERYONE) {
     partPrefGender = prefEveryone.slice();
   } else {
     partPrefGender[0] = partner.preference.gender;
@@ -43,11 +46,11 @@ function isCompatibleByGenderPreference(user, partner) {
   //best way to handle this is to use Exclusion method.
   //this only checks if user sex is not in the list of partner gender preference and vice versa.
 
-  //user pref gender must match partner sex
+  //user pref gender list must include partner sex
   if (userPrefGender.indexOf(partner.sex) < 0) {
     return false;
   }
-  //user sex must match partner pref gender
+  //user sex must be in the list of partner pref gender
   if (partPrefGender.indexOf(user.sex) < 0) {
     return false;
   }
