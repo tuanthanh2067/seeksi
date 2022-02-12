@@ -1,8 +1,8 @@
 db = new Mongo().getDB("seeksi");
 
-db.createCollection("opening_lines", { capped: false });
+db.createCollection("openinglines", { capped: false });
 
-db.opening_lines.insertMany([
+db.openinglines.insertMany([
   {
     _id: ObjectId("61e7615afc13ae336b000014"),
     content:
