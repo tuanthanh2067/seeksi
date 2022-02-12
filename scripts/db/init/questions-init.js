@@ -1,6 +1,6 @@
 db = new Mongo().getDB("seeksi");
 
-db.createCollection("Questions", { capped: false });
+db.createCollection("questions", { capped: false });
 
 db.questions.insertMany([
   {

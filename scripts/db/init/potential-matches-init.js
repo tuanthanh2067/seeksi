@@ -1,8 +1,8 @@
 db = new Mongo().getDB("seeksi");
 
-db.createCollection("PotentialMatches", { capped: false });
+db.createCollection("potentialmatches", { capped: false });
 
-db.potential_matches.insertMany([
+db.potentialmatches.insertMany([
   {
     _id: ObjectId("6207fbf8f0323933be000010"),
     pairID: [

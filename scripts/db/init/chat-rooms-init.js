@@ -1,8 +1,8 @@
 db = new Mongo().getDB("seeksi");
 
-db.createCollection("ChatRooms", { capped: false });
+db.createCollection("chatrooms", { capped: false });
 
-db.chat_rooms.insertMany([
+db.chatrooms.insertMany([
   {
     _id: ObjectId("62080f1ff0323933be00006e"),
     pairID: [

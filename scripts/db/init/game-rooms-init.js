@@ -1,8 +1,8 @@
 db = new Mongo().getDB("seeksi");
 
-db.createCollection("GameRooms", { capped: false });
+db.createCollection("gamerooms", { capped: false });
 
-db.game_rooms.insertMany([
+db.gamerooms.insertMany([
   {
     _id: ObjectId("62080553f0323933be000029"),
     question: [
