@@ -1,6 +1,6 @@
 db = new Mongo().getDB("seeksi");
 
-db.createCollection("hobbies", { capped: false });
+db.createCollection("Hobbies", { capped: false });
 
 db.hobbies.insertMany([
   { _id: ObjectId("61e7611efc13ae17de0004ba"), name: "Tapestry" },
