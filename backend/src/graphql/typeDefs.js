@@ -9,6 +9,8 @@ const { AuthPayload } = require("./AuthPayload");
 const { Token } = require("./Token");
 const { Hobby } = require("./Hobby");
 const { PotentialMatch } = require("./PotentialMatch");
+const { Match } = require("./Match");
+const { ChatRoom } = require("./ChatRoom");
 
 const typeDefs = gql`
   ${interfaces.types}
@@ -20,18 +22,24 @@ const typeDefs = gql`
   ${AuthPayload.types}
   ${Token.types}
   ${PotentialMatch.types}
+  ${Match.types}
+  ${ChatRoom.types}
   
   type Query {
     ${User.queries}
     ${Token.queries}
     ${Hobby.queries}
     ${PotentialMatch.queries}
+    ${Match.queries}
+    ${ChatRoom.queries}
   }
   
   type Mutation {
     ${User.mutations}
     ${Token.mutations}
     ${PotentialMatch.mutations}
+    ${Match.queries}
+    ${ChatRoom.queries}
   }
 `;
 

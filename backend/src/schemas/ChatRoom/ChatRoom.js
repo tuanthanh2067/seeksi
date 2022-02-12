@@ -6,7 +6,8 @@ const { messageHistorySchema } = require("./MessageHistory");
 
 const chatRoomSchema = new Schema({
   pairID: {
-    type: [String],
+    type: [Schema.Types.ObjectId],
+    ref: "Users",
   },
   history: {
     type: messageHistorySchema,
@@ -16,6 +17,7 @@ const chatRoomSchema = new Schema({
   },
   isDisabled: {
     type: Boolean,
+    default: false,
   },
 });
 

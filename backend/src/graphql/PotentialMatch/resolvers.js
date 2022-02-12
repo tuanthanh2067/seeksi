@@ -6,17 +6,47 @@ const mutations = {
     args,
     { dataSources, req, userAuthentication }
   ) => {
-    userAuthentication(req.user);
+    try {
+      userAuthentication(req.user);
 
-    const fromId = req.user.userId;
-    const toId = args.id;
+      const fromId = req.user.userId;
+      const toId = args.id;
 
-    const result = await dataSources.PotentialMatchAPI.sendMatchRequestTo(
-      fromId,
-      toId
-    );
+      const potentialMatch =
+        await dataSources.PotentialMatchAPI.sendMatchRequestTo(fromId, toId);
 
-    return result;
+      if (
+        dataSources.PotentialMatchAPI.isMatched(
+          potentialMatch.status[0],
+          potentialMatch.status[1]
+        )
+      ) {
+        const userId = potentialMatch.pairID[0].toString();
+        const partnerId = potentialMatch.pairID[1].toString();
+
+        // create a chat room
+        const { id } = await dataSources.ChatRoomAPI.createChatRoom(
+          userId,
+          partnerId
+        );
+
+        // create a match
+        await dataSources.MatchAPI.createMatch(userId, partnerId, id);
+
+        return {
+          success: true,
+          message: "It's a match",
+        };
+      }
+
+      return {
+        success: true,
+        message: "Liked",
+      };
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   },
 };
 

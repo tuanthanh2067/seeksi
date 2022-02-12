@@ -10,6 +10,11 @@ class PotentialMatchAPI extends DataSource {
     super();
   }
 
+  async isMatched(s1, s2) {
+    if (s1 === MatchStatus.LIKED && s2 === MatchStatus.LIKED) return true;
+    return false;
+  }
+
   async sendMatchRequestTo(fromId, toId) {
     try {
       const pairID = [
@@ -27,10 +32,8 @@ class PotentialMatchAPI extends DataSource {
       potentialMatch.status[index] = MatchStatus.LIKED;
 
       await potentialMatch.save();
-      return {
-        success: true,
-        message: "Liked",
-      };
+
+      return potentialMatch;
     } catch (err) {
       console.error(err);
       return {
