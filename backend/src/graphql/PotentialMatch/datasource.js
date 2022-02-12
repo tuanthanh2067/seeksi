@@ -39,6 +39,36 @@ class PotentialMatchAPI extends DataSource {
       throw new ApolloError("Internal Server Error");
     }
   }
+
+  async sendRejectRequestTo(fromId, toId) {
+    try {
+      const pairID = [
+        mongoose.Types.ObjectId(fromId),
+        mongoose.Types.ObjectId(toId),
+      ];
+      const potentialMatch = await PotentialMatch.findOne({
+        pairID: { $all: pairID },
+      });
+
+      const index = potentialMatch.pairID.indexOf(
+        `${mongoose.Types.ObjectId(fromId)}`
+      );
+
+      potentialMatch.status[index] = MatchStatus.REJECTED;
+
+      await potentialMatch.save();
+      return {
+        success: true,
+        message: "Passed",
+      };
+    } catch (err) {
+      console.error(err);
+      return {
+        success: false,
+        message: "Internal server error",
+      };
+    }
+  }
 }
 
 module.exports.PotentialMatchAPI = PotentialMatchAPI;

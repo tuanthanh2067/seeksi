@@ -48,6 +48,24 @@ const mutations = {
       throw err;
     }
   },
+
+  sendRejectRequest: async (
+    _,
+    args,
+    { dataSources, req, userAuthentication }
+  ) => {
+    userAuthentication(req.user);
+
+    const fromId = req.user.userId;
+    const toId = args.id;
+
+    const result = await dataSources.PotentialMatchAPI.sendRejectRequestTo(
+      fromId,
+      toId
+    );
+
+    return result;
+  },
 };
 
 module.exports.resolvers = {
