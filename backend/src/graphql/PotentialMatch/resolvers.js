@@ -13,10 +13,10 @@ const mutations = {
       const toId = args.id;
 
       const potentialMatch =
-        await dataSources.PotentialMatchAPI.sendMatchRequestTo(fromId, toId);
+        await dataSources.potentialMatchAPI.sendMatchRequestTo(fromId, toId);
 
       if (
-        dataSources.PotentialMatchAPI.isMatched(
+        dataSources.potentialMatchAPI.isMatched(
           potentialMatch.status[0],
           potentialMatch.status[1]
         )
@@ -25,13 +25,13 @@ const mutations = {
         const partnerId = potentialMatch.pairID[1].toString();
 
         // create a chat room
-        const { id } = await dataSources.ChatRoomAPI.createChatRoom(
+        const { id } = await dataSources.chatRoomAPI.createChatRoom(
           userId,
           partnerId
         );
 
         // create a match
-        await dataSources.MatchAPI.createMatch(userId, partnerId, id);
+        await dataSources.matchAPI.createMatch(userId, partnerId, id);
 
         return {
           success: true,
@@ -60,7 +60,7 @@ const mutations = {
       const fromId = req.user.userId;
       const toId = args.id;
 
-      const result = await dataSources.PotentialMatchAPI.sendRejectRequestTo(
+      const result = await dataSources.potentialMatchAPI.sendRejectRequestTo(
         fromId,
         toId
       );
