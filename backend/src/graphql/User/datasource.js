@@ -5,6 +5,7 @@ const {
   AuthenticationError,
 } = require("apollo-server-core");
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 
 const User = require("../../schemas/User/User");
 
@@ -168,6 +169,22 @@ class UserAPI extends DataSource {
       };
     } else {
       throw new UserInputError("User not found");
+    }
+  }
+
+  async deleteAccountById(userId) {
+    try {
+      const user = await User.findById(userId).exec();
+
+      if (user) {
+        user.isDisabled = true;
+      } else {
+        throw new Error("User doesn't exist");
+      }
+      await user.save();
+    } catch (err) {
+      console.error(err);
+      throw new ApolloError("Internal server error");
     }
   }
 }

@@ -1,5 +1,9 @@
 const { AuthenticationError } = require("apollo-server-core");
 
+const mongoose = require("mongoose");
+
+const PotentialMatch = require("../../schemas/PotentialMatch/PotentialMatch");
+
 const queries = {
   userByEmail: async (_, args, { dataSources }) => {
     return await dataSources.userAPI.findUserByEmail(args.email);
@@ -49,6 +53,23 @@ const mutations = {
     );
 
     return user;
+  },
+
+  deleteAccount: async (_, args, { dataSources, req, userAuthentication }) => {
+    try {
+      userAuthentication(req.user);
+
+      await dataSources.userAPI.deleteAccountById(req.user.userId);
+
+      await dataSources.PotentialMatchAPI.deleteByUserId(req.user.userId);
+
+      return {
+        success: true,
+        message: "Account Deleted",
+      };
+    } catch (err) {
+      throw err;
+    }
   },
 };
 

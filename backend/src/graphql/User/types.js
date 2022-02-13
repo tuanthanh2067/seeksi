@@ -17,4 +17,9 @@ module.exports.types = `
     isDisabled: Boolean
     createdAt: String
   }
+
+  type DeleteUserResponse implements MutationResponse {
+    success: Boolean!
+    message: String!
+  }
 `;
