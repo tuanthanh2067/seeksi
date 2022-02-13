@@ -13,14 +13,11 @@ const validatePassword = (password) => {
 };
 
 const validateSex = (sex) => {
-  //only make and female for sex
-  console.log("validate Sex" + Object.values(MatchGender).includes(sex));
-  return Object.keys(MatchGender).includes(sex);
+  return Object.values(MatchGender).includes(sex);
 };
 
 const validateGenderPreference = (gender) => {
-  console.log("validate gender" + Object.values(MatchGender).includes(sex));
-  return Object.keys(MatchGender).includes(sex);
+  return Object.values(MatchGender).includes(sex);
 };
 
 module.exports = {
