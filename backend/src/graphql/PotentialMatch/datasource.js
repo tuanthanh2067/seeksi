@@ -4,10 +4,15 @@ const mongoose = require("mongoose");
 const PotentialMatch = require("../../schemas/PotentialMatch/PotentialMatch");
 
 const MatchStatus = require("../../enum/MatchStatus");
+const { ApolloError } = require("apollo-server-core");
 
 class PotentialMatchAPI extends DataSource {
   constructor() {
     super();
+  }
+
+  async isMatched(s1, s2) {
+    return s1 === MatchStatus.LIKED && s2 === MatchStatus.LIKED;
   }
 
   async sendMatchRequestTo(fromId, toId) {
@@ -27,16 +32,11 @@ class PotentialMatchAPI extends DataSource {
       potentialMatch.status[index] = MatchStatus.LIKED;
 
       await potentialMatch.save();
-      return {
-        success: true,
-        message: "Liked",
-      };
+
+      return potentialMatch;
     } catch (err) {
       console.error(err);
-      return {
-        success: false,
-        message: "Internal server error",
-      };
+      throw new ApolloError("Internal Server Error");
     }
   }
 }
