@@ -15,6 +15,17 @@ class PotentialMatchAPI extends DataSource {
     return s1 === MatchStatus.LIKED && s2 === MatchStatus.LIKED;
   }
 
+  async deleteByUserId(userId) {
+    try {
+      await PotentialMatch.deleteMany({
+        pairID: { $in: [mongoose.Types.ObjectId(userId)] },
+      });
+    } catch (err) {
+      console.error(err);
+      throw new ApolloError("Internal Server Error");
+    }
+  }
+
   async sendMatchRequestTo(fromId, toId) {
     try {
       const pairID = [

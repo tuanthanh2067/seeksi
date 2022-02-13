@@ -50,6 +50,23 @@ const mutations = {
 
     return user;
   },
+
+  deleteAccount: async (_, args, { dataSources, req, userAuthentication }) => {
+    try {
+      userAuthentication(req.user);
+
+      await dataSources.userAPI.deleteAccountById(req.user.userId);
+
+      await dataSources.PotentialMatchAPI.deleteByUserId(req.user.userId);
+
+      return {
+        success: true,
+        message: "Account Deleted",
+      };
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 
 module.exports.resolvers = {
