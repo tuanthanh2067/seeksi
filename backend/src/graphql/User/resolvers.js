@@ -67,6 +67,37 @@ const mutations = {
       throw err;
     }
   },
+
+  editUser: async (_, args, { dataSources, req, userAuthentication }) => {
+    try {
+      userAuthentication(req.user);
+      const userId = req.user.userId;
+      const editingUser = {
+        firstName: args.firstName,
+        lastName: args.lastName,
+        email: args.email,
+        password: args.newPassword,
+        city: args.city,
+        province: args.province,
+        dob: args.dob,
+        sex: args.sex,
+        genderPref: args.genderPref,
+        hobbies: [...args.hobbies],
+        bio: args.bio,
+      };
+      const updatedUser = await dataSources.userAPI.editUserById(
+        userId,
+        editingUser
+      );
+      return {
+        success: true,
+        message: "Profile updated",
+        user: updatedUser,
+      };
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 
 module.exports.resolvers = {

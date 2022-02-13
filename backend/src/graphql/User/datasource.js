@@ -186,6 +186,19 @@ class UserAPI extends DataSource {
       throw new ApolloError("Internal server error");
     }
   }
+
+  async editUserById(userId, updateUserObject) {
+    try {
+      const filter = { _id: userId };
+      let doc = await User.findOneAndUpdate(filter, updateUserObject, {
+        new: true,
+      });
+      return doc;
+    } catch (err) {
+      console.error(err);
+      throw new ApolloError("Edit user error????");
+    }
+  }
 }
 
 module.exports.UserAPI = UserAPI;
