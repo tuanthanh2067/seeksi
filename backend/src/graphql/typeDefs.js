@@ -38,8 +38,8 @@ const typeDefs = gql`
     ${User.mutations}
     ${Token.mutations}
     ${PotentialMatch.mutations}
-    ${Match.queries}
-    ${ChatRoom.queries}
+    ${Match.mutations}
+    ${ChatRoom.mutations}
   }
 `;
 

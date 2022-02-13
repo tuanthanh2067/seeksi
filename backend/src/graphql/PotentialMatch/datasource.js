@@ -11,8 +11,7 @@ class PotentialMatchAPI extends DataSource {
   }
 
   async isMatched(s1, s2) {
-    if (s1 === MatchStatus.LIKED && s2 === MatchStatus.LIKED) return true;
-    return false;
+    return s1 === MatchStatus.LIKED && s2 === MatchStatus.LIKED;
   }
 
   async sendMatchRequestTo(fromId, toId) {
