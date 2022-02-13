@@ -63,10 +63,7 @@ class PotentialMatchAPI extends DataSource {
       };
     } catch (err) {
       console.error(err);
-      return {
-        success: false,
-        message: "Internal server error",
-      };
+      throw new ApolloError("Internal Server Error");
     }
   }
 }

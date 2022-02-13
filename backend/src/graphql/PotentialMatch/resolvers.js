@@ -54,17 +54,22 @@ const mutations = {
     args,
     { dataSources, req, userAuthentication }
   ) => {
-    userAuthentication(req.user);
+    try {
+      userAuthentication(req.user);
 
-    const fromId = req.user.userId;
-    const toId = args.id;
+      const fromId = req.user.userId;
+      const toId = args.id;
 
-    const result = await dataSources.PotentialMatchAPI.sendRejectRequestTo(
-      fromId,
-      toId
-    );
+      const result = await dataSources.PotentialMatchAPI.sendRejectRequestTo(
+        fromId,
+        toId
+      );
 
-    return result;
+      return result;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   },
 };
 
