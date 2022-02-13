@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const { MatchGender } = require("../../enum/MatchGender");
+const MatchGender = require("../../enum/MatchGender");
 
 const preferenceSchema = new Schema({
   gender: {
