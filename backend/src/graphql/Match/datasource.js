@@ -1,4 +1,5 @@
 const { DataSource } = require("apollo-datasource");
+const { ApolloError } = require("apollo-server-core");
 
 const mongoose = require("mongoose");
 
@@ -25,6 +26,7 @@ class MatchAPI extends DataSource {
       return;
     } catch (err) {
       console.error(err);
+      throw new ApolloError("Internal Server Error");
     }
   }
 }

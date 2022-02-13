@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const PotentialMatch = require("../../schemas/PotentialMatch/PotentialMatch");
 
 const MatchStatus = require("../../enum/MatchStatus");
+const { ApolloError } = require("apollo-server-core");
 
 class PotentialMatchAPI extends DataSource {
   constructor() {
@@ -35,10 +36,7 @@ class PotentialMatchAPI extends DataSource {
       return potentialMatch;
     } catch (err) {
       console.error(err);
-      return {
-        success: false,
-        message: "Internal server error",
-      };
+      throw new ApolloError("Internal Server Error");
     }
   }
 }
