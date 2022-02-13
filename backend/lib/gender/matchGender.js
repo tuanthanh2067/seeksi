@@ -12,7 +12,6 @@ const MatchGenderEnum = require("../../src/enum/MatchGender");
 
 function isCompatibleByGenderPreference(user, partner) {
   //checks if user gender is set
-  console.log("user:" + user.sex + " partner: " + partner.sex);
   if (!Object.values(MatchGenderEnum).includes(user.sex)) {
     throw new Error("User's sex not found");
   }
