@@ -3,13 +3,16 @@ const { Schema } = mongoose;
 
 const matchSchema = new Schema({
   pairID: {
-    type: [String],
+    type: [Schema.Types.ObjectId],
+    ref: "Users",
   },
   isUnmatched: {
     type: Boolean,
+    default: false,
   },
   roomId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "ChatRooms",
   },
 });
 
