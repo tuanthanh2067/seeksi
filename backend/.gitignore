@@ -129,5 +129,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-#devcontainer
+#devcontainer, for local debugging, does not affect the project
 backend/.devcontainer/devcontainer.json
+.devcontainer/devcontainer.json

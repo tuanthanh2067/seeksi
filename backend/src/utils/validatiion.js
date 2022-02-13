@@ -1,3 +1,5 @@
+const MatchGender = require("../enum/MatchGender");
+
 const validateEmail = (email) => {
   return String(email)
     .toLowerCase()
@@ -11,11 +13,16 @@ const validatePassword = (password) => {
 };
 
 const validateSex = (sex) => {
-  return sex === "male" || sex === "female" || sex === "others";
+  return Object.values(MatchGender).includes(sex);
+};
+
+const validateGenderPreference = (gender) => {
+  return Object.values(MatchGender).includes(sex);
 };
 
 module.exports = {
   validateEmail,
   validatePassword,
   validateSex,
+  validateGenderPreference,
 };

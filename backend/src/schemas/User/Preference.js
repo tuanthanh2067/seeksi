@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
-
 const { Schema } = mongoose;
+
+const { MatchGender } = require("../../enum/MatchGender");
 
 const preferenceSchema = new Schema({
   gender: {
     type: String,
+    enum: [MatchGender.MALE, MatchGender.FEMALE, MatchGender.EVERYONE],
     required: true,
   },
   distance: {
