@@ -1,9 +1,5 @@
 const { AuthenticationError } = require("apollo-server-core");
 
-const mongoose = require("mongoose");
-
-const PotentialMatch = require("../../schemas/PotentialMatch/PotentialMatch");
-
 const queries = {
   userByEmail: async (_, args, { dataSources }) => {
     return await dataSources.userAPI.findUserByEmail(args.email);

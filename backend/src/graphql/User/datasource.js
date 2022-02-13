@@ -5,7 +5,6 @@ const {
   AuthenticationError,
 } = require("apollo-server-core");
 const bcrypt = require("bcryptjs");
-const mongoose = require("mongoose");
 
 const User = require("../../schemas/User/User");
 
