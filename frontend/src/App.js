@@ -45,8 +45,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/match" element={<Match />} />
-        {/* need to update the profile route to take user id as param */}
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/user/:id" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

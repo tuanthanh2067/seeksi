@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const MatchStatus  = require("../../enum/MatchStatus");
+const MatchStatus = require("../../enum/MatchStatus");
 
 const potentialMatch = new Schema({
   pairID: {
-    type: [String],
+    type: [Schema.Types.ObjectId],
+    ref: "Users",
   },
   matchScore: {
     type: Number,
@@ -13,7 +14,7 @@ const potentialMatch = new Schema({
   status: {
     type: [String],
     enum: [MatchStatus.PENDING, MatchStatus.LIKED, MatchStatus.REJECTED],
-    default: MatchStatus.PENDING
+    default: MatchStatus.PENDING,
   },
 });
 

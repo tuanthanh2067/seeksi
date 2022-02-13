@@ -1,9 +1,8 @@
 import { useState } from "react";
-
+import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 
 import RoundedButton from "../Buttons/RoundedButton";
-
 import LogoDark from "../../assets/logo_dark.png";
 
 const Navbar = () => {
@@ -12,6 +11,10 @@ const Navbar = () => {
   const handleNavbarOpen = () => {
     setNavbarOpen(!isNavbarOpen);
   };
+
+  const token = localStorage.getItem("token");
+  const decodedToken = jwt_decode(token);
+  const currentUserID = decodedToken.userId;
 
   return (
     <header className="bg-gradient-to-b from-[#F06C9B66]">
@@ -48,7 +51,7 @@ const Navbar = () => {
           } sm:flex items-center`}
         >
           <Link
-            to="/profile"
+            to={`/user/${currentUserID}`}
             className=" block text-primary font-semibold text-lg lg:text-xl hover:underline"
           >
             Profile
