@@ -15,4 +15,23 @@ module.exports.mutations = `
   setLocation(city: String, province: String, longitude: Float, latitude: Float): User
 
   deleteAccount: DeleteUserResponse
+
+
+  "edit user profile, avatar and photos will be processed differently"
+  editUser(
+    firstName: String,
+    lastName: String,
+    city: String,
+    province: String,
+    dob: String,
+    sex: String,
+    genderPref: String,
+    hobbies: [String],
+    bio: String,
+    distance: Int,
+    minAge: Int,
+    maxAge: Int,
+     ): EditUserResponse
+
+    
 `;

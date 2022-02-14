@@ -22,4 +22,12 @@ module.exports.types = `
     success: Boolean!
     message: String!
   }
+
+  "return type of editUser request"
+  type EditUserResponse{
+    code: Int!
+    success: Boolean!
+    message: [String]
+  }
+
 `;
