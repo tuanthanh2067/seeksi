@@ -75,25 +75,34 @@ const mutations = {
       const editingUser = {
         firstName: args.firstName,
         lastName: args.lastName,
-        email: args.email,
-        password: args.newPassword,
         city: args.city,
         province: args.province,
         dob: args.dob,
         sex: args.sex,
         genderPref: args.genderPref,
-        hobbies: [...args.hobbies],
+        hobbies: args.hobbies,
         bio: args.bio,
+        distance: args.distance,
+        minAge: args.minAge,
+        maxAge: args.maxAge,
       };
-      const updatedUser = await dataSources.userAPI.editUserById(
+      const errors = await dataSources.userAPI.editUserById(
         userId,
         editingUser
       );
-      return {
-        success: true,
-        message: "Profile updated",
-        user: updatedUser,
-      };
+      if (errors.length > 0) {
+        return {
+          code: 400,
+          success: false,
+          message: errors,
+        };
+      } else {
+        return {
+          code: 200,
+          success: true,
+          message: ["Profile updated"],
+        };
+      }
     } catch (err) {
       throw err;
     }

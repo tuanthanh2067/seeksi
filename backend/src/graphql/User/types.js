@@ -25,8 +25,9 @@ module.exports.types = `
 
   "return type of editUser request"
   type EditUserResponse{
+    code: Int!
     success: Boolean!
-    message: String!
-    user: User
+    message: [String]
   }
+
 `;
