@@ -102,6 +102,7 @@ class PotentialMatchAPI extends DataSource {
       const result = await User.paginate(
         {
           _id: { $ne: user._id },
+          isDisabled: { $ne: true },
         },
         options
       );
@@ -136,7 +137,7 @@ class PotentialMatchAPI extends DataSource {
 
   async findByUserId(userId, page) {
     const _id = mongoose.Types.ObjectId(userId);
-    const limit = process.env.POTENTIAL_PARTNER_LIMIT;
+    const limit = process.env.POTENTIAL_PARTNER_LIMIT || 10;
     const query = {
       pairID: { $in: [_id] },
     };
