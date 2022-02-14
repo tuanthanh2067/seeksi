@@ -1,10 +1,18 @@
 const { DataSource } = require("apollo-datasource");
+const { ApolloError } = require("apollo-server-core");
 const mongoose = require("mongoose");
 
 const PotentialMatch = require("../../schemas/PotentialMatch/PotentialMatch");
+const PotentialMatchStats = require("../../schemas/PotentialMatch/PotentialMatchStats");
+const User = require("../../schemas/User/User");
 
+const { MatchGender } = require("../../../lib/gender");
+const { MatchAge } = require("../../../lib/age");
+const { MatchDistance } = require("../../../lib/location");
+const { MatchScore } = require("../../../lib/score");
 const MatchStatus = require("../../enum/MatchStatus");
-const { ApolloError } = require("apollo-server-core");
+
+require("dotenv").config();
 
 class PotentialMatchAPI extends DataSource {
   constructor() {
@@ -78,32 +86,77 @@ class PotentialMatchAPI extends DataSource {
     }
   }
 
-  async createPotentialMatches(userId, offset, limit) {
-    console.log("Generate new potential matches");
-    // const user = await User.findById(userId);
-    // If user needs more potential matches:
-    // While other_users < 100:
-    // Fetch 100 users
-    // Find & create potential matches from 100 users
-    // Until 25 potential matches are found
-    // Stop
+  async createPotentialMatches(userId, size, stats) {
+    let hasNextPage = true;
+    let count = stats.prevCarryOver;
+    const user = await User.findById(userId);
+
+    while (hasNextPage && count < size) {
+      stats.prevUserPage += 1;
+
+      const options = {
+        page: stats.prevUserPage,
+        limit: size,
+      };
+
+      const result = await User.paginate(
+        {
+          _id: { $ne: user._id },
+        },
+        options
+      );
+
+      for (const partner of result.docs) {
+        const isCompatible =
+          MatchGender.isCompatibleByGenderPreference(user, partner) &&
+          MatchAge.isCompatibleByAge(user, partner) &&
+          MatchDistance.isCompatibleByDistance(user, partner);
+
+        if (isCompatible) {
+          const potentialMatch = new PotentialMatch({
+            pairID: [user._id, partner._id],
+            matchScore: MatchScore.calculateMatchScore({
+              user,
+              partner,
+              partnerStatus: MatchStatus.PENDING,
+            }),
+          });
+
+          await potentialMatch.save();
+
+          count += 1;
+        }
+      }
+
+      hasNextPage = result.hasNextPage;
+    }
+
+    stats.prevCarryOver = count - size;
   }
 
-  async findByUserId(userId, offset, limit) {
+  async findByUserId(userId, page) {
+    const _id = mongoose.Types.ObjectId(userId);
+    const limit = process.env.POTENTIAL_PARTNER_LIMIT;
     const query = {
-      pairID: { $in: [mongoose.Types.ObjectId(userId)] },
+      pairID: { $in: [_id] },
     };
     const options = {
-      offset,
+      page,
       limit,
     };
 
-    const result = await PotentialMatch.paginate(query, options);
+    let stats = await PotentialMatchStats.findOne({ userId: _id });
 
-    // If no potential match exists, create potential matches
-    if (result.totalDocs < limit) {
-      // TODO: Implement potential match generation
-      this.createPotentialMatches(userId, 0, 0);
+    if (!stats) {
+      stats = await PotentialMatchStats.create({
+        userId: _id,
+      });
+    }
+
+    if (stats.lastPage < page) {
+      await this.createPotentialMatches(userId, limit, stats);
+      stats.lastPage = page;
+      await stats.save();
     }
 
     return await PotentialMatch.paginate(query, {
@@ -125,7 +178,6 @@ class PotentialMatchAPI extends DataSource {
       sort: {
         matchScore: "desc",
       },
-      lean: true,
     });
   }
 }

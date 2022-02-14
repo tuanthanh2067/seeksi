@@ -12,11 +12,10 @@ const queries = {
     userAuthentication(req.user);
 
     const { userId } = req.user;
-    const { offset, limit } = args;
+    const { page } = args;
     const { docs } = await dataSources.PotentialMatchAPI.findByUserId(
       userId,
-      offset,
-      limit
+      page
     );
 
     const findPartnerIndex = (match) => {
@@ -31,7 +30,7 @@ const queries = {
       const user = match.pairID[1 - partnerIndex];
       let partner = match.pairID[partnerIndex];
 
-      partner.id = partner._id;
+      partner.id = partner._id.toString();
       partner.age = MatchAge.calculateAge(partner.dob.toISOString());
       partner.distance = Math.ceil(
         distanceTo(
