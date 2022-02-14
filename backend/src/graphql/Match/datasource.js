@@ -18,7 +18,7 @@ class MatchAPI extends DataSource {
 
       const match = new Match({
         pairID: [user, partner],
-        roomId: room,
+        roomID: room,
       });
 
       await match.save();

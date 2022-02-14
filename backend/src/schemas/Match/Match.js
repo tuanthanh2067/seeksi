@@ -10,7 +10,7 @@ const matchSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  roomId: {
+  roomID: {
     type: Schema.Types.ObjectId,
     ref: "ChatRooms",
   },
