@@ -1,7 +1,6 @@
-const { distanceTo } = require("geolocation-utils");
-
 const MatchStatus = require("../../enum/MatchStatus");
 const { MatchAge } = require("../../../lib/age");
+const { MatchDistance } = require("../../../lib/location");
 
 const queries = {
   getPotentialPartners: async (
@@ -13,7 +12,7 @@ const queries = {
 
     const { userId } = req.user;
     const { page } = args;
-    const { docs } = await dataSources.PotentialMatchAPI.findByUserId(
+    const { docs } = await dataSources.potentialMatchAPI.findByUserId(
       userId,
       page
     );
@@ -32,12 +31,7 @@ const queries = {
 
       partner.id = partner._id.toString();
       partner.age = MatchAge.calculateAge(partner.dob.toISOString());
-      partner.distance = Math.ceil(
-        distanceTo(
-          { lat: user.location.latitude, lon: user.location.longitude },
-          { lat: partner.location.latitude, lon: partner.location.longitude }
-        ) / 1000
-      );
+      partner.distance = MatchDistance.calculateDistance(user, partner);
 
       delete partner._id;
       delete partner.dob;
