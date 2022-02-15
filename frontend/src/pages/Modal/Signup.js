@@ -6,6 +6,8 @@ import Label from "../../components/Input/Label";
 import Radio from "../../components/Input/Radio";
 import { USER_REGISTER_MUTATION } from "../../graphql/mutations/Mutations";
 import { useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 const Signup = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -18,7 +20,8 @@ const Signup = (props) => {
   const [date, setDate] = useState("");
   const [year, setYear] = useState("");
   const [err, setErr] = useState("");
-  const [signup, { error }] = useMutation(USER_REGISTER_MUTATION);
+  const navigate = useNavigate();
+  const [signup] = useMutation(USER_REGISTER_MUTATION);
 
   const monthOptions = [
     { value: "January", label: "Jan" },
@@ -103,6 +106,8 @@ const Signup = (props) => {
         onCompleted: (data) => {
           localStorage.setItem("token", data.signup.token);
           props.handleShow();
+          const decodedToken = jwt_decode(data.signup.token);
+          navigate(`/user/${decodedToken.userId}`);
         },
       });
     }

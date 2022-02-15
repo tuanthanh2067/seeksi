@@ -57,7 +57,7 @@ const mutations = {
 
       await dataSources.userAPI.deleteAccountById(req.user.userId);
 
-      await dataSources.PotentialMatchAPI.deleteByUserId(req.user.userId);
+      await dataSources.potentialMatchAPI.deleteByUserId(req.user.userId);
 
       return {
         success: true,

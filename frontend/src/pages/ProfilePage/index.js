@@ -1,22 +1,26 @@
 import { useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Navbar from "../../components/Navbar/index";
-
+import defaultAvt from "../../assets/mock_avatar.png";
 import LightGallery from "lightgallery/react";
 import lgZoom from "lightgallery/plugins/zoom";
-import "lightgallery/css/lightgallery.css";
-import "lightgallery/css/lg-zoom.css";
-
 import AgeLogo from "../../assets/age_logo.png";
 import GenderLogo from "../../assets/gender_logo.png";
 import LocationLogo from "../../assets/location_logo.png";
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import Spinner from "../../components/Spinner/Spinner";
-
+import EditAvatar from "../../components/Image/EditAvatar";
+import OvalImage from "../../components/Image/OvalImage";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "../../graphql/queries/User";
+import React, { useState } from "react";
+import EditMode from "./EditMode/EditMode";
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
 
 const ProfilePage = () => {
+  const [editMode, setEditMode] = useState(false);
+  const [avt, setAvt] = useState("");
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const decodedToken = jwt_decode(token);
@@ -25,6 +29,18 @@ const ProfilePage = () => {
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { userId: id },
   });
+
+  const handleCancel = () => setEditMode(false);
+  const handleAvtRemove = () => setAvt("");
+  const handleDeleteAcc = () => alert("delete account");
+  const handleEditMode = () => setEditMode(true);
+  const onAvtChange = (e) => setAvt(URL.createObjectURL(e.target.files[0]));
+
+  const getImgArr = () => {
+    let images = [];
+    data.userById.photo.map((pic) => images.push(pic.large));
+    return images;
+  };
 
   const getAge = (birthday) => {
     const userDOB = new Date(birthday);
@@ -41,10 +57,6 @@ const ProfilePage = () => {
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
-  };
-
-  const handleClick = () => {
-    //go to edit profile page
   };
 
   return (
@@ -72,11 +84,25 @@ const ProfilePage = () => {
             <div className="container mx-auto px-4 py-5 sm:p-5">
               <div className="grid grid-cols-3 gap-5">
                 <div className="w-52 h-52 justify-self-center overflow-hidden rounded-full">
-                  <img
-                    src={data.userById.avatar.medium}
-                    alt="user avatar"
-                    className="object-contain"
-                  />
+                  {editMode ? (
+                    avt ? (
+                      <OvalImage src={avt} handleRemove={handleAvtRemove} />
+                    ) : (
+                      <EditAvatar handleChange={onAvtChange} />
+                    )
+                  ) : data.userById.avatar ? (
+                    <img
+                      src={data.userById.avatar.medium}
+                      alt="user avatar"
+                      className="object-contain"
+                    />
+                  ) : (
+                    <img
+                      src={defaultAvt}
+                      alt="user avatar"
+                      className="object-contain"
+                    />
+                  )}
                 </div>
                 <div className="col-span-2 h-52 self-center flex flex-col justify-between">
                   <div className="block text-lg">
@@ -100,56 +126,88 @@ const ProfilePage = () => {
                         <div className="w-6 h-6 flex justify-center">
                           <img src={LocationLogo} alt="location logo" />
                         </div>
-                        <p>
-                          {data.userById.location.city},{" "}
-                          {data.userById.location.province}
-                        </p>
+                        {data.userById.location ? (
+                          <p>
+                            {data.userById.location.city},{" "}
+                            {data.userById.location.province}
+                          </p>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     </div>
                     <p className="mt-2">
                       <span className="font-bold">Hobbies: </span>
-                      {data.userById.hobbies.join(", ")}
+
+                      {data.userById.hobbies
+                        ? data.userById.hobbies.join(", ")
+                        : ""}
                     </p>
-                    <p className="mt-2">{data.userById.bio}</p>
+                    <p className="mt-2">
+                      {data.userById.bio ? data.userById.bio : ""}
+                    </p>
                   </div>
-                  {currentUserID === id && (
-                    <RoundedButton
-                      btnName="Edit Profile"
-                      bgColor={"bg-secondary"}
-                      borderColor={"border-secondary"}
-                      fontSize={"text-lg"}
-                      paddingLR={"px-6 w-2/3"}
-                      hover={
-                        "hover:bg-white hover:text-secondary hover:border-secondary"
-                      }
-                      handleClick={handleClick}
-                    />
-                  )}
+                  {currentUserID === id &&
+                    (editMode ? (
+                      <RoundedButton
+                        btnName="Delete account"
+                        bgColor={"bg-secondary"}
+                        borderColor={"border-secondary"}
+                        fontSize={"text-lg"}
+                        paddingLR={"px-4 w-1/3"}
+                        hover={
+                          "hover:bg-white hover:text-secondary hover:border-secondary"
+                        }
+                        handleClick={handleDeleteAcc}
+                      />
+                    ) : (
+                      <RoundedButton
+                        btnName="Edit Profile"
+                        bgColor={"bg-secondary"}
+                        borderColor={"border-secondary"}
+                        fontSize={"text-lg"}
+                        paddingLR={"px-6 w-2/3"}
+                        hover={
+                          "hover:bg-white hover:text-secondary hover:border-secondary"
+                        }
+                        handleClick={handleEditMode}
+                      />
+                    ))}
                 </div>
               </div>
             </div>
           </section>
-          <section className="mt-20">
-            <div className="container mx-auto py-5 md:p-5">
-              <LightGallery
-                speed={500}
-                plugins={[lgZoom]}
-                elementClassNames="grid grid-cols-3 gap-y-7"
-              >
-                {data.userById.photo.map((pic, key) => (
-                  <a
-                    href={`${pic.large}`}
-                    className="block justify-self-center w-80 h-80"
-                  >
-                    <img
-                      src={`${pic.large}`}
-                      className="object-cover object-center"
-                    />
-                  </a>
-                ))}
-              </LightGallery>
-            </div>
-          </section>
+          {editMode ? (
+            <EditMode
+              handleCancel={handleCancel}
+              photos={getImgArr()}
+              avt={data.userById.avatar.medium}
+              newAvt={avt}
+            />
+          ) : (
+            <section className="mt-20">
+              <div className="container mx-auto py-5 md:p-5">
+                <LightGallery
+                  speed={500}
+                  plugins={[lgZoom]}
+                  elementClassNames="grid grid-cols-3 gap-y-7"
+                >
+                  {data.userById.photo.map((pic, key) => (
+                    <a
+                      href={`${pic.large}`}
+                      className="block justify-self-center w-80 h-80"
+                    >
+                      <img
+                        src={`${pic.large}`}
+                        alt={key}
+                        className="object-cover object-center"
+                      />
+                    </a>
+                  ))}
+                </LightGallery>
+              </div>
+            </section>
+          )}
         </main>
       )}
     </>
