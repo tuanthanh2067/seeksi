@@ -10,12 +10,14 @@ const User = require("../../schemas/User/User");
 const preferenceSchema = require("../../schemas/User/Preference");
 
 const { createToken } = require("../../utils/jwt");
+
 const geocoder = require("../../utils/geo_location");
 
 const {
   validateEmail,
   validatePassword,
   validateSex,
+  validateGenderPreference,
 } = require("../../utils/validatiion");
 
 require("dotenv").config();
@@ -199,13 +201,24 @@ class UserAPI extends DataSource {
             //maybe we could make this a separate function?
             //needs more validation checks
             for (const [key, value] of Object.entries(updateUserObject)) {
-              if (!value) {
-                errors.push(key + " is not valid");
+              if (
+                (key == "shortTerm" || key == "longTerm") &&
+                typeof value != "boolean"
+              ) {
+                errors.push(key + " must be a Boolean");
+                continue;
+              }
+              if (!value && typeof value != "boolean") {
+                errors.push(key + " is  empty");
               }
             }
+            if (!validateGenderPreference(updateUserObject.genderPref)) {
+              errors.push("Gender preference is not valid");
+            }
+            if (!validateSex(updateUserObject.sex)) {
+              errors.push("Sex is not valid");
+            }
             if (errors.length == 0) {
-              user.firstName = updateUserObject.firstName;
-              user.lastName = updateUserObject.lastName;
               user.bio = updateUserObject.bio;
               user.dob = updateUserObject.dob;
               user.sex = updateUserObject.sex;
@@ -222,18 +235,22 @@ class UserAPI extends DataSource {
                   shortTerm: false,
                 };
               }
-              user.preference.gender = updateUserObject.genderPref;
+
               user.preference.distance = updateUserObject.distance;
               user.preference.minAge = updateUserObject.minAge;
               user.preference.maxAge = updateUserObject.maxAge;
+              user.preference.longTerm = updateUserObject.longTerm;
+              user.preference.shortTerm = updateUserObject.shortTerm;
               if (user.location) {
                 user.location = {
+                  country: null,
                   city: null,
                   province: null,
                   longitude: 0.0,
                   latitude: 0.0,
                 };
               }
+              user.location.country = updateUserObject.country;
               user.location.city = updateUserObject.city;
               user.location.province = updateUserObject.province;
               user

@@ -73,8 +73,7 @@ const mutations = {
       userAuthentication(req.user);
       const userId = req.user.userId;
       const editingUser = {
-        firstName: args.firstName,
-        lastName: args.lastName,
+        country: args.country,
         city: args.city,
         province: args.province,
         dob: args.dob,
@@ -85,6 +84,8 @@ const mutations = {
         distance: args.distance,
         minAge: args.minAge,
         maxAge: args.maxAge,
+        longTerm: args.longTerm,
+        shortTerm: args.shortTerm,
       };
       const errors = await dataSources.userAPI.editUserById(
         userId,
