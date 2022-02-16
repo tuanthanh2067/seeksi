@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("apollo-server-core");
+const { AuthenticationError, ApolloError } = require("apollo-server-core");
 
 const queries = {
   userByEmail: async (_, args, { dataSources }) => {
@@ -87,21 +87,18 @@ const mutations = {
         longTerm: args.longTerm,
         shortTerm: args.shortTerm,
       };
-      const errors = await dataSources.userAPI.editUserById(
+      const { errors, user } = await dataSources.userAPI.editUserById(
         userId,
         editingUser
       );
       if (errors.length > 0) {
-        return {
-          code: 400,
-          success: false,
-          message: errors,
-        };
+        throw new ApolloError("Edit user error", errors);
       } else {
         return {
           code: 200,
           success: true,
           message: ["Profile updated"],
+          user: user,
         };
       }
     } catch (err) {

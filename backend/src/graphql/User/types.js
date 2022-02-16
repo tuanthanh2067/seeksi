@@ -28,6 +28,7 @@ module.exports.types = `
     code: Int!
     success: Boolean!
     message: [String]
+    user: User
   }
 
 `;

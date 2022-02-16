@@ -235,13 +235,13 @@ class UserAPI extends DataSource {
                   shortTerm: false,
                 };
               }
-
+              user.preference.gender = updateUserObject.genderPref;
               user.preference.distance = updateUserObject.distance;
               user.preference.minAge = updateUserObject.minAge;
               user.preference.maxAge = updateUserObject.maxAge;
               user.preference.longTerm = updateUserObject.longTerm;
               user.preference.shortTerm = updateUserObject.shortTerm;
-              if (user.location) {
+              if (user.location == null) {
                 user.location = {
                   country: null,
                   city: null,
@@ -253,7 +253,7 @@ class UserAPI extends DataSource {
               user.location.country = updateUserObject.country;
               user.location.city = updateUserObject.city;
               user.location.province = updateUserObject.province;
-              user
+              updatedUser = user
                 .save()
                 .then(() => {})
                 .catch((err) => {
@@ -265,10 +265,23 @@ class UserAPI extends DataSource {
         .catch((err) => {
           console.log("Find user err " + err);
         });
-      return errors;
+
+      let updatedUser = "null";
+      if (errors.length == 0) {
+        updatedUser = await User.findById(userId)
+          .then()
+          .catch((err) => {
+            throw ApolloError("Fetch updated user error" + err);
+          });
+        updatedUser.password = null;
+      }
+      return {
+        errors: errors,
+        user: updatedUser,
+      };
     } catch (err) {
       console.log(err);
-      throw new ApolloError("Edit user error????");
+      throw new ApolloError("Edit user error" + err);
     }
   }
 }
