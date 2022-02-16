@@ -13,7 +13,7 @@ class ReportAPI extends DataSource {
   async createReport({
     title,
     problem,
-    description = "",
+    description,
     reportedUserID,
     reporterID,
   }) {
