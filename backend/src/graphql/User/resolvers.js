@@ -94,14 +94,12 @@ const mutations = {
       if (errors.length > 0) {
         throw new ApolloError("Edit user error", errors);
       } else {
-        const updatedUser = await dataSources.userAPI.getUserProfileById(
-          userId
-        );
+        let user = await dataSources.userAPI.getUserProfileById(userId);
         return {
           code: 200,
           success: true,
           message: ["Profile updated"],
-          user: updatedUser,
+          user: user,
         };
       }
     } catch (err) {
