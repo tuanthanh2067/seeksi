@@ -251,6 +251,18 @@ class UserAPI extends DataSource {
       throw new ApolloError("edit user error" + err);
     }
   }
+
+  async setAvatar({ userId, avatar }) {
+    const user = await User.findById(userId);
+    user.avatar = avatar;
+    await user.save();
+  }
+
+  async setPhotos({ userId, photos }) {
+    const user = await User.findById(userId);
+    user.photo = photos;
+    await user.save();
+  }
 }
 
 module.exports.UserAPI = UserAPI;

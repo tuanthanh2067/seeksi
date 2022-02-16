@@ -2,6 +2,7 @@ const { ApolloServer } = require("apollo-server-express");
 const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
 const express = require("express");
 const http = require("http");
+const { graphqlUploadExpress } = require("graphql-upload");
 const Mongoose = require("mongoose");
 const cloudinary = require("cloudinary");
 const { execute, subscribe } = require("graphql");
@@ -52,6 +53,8 @@ Mongoose.connect(process.env.MONGODB_CONNECTION, {
 async function startApolloSever() {
   const app = express();
 
+  app.use(graphqlUploadExpress({ maxFiles: process.env.MAX_IMAGE_UPLOAD }));
+
   const httpServer = http.createServer(app);
 
   const schema = makeExecutableSchema({ typeDefs, resolvers });
@@ -85,6 +88,7 @@ async function startApolloSever() {
         },
       },
     ],
+    uploads: true,
   });
 
   await server.start();
