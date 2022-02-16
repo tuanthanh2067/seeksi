@@ -209,14 +209,14 @@ class UserAPI extends DataSource {
                 continue;
               }
               if (!value && typeof value != "boolean") {
-                errors.push(key + " is  empty");
+                errors.push(key + " is empty");
               }
             }
             if (!validateGenderPreference(updateUserObject.genderPref)) {
-              errors.push("Gender preference is not valid");
+              errors.push("gender preference is not valid");
             }
             if (!validateSex(updateUserObject.sex)) {
-              errors.push("Sex is not valid");
+              errors.push("sex is not valid");
             }
             if (errors.length == 0) {
               user.bio = updateUserObject.bio;
@@ -257,13 +257,13 @@ class UserAPI extends DataSource {
                 .save()
                 .then(() => {})
                 .catch((err) => {
-                  console.log("Update->save user error" + err);
+                  console.log("update->save user error" + err);
                 });
             }
           }
         })
         .catch((err) => {
-          console.log("Find user err " + err);
+          console.log("find user err " + err);
         });
 
       let updatedUser = "null";
@@ -271,7 +271,7 @@ class UserAPI extends DataSource {
         updatedUser = await User.findById(userId)
           .then()
           .catch((err) => {
-            throw ApolloError("Fetch updated user error" + err);
+            throw ApolloError("fetch updated user error" + err);
           });
         updatedUser.password = null;
       }
@@ -281,7 +281,7 @@ class UserAPI extends DataSource {
       };
     } catch (err) {
       console.log(err);
-      throw new ApolloError("Edit user error" + err);
+      throw new ApolloError("edit user error" + err);
     }
   }
 }
