@@ -4,6 +4,7 @@ const { Hobby } = require("./Hobby");
 const { PotentialMatch } = require("./PotentialMatch");
 const { Match } = require("./Match");
 const { ChatRoom } = require("./ChatRoom");
+const { Report } = require("./Report");
 
 const resolvers = {
   Query: {
@@ -13,6 +14,7 @@ const resolvers = {
     ...PotentialMatch.resolvers.queries,
     ...Match.resolvers.queries,
     ...ChatRoom.resolvers.queries,
+    ...Report.resolvers.queries,
   },
   Mutation: {
     ...User.resolvers.mutations,
@@ -20,6 +22,7 @@ const resolvers = {
     ...PotentialMatch.resolvers.mutations,
     ...Match.resolvers.mutations,
     ...ChatRoom.resolvers.mutations,
+    ...Report.resolvers.mutations,
   },
 };
 

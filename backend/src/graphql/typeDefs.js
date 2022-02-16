@@ -11,6 +11,7 @@ const { Hobby } = require("./Hobby");
 const { PotentialMatch } = require("./PotentialMatch");
 const { Match } = require("./Match");
 const { ChatRoom } = require("./ChatRoom");
+const { Report } = require("./Report");
 
 const typeDefs = gql`
   ${interfaces.types}
@@ -24,6 +25,7 @@ const typeDefs = gql`
   ${PotentialMatch.types}
   ${Match.types}
   ${ChatRoom.types}
+  ${Report.types}
   
   type Query {
     ${User.queries}
@@ -32,6 +34,7 @@ const typeDefs = gql`
     ${PotentialMatch.queries}
     ${Match.queries}
     ${ChatRoom.queries}
+    ${Report.queries}
   }
   
   type Mutation {
@@ -40,6 +43,7 @@ const typeDefs = gql`
     ${PotentialMatch.mutations}
     ${Match.mutations}
     ${ChatRoom.mutations}
+    ${Report.mutations}
   }
 `;
 

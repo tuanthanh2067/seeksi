@@ -19,6 +19,7 @@ const dataSources = () => ({
   potentialMatchAPI: new datasources.PotentialMatchAPI(),
   matchAPI: new datasources.MatchAPI(),
   chatRoomAPI: new datasources.ChatRoomAPI(),
+  reportAPI: new datasources.ReportAPI(),
 });
 
 cloudinary.config({
