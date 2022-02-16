@@ -29,6 +29,21 @@ class ChatRoomAPI extends DataSource {
       throw new ApolloError("Internal Server Error");
     }
   }
+
+  async getChatRoomById(roomId) {
+    try {
+      const chatRoom = await ChatRoom.findById(roomId).exec();
+
+      if (!chatRoom) {
+        throw new ApolloError("Can not find chat room");
+      }
+
+      return chatRoom;
+    } catch (err) {
+      console.log(err);
+      throw new ApolloError("Internal Server Error");
+    }
+  }
 }
 
 module.exports.ChatRoomAPI = ChatRoomAPI;

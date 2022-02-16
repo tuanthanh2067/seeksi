@@ -1,1 +1,3 @@
-module.exports.queries = ``;
+module.exports.queries = `
+    messages(roomId: ID!): [Message]
+`;
