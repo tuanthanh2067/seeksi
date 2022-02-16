@@ -1,5 +1,4 @@
 const { PubSub } = require("graphql-subscriptions");
-const mongoose = require("mongoose");
 
 const pubsub = new PubSub();
 
@@ -7,11 +6,7 @@ const queries = {
   messages: async (_, args, { dataSources, req, userAuthentication }) => {
     userAuthentication(req.user);
 
-    const roomId = args.roomId;
-
-    const chatRoom = await dataSources.chatRoomAPI.getChatRoomById(roomId);
-
-    return chatRoom.history.messages;
+    return await dataSources.chatRoomAPI.getMessages(args.roomId);
   },
 };
 
@@ -21,39 +16,14 @@ const mutations = {
 
     const roomId = args.roomId;
     const content = args.content || "";
-    // const photo = args.photo || "";
+    const photo = null;
 
-    const id = mongoose.Types.ObjectId();
-    // create a returned message
-    const message = {
-      sendBy: req.user.userId,
+    const message = await dataSources.chatRoomAPI.sendMessageToChatRoom(
+      roomId,
       content,
-      // photo,
-    };
-
-    // create a message to save to db
-    const dbMessage = {
-      ...message,
-      _id: id,
-    };
-
-    // _id and id is the same but the key name is different
-    message.id = id;
-
-    const chatRoom = await dataSources.chatRoomAPI.getChatRoomById(roomId);
-    if (!chatRoom.history) {
-      // create a message history
-      const messageHistory = {
-        key: "",
-        messages: [dbMessage],
-      };
-      chatRoom.history = messageHistory;
-    } else {
-      chatRoom.history.messages = [...chatRoom.history.messages, dbMessage];
-    }
-
-    // save message to chat room
-    await chatRoom.save();
+      photo,
+      req.user.userId
+    );
 
     // publish to channel
     pubsub.publish(`CHANNEL_${roomId}`, {

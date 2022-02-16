@@ -28,6 +28,7 @@
     "apollo-server-express": "^3.6.2",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.28.1",
+    "cryptr": "^6.0.2",
     "dotenv": "^12.0.3",
     "express": "^4.17.2",
     "geolocation-utils": "^1.2.5",
