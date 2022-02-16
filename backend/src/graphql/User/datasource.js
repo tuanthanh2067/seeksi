@@ -268,16 +268,10 @@ class UserAPI extends DataSource {
 
       let updatedUser = "null";
       if (errors.length == 0) {
-        updatedUser = await User.findById(userId)
-          .then()
-          .catch((err) => {
-            throw ApolloError("fetch updated user error" + err);
-          });
-        updatedUser.password = null;
+        updatedUser = await this.getUserProfileById(userId);
       }
       return {
         errors: errors,
-        user: updatedUser,
       };
     } catch (err) {
       console.log(err);

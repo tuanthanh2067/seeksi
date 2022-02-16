@@ -87,18 +87,21 @@ const mutations = {
         longTerm: args.longTerm,
         shortTerm: args.shortTerm,
       };
-      const { errors, user } = await dataSources.userAPI.editUserById(
+      const { errors } = await dataSources.userAPI.editUserById(
         userId,
         editingUser
       );
       if (errors.length > 0) {
         throw new ApolloError("Edit user error", errors);
       } else {
+        const updatedUser = await dataSources.userAPI.getUserProfileById(
+          userId
+        );
         return {
           code: 200,
           success: true,
           message: ["Profile updated"],
-          user: user,
+          user: updatedUser,
         };
       }
     } catch (err) {
