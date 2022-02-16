@@ -60,7 +60,7 @@ async function startApolloSever() {
     },
     {
       server: httpServer,
-      path: "/graphql",
+      path: "/",
     }
   );
 
@@ -86,6 +86,7 @@ async function startApolloSever() {
   await server.start();
   server.applyMiddleware({
     app,
+    path: "/",
   });
 
   // Modified server startup
