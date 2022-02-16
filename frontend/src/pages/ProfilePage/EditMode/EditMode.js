@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import RoundedButton from "../../../components/Buttons/RoundedButton";
 import Input from "../../../components/Input/Input";
+import { InputSlider, InputRange } from "../../../components/Input/InputRange";
 import Dropdown from "../../../components/Input/Dropdown";
 import Textarea from "../../../components/Input/Textarea";
 import Label from "../../../components/Input/Label";
 import Radio from "../../../components/Input/Radio";
 import Checkbox from "../../../components/Input/Checkbox";
-import InputRange from "react-input-range";
-import "react-input-range/lib/css/index.css";
 import RoundedImage from "../../../components/Image/RoundedImage";
 import EditImage from "../../../components/Image/EditImage";
 import { useQuery } from "@apollo/client";
@@ -39,8 +38,8 @@ const EditMode = (props) => {
   const [genderBias, setGenderBias] = useState("");
   const [longTerm, setLongTerm] = useState("");
   const [shortTerm, setShortTerm] = useState("");
-  const [distance, setDistance] = useState(4);
-  const [ageBias, setAgeBias] = useState({ min: 21, max: 25 });
+  const [distance, setDistance] = useState(10);
+  const [ageBias, setAgeBias] = useState([21, 27]);
   const { loading, data } = useQuery(GET_HOBBY);
   const [images, setImages] = useState(props.photos);
   const [bio, setBio] = useState("");
@@ -99,7 +98,7 @@ const EditMode = (props) => {
       !bio
     ) {
       setErr("*Please provide all information");
-    } else if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    } else if (email && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setErr("*Please provide a properly formatted email address");
     } else if (password && password.length < 12) {
       setErr("*Password should be at least 12 characters");
@@ -124,8 +123,8 @@ const EditMode = (props) => {
           hobbies: hobbies,
           bio: bio,
           distance: distance,
-          minAge: ageBias.min,
-          maxAge: ageBias.max,
+          minAge: ageBias[0],
+          maxAge: ageBias[1],
         },
         onError: (error) => {
           setErr(error);
@@ -314,13 +313,9 @@ const EditMode = (props) => {
                   }}
                 />
               </div>
-              <Label label="Distance Preference" />
+              <Label label={`Distance Preference: ${distance} km`} />
               <div className="pt-5 pb-8 ml-2">
-                <InputRange
-                  maxValue={100}
-                  minValue={0}
-                  formatLabel={(distance) => `${distance} km`}
-                  value={distance}
+                <InputSlider
                   onChange={(value) => {
                     setDistance(value);
                     clearErr();
@@ -328,17 +323,15 @@ const EditMode = (props) => {
                 />
               </div>
 
-              <Label label="Age Range Preference" />
+              <Label
+                label={`Age Range Preference: ${ageBias[0]} - ${ageBias[1]} y.o`}
+              />
               <div className="pt-5 ml-2">
                 <InputRange
-                  draggableTrack
-                  maxValue={100}
-                  minValue={18}
                   onChange={(value) => {
                     setAgeBias(value);
                     clearErr();
                   }}
-                  value={ageBias}
                 />
               </div>
             </div>
