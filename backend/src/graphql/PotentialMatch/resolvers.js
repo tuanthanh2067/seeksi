@@ -39,8 +39,6 @@ const queries = {
 
       return partner;
     };
-    const isNotRejectedPair = (match) =>
-      !match.status.includes(MatchStatus.REJECTED);
     const isUserPending = (match) => {
       const userIndex = 1 - findPartnerIndex(match);
 
@@ -53,7 +51,6 @@ const queries = {
     };
 
     const potentialPartners = docs
-      .filter(isNotRejectedPair)
       .filter(isUserPending)
       .sort(isLikedByPartner)
       .map(getPartnerCardInfo);

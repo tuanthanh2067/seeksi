@@ -108,6 +108,14 @@ class PotentialMatchAPI extends DataSource {
       );
 
       for (const partner of result.docs) {
+        const matchAlreadyExists = await PotentialMatch.exists({
+          pairID: { $all: [user._id, partner._id] },
+        });
+
+        if (matchAlreadyExists) {
+          continue;
+        }
+
         const isCompatible =
           MatchGender.isCompatibleByGenderPreference(user, partner) &&
           MatchAge.isCompatibleByAge(user, partner) &&
@@ -140,6 +148,7 @@ class PotentialMatchAPI extends DataSource {
     const limit = process.env.POTENTIAL_PARTNER_LIMIT || 10;
     const query = {
       pairID: { $in: [_id] },
+      status: { $nin: [MatchStatus.REJECTED] },
     };
     const options = {
       page,
