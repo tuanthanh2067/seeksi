@@ -24,6 +24,9 @@ const resolvers = {
     ...ChatRoom.resolvers.mutations,
     ...Report.resolvers.mutations,
   },
+  Subscription: {
+    ...ChatRoom.resolvers.subscriptions,
+  },
 };
 
 module.exports = resolvers;
