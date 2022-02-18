@@ -73,7 +73,11 @@ function main() {
   });
 }
 function generateMessages() {
-  const encryptMessages = messages.map((mes) => cryptr.encrypt(mes));
+  let encryptMessages = "";
+
+  messages.forEach((mes) => {
+    encryptMessages += cryptr.encrypt(mes) + "\n";
+  });
 
   fs.rm("./message", { recursive: true }, function () {
     fs.mkdir("./message", { recursive: true }, function (err, path) {
