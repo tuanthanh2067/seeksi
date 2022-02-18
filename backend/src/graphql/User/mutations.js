@@ -14,7 +14,7 @@ module.exports.mutations = `
   "Set user's location. Client can pass either city and province OR longitude and latitude"
   setLocation(city: String, province: String, longitude: Float, latitude: Float): User
 
-  deleteAccount: DeleteUserResponse
+  deleteAccount: GeneralMutationResponse
 
 
   "edit user profile, avatar and photos will be processed differently"
@@ -32,7 +32,7 @@ module.exports.mutations = `
     distance: Int,
     minAge: Int,
     maxAge: Int,
-     ): GeneralMutationResponse
+     ): EditUserResponse
 
     
 `;

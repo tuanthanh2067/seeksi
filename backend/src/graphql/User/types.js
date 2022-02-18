@@ -18,6 +18,7 @@ module.exports.types = `
     createdAt: String
   }
 
+  "this type is obsolete, please use GeneralMutationResponse instead"
   type DeleteUserResponse implements MutationResponse {
     success: Boolean!
     message: String!
@@ -25,7 +26,6 @@ module.exports.types = `
 
   "return type of editUser request"
   type EditUserResponse{
-    code: Int!
     success: Boolean!
     message: [String]
     user: User
