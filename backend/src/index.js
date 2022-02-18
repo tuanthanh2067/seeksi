@@ -4,6 +4,9 @@ const express = require("express");
 const http = require("http");
 const Mongoose = require("mongoose");
 const cloudinary = require("cloudinary");
+const { execute, subscribe } = require("graphql");
+const { SubscriptionServer } = require("subscriptions-transport-ws");
+const { makeExecutableSchema } = require("@graphql-tools/schema");
 
 require("dotenv").config();
 const { typeDefs, resolvers, datasources } = require("./graphql");
@@ -19,6 +22,7 @@ const dataSources = () => ({
   potentialMatchAPI: new datasources.PotentialMatchAPI(),
   matchAPI: new datasources.MatchAPI(),
   chatRoomAPI: new datasources.ChatRoomAPI(),
+  reportAPI: new datasources.ReportAPI(),
 });
 
 cloudinary.config({
@@ -46,23 +50,42 @@ async function startApolloSever() {
 
   const httpServer = http.createServer(app);
 
+  const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+  const subscriptionServer = SubscriptionServer.create(
+    {
+      schema,
+      execute,
+      subscribe,
+    },
+    {
+      server: httpServer,
+      path: "/",
+    }
+  );
+
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
     dataSources,
     context: ({ req }) => {
-      return middleware(req);
+      return { ...middleware(req) };
     },
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              subscriptionServer.close();
+            },
+          };
+        },
+      },
+    ],
   });
 
   await server.start();
   server.applyMiddleware({
     app,
-
-    // By default, apollo-server hosts its GraphQL endpoint at the
-    // server root. However, *other* Apollo Server packages host it at
-    // /graphql. Optionally provide this to match apollo-server.
     path: "/",
   });
 

@@ -3,7 +3,7 @@ import React from "react";
 function RoundedButton(props) {
   return (
     <button
-      className={`${props.borderColor} ${props.bgColor} ${props.textColor} ${props.fontSize} ${props.hover} ${props.paddingLR} ${props.paddingTB} ${props.fontWeight} border-2 rounded`}
+      className={`${props.borderColor} ${props.bgColor} ${props.textColor} ${props.fontSize} ${props.hover} ${props.paddingLR} ${props.paddingTB} ${props.fontWeight} ${props.btnStyle} border-2 rounded`}
       onClick={props.handleClick}
     >
       {props.btnName}

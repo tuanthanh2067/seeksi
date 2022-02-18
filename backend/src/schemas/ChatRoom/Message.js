@@ -13,9 +13,11 @@ const messageSchema = new Schema({
   },
   isSeen: {
     type: Boolean,
+    default: false,
   },
   content: {
     type: String,
+    default: "",
   },
   photo: {
     type: imageSchema,

@@ -1,4 +1,5 @@
 const MatchGender = require("../enum/MatchGender");
+const ReportProblem = require("../enum/ReportProblem");
 
 const validateEmail = (email) => {
   return String(email)
@@ -20,9 +21,14 @@ const validateGenderPreference = (gender) => {
   return Object.values(MatchGender).includes(gender);
 };
 
+const validateReportProblem = (problem) => {
+  return Object.values(ReportProblem).includes(problem);
+};
+
 module.exports = {
   validateEmail,
   validatePassword,
   validateSex,
   validateGenderPreference,
+  validateReportProblem,
 };

@@ -11,6 +11,7 @@ import {
 } from "../../graphql/mutations/Match";
 import { useMutation } from "@apollo/client";
 import "./Match.css";
+import Report from "../../pages/Modal/Report";
 
 const cards = [
   {
@@ -110,6 +111,8 @@ const Match = () => {
   const [isMatched, setIsMatched] = useState(false);
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
+  const [reportedUserID, setReportedUserID] = useState("");
+  const [showReport, setShowReport] = useState(false);
   const [sendMatchRequest] = useMutation(SEND_MATCH_REQUEST);
   const [sendRejectRequest] = useMutation(SEND_REJECT_REQUEST);
 
@@ -202,7 +205,11 @@ const Match = () => {
       {(isMatched || isError) && <MatchConfirm message={message} />}
 
       <div className="deckContainer h-1/2 flex items-center justify-center">
-        <Deck cards={profiles} />
+        <Deck
+          cards={profiles}
+          handleReport={() => setShowReport(true)}
+          getReportedUserID={setReportedUserID}
+        />
       </div>
       <div className="container flex space-x-24 max-w-sm h-1/5 mx-auto px-20 py-[2%]">
         <CircleButton
@@ -212,6 +219,21 @@ const Match = () => {
         />
         <CircleButton icon={Heart} onClick={handleLike} bgColor="primary" />
       </div>
+
+      {showReport && (
+        <div
+          onClick={(e) => {
+            if (e.currentTarget.firstChild === e.target) {
+              setShowReport(false);
+            }
+          }}
+        >
+          <Report
+            handleSend={() => setShowReport(false)}
+            reportedUserID={reportedUserID}
+          />
+        </div>
+      )}
     </div>
   );
 };
