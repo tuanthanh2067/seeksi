@@ -115,11 +115,35 @@ class ChatRoomAPI extends DataSource {
       return {
         ...message._doc,
         id: message._id,
-        content: cryptr.decrypt(message.content),
+        content: message.content,
       };
     });
 
     return messages;
+  }
+
+  async getUserChatRooms(userId) {
+    const chatRooms = await ChatRoom.find({
+      pairID: { $in: [userId] },
+    })
+      .populate("pairID")
+      .exec();
+
+    const res = chatRooms.map(async (chatRoom) => {
+      const partnerIndex = chatRoom.pairID[0].id === userId ? 1 : 0;
+
+      const history = await this.getMessages(chatRoom.id);
+
+      chatRoom.pairID[partnerIndex].password = "";
+
+      return {
+        partner: chatRoom.pairID[partnerIndex],
+        history,
+        isDisabled: chatRoom.isDisabled,
+      };
+    });
+
+    return res;
   }
 }
 
