@@ -10,12 +10,14 @@ const User = require("../../schemas/User/User");
 const preferenceSchema = require("../../schemas/User/Preference");
 
 const { createToken } = require("../../utils/jwt");
+
 const geocoder = require("../../utils/geo_location");
 
 const {
   validateEmail,
   validatePassword,
   validateSex,
+  validateGenderPreference,
 } = require("../../utils/validatiion");
 
 require("dotenv").config();
@@ -120,7 +122,7 @@ class UserAPI extends DataSource {
   }
 
   async setUserLocation(
-    { city = "", province = "", longitude = 0, latitude = 0 },
+    { city = "", province = "", country = "", longitude = 0, latitude = 0 },
     userID
   ) {
     // location received can be either city and province || longitude and latitude
@@ -137,6 +139,7 @@ class UserAPI extends DataSource {
 
     if (!user.location) {
       user.location = {
+        country: country,
         city: city,
         province: province,
         longitude: longitude,
@@ -149,7 +152,7 @@ class UserAPI extends DataSource {
       longitude = res[0].longitude;
       latitude = res[0].latitude;
     }
-
+    user.location.country = country || user.location.country;
     user.location.city = city || user.location.city;
     user.location.province = province || user.location.province;
     user.location.longitude = longitude ? longitude : user.location.longitude;
@@ -191,67 +194,62 @@ class UserAPI extends DataSource {
   async editUserById(userId, updateUserObject) {
     try {
       let errors = [];
-      await User.findById(userId)
-        .then((user) => {
-          if (user == null) {
-            return null;
-          } else {
-            //maybe we could make this a separate function?
-            //needs more validation checks
-            for (const [key, value] of Object.entries(updateUserObject)) {
-              if (!value) {
-                errors.push(key + " is not valid");
-              }
-            }
-            if (errors.length == 0) {
-              user.firstName = updateUserObject.firstName;
-              user.lastName = updateUserObject.lastName;
-              user.bio = updateUserObject.bio;
-              user.dob = updateUserObject.dob;
-              user.sex = updateUserObject.sex;
-              user.hobbies = updateUserObject.hobbies;
-              //sub schema, needs to be initialized
-              // (maybe we should do this when user gets created)
-              if (user.preference == null) {
-                user.preference = {
-                  gender: null,
-                  distance: 0,
-                  minAge: 0,
-                  maxAge: 0,
-                  longTerm: false,
-                  shortTerm: false,
-                };
-              }
-              user.preference.gender = updateUserObject.genderPref;
-              user.preference.distance = updateUserObject.distance;
-              user.preference.minAge = updateUserObject.minAge;
-              user.preference.maxAge = updateUserObject.maxAge;
-              if (user.location) {
-                user.location = {
-                  city: null,
-                  province: null,
-                  longitude: 0.0,
-                  latitude: 0.0,
-                };
-              }
-              user.location.city = updateUserObject.city;
-              user.location.province = updateUserObject.province;
-              user
-                .save()
-                .then(() => {})
-                .catch((err) => {
-                  console.log("Update->save user error" + err);
-                });
-            }
-          }
-        })
-        .catch((err) => {
-          console.log("Find user err " + err);
+      for (const [key, value] of Object.entries(updateUserObject)) {
+        if (
+          (key == "shortTerm" || key == "longTerm") &&
+          typeof value != "boolean"
+        ) {
+          errors.push(key + " must be a Boolean");
+          continue;
+        }
+        if (!value && typeof value != "boolean") {
+          errors.push(key + " is empty");
+        }
+      }
+      if (!validateGenderPreference(updateUserObject.genderPref)) {
+        errors.push("gender preference is not valid");
+      }
+      if (!validateSex(updateUserObject.sex)) {
+        errors.push("sex is not valid");
+      }
+      if (errors.length == 0) {
+        let user = await User.findById(userId).catch(err => {
+          throw err;
         });
-      return errors;
+
+        //maybe we could make this a separate function?
+        //needs more validation checks
+        user.bio = updateUserObject.bio;
+        user.dob = updateUserObject.dob;
+        user.sex = updateUserObject.sex;
+        user.hobbies = updateUserObject.hobbies;
+        //sub schema, needs to be initialized
+        // (maybe we should do this when user gets created)
+        if (user.preference == null) {
+          user.preference = {
+            gender: null,
+            distance: 0,
+            minAge: 0,
+            maxAge: 0,
+            longTerm: false,
+            shortTerm: false,
+          };
+        }
+        user.preference.gender = updateUserObject.genderPref;
+        user.preference.distance = updateUserObject.distance;
+        user.preference.minAge = updateUserObject.minAge;
+        user.preference.maxAge = updateUserObject.maxAge;
+        user.preference.longTerm = updateUserObject.longTerm;
+        user.preference.shortTerm = updateUserObject.shortTerm;
+        await user.save();
+        await this.setUserLocation(updateUserObject, userId);
+      }
+      return {
+        errors: errors
+      }
     } catch (err) {
       console.log(err);
-      throw new ApolloError("Edit user error????");
+      throw new ApolloError("edit user error" + err);
     }
   }
 }
