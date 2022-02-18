@@ -31,7 +31,7 @@ module.exports.mutations = `
     distance: Int,
     minAge: Int,
     maxAge: Int,
-     ): EditUserResponse
+     ): GeneralMutationResponse
 
     
 `;

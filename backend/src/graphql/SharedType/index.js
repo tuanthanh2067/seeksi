@@ -1,5 +1,5 @@
 const { types } = require("./types");
 
-module.exports.Location = {
+module.exports.SharedType = {
     types,
 };

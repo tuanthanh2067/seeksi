@@ -92,13 +92,11 @@ const mutations = {
       );
       if (errors.length > 0) {
         return {
-          code: 400,
           success: false,
           message: errors,
         };
       } else {
         return {
-          code: 200,
           success: true,
           message: ["Profile updated"],
         };
