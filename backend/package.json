@@ -22,18 +22,22 @@
   },
   "homepage": "https://github.com/tuanthanh2067/seeksi#readme",
   "dependencies": {
+    "@graphql-tools/schema": "^8.3.1",
     "@sendgrid/mail": "^7.6.0",
     "apollo-server-core": "^3.6.2",
     "apollo-server-express": "^3.6.2",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.28.1",
+    "cryptr": "^6.0.2",
     "dotenv": "^12.0.3",
     "express": "^4.17.2",
     "geolocation-utils": "^1.2.5",
     "graphql": "^16.3.0",
+    "graphql-subscriptions": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.7",
-    "node-geocoder": "^3.28.0"
+    "node-geocoder": "^3.28.0",
+    "subscriptions-transport-ws": "^0.11.0"
   },
   "devDependencies": {
     "jest": "^27.4.7",
