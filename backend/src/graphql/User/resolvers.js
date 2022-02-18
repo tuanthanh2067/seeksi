@@ -76,7 +76,6 @@ const mutations = {
         country: args.country,
         city: args.city,
         province: args.province,
-        dob: args.dob,
         sex: args.sex,
         genderPref: args.genderPref,
         hobbies: args.hobbies,
@@ -96,7 +95,6 @@ const mutations = {
       } else {
         let user = await dataSources.userAPI.getUserProfileById(userId);
         return {
-          code: 200,
           success: true,
           message: ["Profile updated"],
           user: user,

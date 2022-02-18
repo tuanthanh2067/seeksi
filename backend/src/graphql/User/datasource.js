@@ -148,7 +148,7 @@ class UserAPI extends DataSource {
     }
 
     if (city !== "" && province !== "") {
-      const res = await geocoder.geocode(`${city} ${province}`);
+      const res = await geocoder.geocode(`${city} ${province} ${country}`);
       longitude = res[0].longitude;
       latitude = res[0].latitude;
     }
@@ -220,7 +220,6 @@ class UserAPI extends DataSource {
         //maybe we could make this a separate function?
         //needs more validation checks
         user.bio = updateUserObject.bio;
-        user.dob = updateUserObject.dob;
         user.sex = updateUserObject.sex;
         user.hobbies = updateUserObject.hobbies;
         //sub schema, needs to be initialized
