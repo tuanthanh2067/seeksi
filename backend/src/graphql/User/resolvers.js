@@ -76,7 +76,6 @@ const mutations = {
         country: args.country,
         city: args.city,
         province: args.province,
-        dob: args.dob,
         sex: args.sex,
         genderPref: args.genderPref,
         hobbies: args.hobbies,

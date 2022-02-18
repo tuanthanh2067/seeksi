@@ -22,7 +22,6 @@ module.exports.mutations = `
     country: String,
     city: String,
     province: String,
-    dob: String,
     sex: String,
     genderPref: String,
     longTerm: Boolean,
