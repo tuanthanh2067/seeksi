@@ -2,6 +2,7 @@ const { DataSource } = require("apollo-datasource");
 const { ApolloError } = require("apollo-server-core");
 const Cryptr = require("cryptr");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const ChatRoom = require("../../schemas/ChatRoom/ChatRoom");
 const UserTypeEnum = require("../../enum/UserType");
@@ -18,7 +19,10 @@ class ChatRoomAPI extends DataSource {
 
       const roomId = mongoose.Types.ObjectId();
 
-      const secretKey = roomId.toString();
+      let secretKey = process.env.ENCRYPT_KEY;
+      if (process.env.NODE_ENV === "production") {
+        secretKey = roomId.toString();
+      }
 
       const cryptr = new Cryptr(secretKey);
 
@@ -79,7 +83,12 @@ class ChatRoomAPI extends DataSource {
   async sendMessageToChatRoom(roomId, content, photo = null, sendBy) {
     const id = mongoose.Types.ObjectId();
 
-    const cryptr = new Cryptr(roomId);
+    let secretKey = process.env.ENCRYPT_KEY;
+    if (process.env.NODE_ENV === "production") {
+      secretKey = roomId;
+    }
+
+    const cryptr = new Cryptr(secretKey);
 
     // create a returned message
     const message = {
@@ -109,17 +118,46 @@ class ChatRoomAPI extends DataSource {
   async getMessages(roomId) {
     const chatRoom = await this.getChatRoomById(roomId);
 
-    const cryptr = new Cryptr(roomId);
+    let secretKey = process.env.ENCRYPT_KEY;
+    if (process.env.NODE_ENV === "production") {
+      secretKey = roomId;
+    }
+    const cryptr = new Cryptr(secretKey);
 
     const messages = chatRoom.history.messages.map((message) => {
       return {
         ...message._doc,
         id: message._id,
-        content: cryptr.decrypt(message.content),
+        content: message.content,
       };
     });
 
     return messages;
+  }
+
+  async getUserChatRooms(userId) {
+    const chatRooms = await ChatRoom.find({
+      pairID: { $in: [userId] },
+    })
+      .populate("pairID")
+      .exec();
+
+    const res = chatRooms.map(async (chatRoom) => {
+      const partnerIndex = chatRoom.pairID[0].id === userId ? 1 : 0;
+
+      const history = await this.getMessages(chatRoom.id);
+
+      chatRoom.pairID[partnerIndex].password = "";
+
+      return {
+        id: chatRoom.id,
+        partner: chatRoom.pairID[partnerIndex],
+        history,
+        isDisabled: chatRoom.isDisabled,
+      };
+    });
+
+    return res;
   }
 }
 
