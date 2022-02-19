@@ -53,7 +53,9 @@ Mongoose.connect(process.env.MONGODB_CONNECTION, {
 async function startApolloSever() {
   const app = express();
 
-  app.use(graphqlUploadExpress({ maxFiles: process.env.MAX_IMAGE_UPLOAD }));
+  app.use(
+    graphqlUploadExpress({ maxFiles: process.env.MAX_IMAGE_UPLOAD || 6 })
+  );
 
   const httpServer = http.createServer(app);
 
