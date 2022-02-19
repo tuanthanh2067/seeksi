@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 const { Schema } = mongoose;
 
 const { imageSchema } = require("../share/Image");
@@ -61,6 +62,8 @@ const userSchema = new Schema({
     default: Date.now(),
   },
 });
+
+userSchema.plugin(mongoosePaginate);
 
 const User = mongoose.model("Users", userSchema);
 

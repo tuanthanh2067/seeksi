@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const locationSchema = new Schema({
+  country: {
+    type: String,
+  },
   city: {
     type: String,
   },

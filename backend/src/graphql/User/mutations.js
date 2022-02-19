@@ -19,13 +19,13 @@ module.exports.mutations = `
 
   "edit user profile, avatar and photos will be processed differently"
   editUser(
-    firstName: String,
-    lastName: String,
+    country: String,
     city: String,
     province: String,
-    dob: String,
     sex: String,
     genderPref: String,
+    longTerm: Boolean,
+    shortTerm: Boolean,
     hobbies: [String],
     bio: String,
     distance: Int,

@@ -1,5 +1,5 @@
-const Match = require("./matchDistance");
+const MatchDistance = require("./matchDistance");
 
 module.exports = {
-  Match
+  MatchDistance,
 };

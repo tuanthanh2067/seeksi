@@ -18,7 +18,7 @@ const validateSex = (sex) => {
 };
 
 const validateGenderPreference = (gender) => {
-  return Object.values(MatchGender).includes(sex);
+  return Object.values(MatchGender).includes(gender);
 };
 
 const validateReportProblem = (problem) => {
