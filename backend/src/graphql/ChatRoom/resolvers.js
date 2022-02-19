@@ -8,6 +8,12 @@ const queries = {
 
     return await dataSources.chatRoomAPI.getMessages(args.roomId);
   },
+
+  chatRooms: async (_, args, { dataSources, req, userAuthentication }) => {
+    userAuthentication(req.user);
+
+    return await dataSources.chatRoomAPI.getUserChatRooms(req.user.userId);
+  },
 };
 
 const mutations = {
