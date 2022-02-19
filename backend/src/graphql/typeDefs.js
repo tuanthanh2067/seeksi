@@ -52,6 +52,7 @@ const typeDefs = gql`
 
   type Subscription {
     ${UserStatus.subscriptions}
+    ${ChatRoom.subscriptions}
   }
 `;
 
