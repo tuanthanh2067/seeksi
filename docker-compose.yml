@@ -27,7 +27,7 @@ services:
     networks:
       - seeksi-network
   server:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: seeksi-server
@@ -42,6 +42,10 @@ services:
       SENDGRID_API_KEY:
       SENDGRID_EMAIL:
       PASSWORD_RESET_TEMPLATE_ID:
+      CLOUDINARY_CLOUD_NAME:
+      CLOUDINARY_API_KEY:
+      CLOUDINARY_API_SECRET:
+      MAX_IMAGE_UPLOAD:
     depends_on:
       - mongo
     volumes:
@@ -50,7 +54,7 @@ services:
     networks:
       - seeksi-network
   client:
-    build: 
+    build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: seeksi-client
