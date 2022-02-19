@@ -12,10 +12,11 @@ const { PotentialMatch } = require("./PotentialMatch");
 const { Match } = require("./Match");
 const { ChatRoom } = require("./ChatRoom");
 const { Report } = require("./Report");
+const { SharedType } = require("./SharedType");
 
 const typeDefs = gql`
   ${interfaces.types}
-
+  ${SharedType.types}
   ${User.types}
   ${Location.types}
   ${Preference.types}

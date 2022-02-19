@@ -1,4 +1,7 @@
 module.exports.types = `
+<<<<<<< HEAD
+
+=======
   type PartnerCard {
     id: ID!
     firstName: String!
@@ -15,4 +18,5 @@ module.exports.types = `
     success: Boolean!
     message: String!
   }
+>>>>>>> main
 `;

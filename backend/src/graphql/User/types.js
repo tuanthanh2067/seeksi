@@ -18,14 +18,8 @@ module.exports.types = `
     createdAt: String
   }
 
-  type DeleteUserResponse implements MutationResponse {
-    success: Boolean!
-    message: String!
-  }
-
   "return type of editUser request"
   type EditUserResponse{
-    code: Int!
     success: Boolean!
     message: [String]
     user: User
