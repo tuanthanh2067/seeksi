@@ -64,7 +64,7 @@ const Navbar = () => {
               Match
             </Link>
             <Link
-              to="/"
+              to="/chat"
               className=" block mt-3 sm:mt-0 sm:ml-10 text-primary font-semibold text-lg lg:text-xl hover:underline"
             >
               Chat
