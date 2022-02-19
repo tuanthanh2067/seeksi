@@ -1,4 +1,4 @@
-const { PubSub } = require("graphql-subscriptions");
+const { PubSub, withFilter } = require("graphql-subscriptions");
 
 const pubsub = new PubSub();
 
@@ -28,9 +28,12 @@ const mutations = {
 
 const subscriptions = {
   statusUpdated: {
-    subscribe: (_, args, context) => {
-      return pubsub.asyncIterator("CURRENT_USERS");
-    },
+    subscribe: withFilter(
+      () => pubsub.asyncIterator("CURRENT_USERS"),
+      (payload, variables) => {
+        return variables.partners.includes(payload.statusUpdated.key);
+      }
+    ),
   },
 };
 
