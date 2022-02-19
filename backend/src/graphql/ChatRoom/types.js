@@ -12,6 +12,7 @@ module.exports.types = `
     }
 
     type ChatRoom {
+        id: String
         partner: User
         history: [Message]
         isDisabled: Boolean

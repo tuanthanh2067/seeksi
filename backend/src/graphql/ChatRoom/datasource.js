@@ -137,6 +137,7 @@ class ChatRoomAPI extends DataSource {
       chatRoom.pairID[partnerIndex].password = "";
 
       return {
+        id: chatRoom.id,
         partner: chatRoom.pairID[partnerIndex],
         history,
         isDisabled: chatRoom.isDisabled,
