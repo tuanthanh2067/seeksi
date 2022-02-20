@@ -9,6 +9,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "country-state-city": "^3.0.1",
+    "emoji-mart": "^3.0.1",
     "graphql": "^16.2.0",
     "jwt-decode": "^3.1.2",
     "lightgallery": "^2.4.0",
@@ -19,6 +20,7 @@
     "react-scripts": "^5.0.0",
     "react-select": "^5.2.2",
     "react-spring": "^9.4.2",
+    "subscriptions-transport-ws": "^0.11.0",
     "web-vitals": "^2.1.2"
   },
   "scripts": {

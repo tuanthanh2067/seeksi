@@ -6,6 +6,7 @@ import LandingPage from "./pages/LandingPage/index";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Match from "./pages/Match/Match";
 import ProfilePage from "./pages/ProfilePage/index";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
   // const { loading, error, data } = useQuery(GET_TRACKS);
@@ -46,6 +47,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/match" element={<Match />} />
         <Route path="/user/:id" element={<ProfilePage />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>
   );
