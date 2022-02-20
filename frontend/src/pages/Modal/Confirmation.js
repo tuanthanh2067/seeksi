@@ -3,7 +3,7 @@ import RoundedButton from "../../components/Buttons/RoundedButton";
 const Confirmation = (props) => {
   return (
     <div
-      className={`bg-black bg-opacity-50 absolute overflow-auto inset-0 flex justify-center items-center h-screen`}
+      className={`fixed bg-black bg-opacity-50 overflow-auto inset-0 flex justify-center items-center h-full z-20`}
     >
       <div className="px-8 bg-white w-5/6 lg:w-1/3 md:max-w-3xl rounded-lg ">
         <h3 className="text-primary font-bold pt-5 pb-3 text-2xl text-center">
@@ -13,10 +13,10 @@ const Confirmation = (props) => {
           <span className="text-red-600 font-medium">{props.err}</span>
         )}
         {/* Contains content of the confirmation */}
-        <div className="text-center text-lg mt-5 mb-3">{props.content}</div>
+        <div className="text-center text-lg my-5">{props.content}</div>
         {/* Contains the final statement for the confirmation */}
         {props.confirmState}
-        <div className={`mt-3 pb-8 text-center ${props.hideBtn}`}>
+        <div className={`mt-5 pb-8 text-center ${props.hideBtn}`}>
           <div className="inline-block mr-2">
             <RoundedButton
               btnName={props.btn1Name}

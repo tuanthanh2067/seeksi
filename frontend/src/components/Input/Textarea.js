@@ -12,6 +12,7 @@ const Textarea = ({
     <textarea
       id={id}
       placeholder={placeholder}
+      value={value}
       className={`focus:outline-none focus:border-none outline-none border-none rounded-md shadow-inner px-3 py-3.5 my-1.5 ${height} ${width} `}
       {...props}
     />

@@ -6,6 +6,8 @@ const Dropdown = ({
   id,
   name,
   options = [],
+  singleValue,
+  multiValues,
   width = "50vw",
   placeholder,
   isMulti = false,
@@ -48,6 +50,14 @@ const Dropdown = ({
     }),
   };
 
+  let values;
+  if (singleValue) {
+    values = options.filter((option) => option.label === singleValue);
+  }
+  if (multiValues) {
+    values = options.filter((option) => multiValues.includes(option.label));
+  }
+
   return (
     <Select
       id={id}
@@ -56,7 +66,9 @@ const Dropdown = ({
       components={animatedComponents}
       placeholder={placeholder}
       isMulti={isMulti}
+      max={5}
       options={options}
+      value={values}
       styles={customStyles}
       theme={(theme) => ({
         ...theme,
