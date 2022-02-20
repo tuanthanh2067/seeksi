@@ -128,7 +128,7 @@ class ChatRoomAPI extends DataSource {
       return {
         ...message._doc,
         id: message._id,
-        content: message.content,
+        content: cryptr.decrypt(message.content),
       };
     });
 
