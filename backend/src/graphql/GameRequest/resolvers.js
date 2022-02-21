@@ -23,6 +23,32 @@ const mutations = {
 
     return gameRequest;
   },
+
+  acceptGameRequest: async (
+    _,
+    args,
+    { dataSources, req, userAuthentication }
+  ) => {
+    userAuthentication(req.user);
+
+    await dataSources.gameRequestAPI.acceptGameRequest(args.gameRequestId);
+
+    await dataSources.gameRoomAPI.createGameRoom(args.chatRoomId);
+
+    return "Accept Successfully";
+  },
+
+  rejectGameRequest: async (
+    _,
+    args,
+    { dataSources, req, userAuthentication }
+  ) => {
+    userAuthentication(req.user);
+
+    await dataSources.gameRequestAPI.rejectGameRequest(args.gameRequestId);
+
+    return "Reject Successfully";
+  },
 };
 
 const subscriptions = {

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-import { gameQuestionSchema } from "./GameQuestion";
+const { gameQuestionSchema } = require("./GameQuestion");
 
 const gameRoomSchema = new Schema({
   questions: {
@@ -9,6 +9,4 @@ const gameRoomSchema = new Schema({
   },
 });
 
-const GameRoom = mongoose.model("GameRooms", gameRoomSchema);
-
-module.exports = GameRoom;
+module.exports.gameRoomSchema = gameRoomSchema;

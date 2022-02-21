@@ -13,14 +13,14 @@ const gameRequestSchema = new Schema({
 
   status: {
     type: [String],
-    enum: [GameRequestEnum.WAITING, GameRequestEnum.ACCEPTED],
+    enum: [GameRequestEnum.ACCEPTED, GameRequestEnum.WAITING],
     default: [GameRequestEnum.WAITING, GameRequestEnum.WAITING],
   },
 
   createdAt: {
     type: Date,
-    // expire in 30 mins
-    expires: 1800,
+    // expire in 10 mins
+    expires: 600,
     default: Date.now,
   },
 });
