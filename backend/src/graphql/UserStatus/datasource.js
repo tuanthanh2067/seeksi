@@ -7,8 +7,8 @@ class UserStatusAPI extends DataSource {
     super();
   }
 
-  updateUserStatus(key, value) {
-    userStatus[key] = value;
+  updateUserStatus(userId, lastSeen) {
+    userStatus[userId] = lastSeen;
   }
 }
 

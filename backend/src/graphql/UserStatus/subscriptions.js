@@ -1,3 +1,3 @@
 module.exports.subscriptions = `
-    statusUpdated(partners: [String]): UserStatus
+    statusUpdated(partners: [String!]!): UserStatus
 `;

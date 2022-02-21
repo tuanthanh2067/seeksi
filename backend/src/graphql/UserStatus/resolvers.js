@@ -8,14 +8,14 @@ const mutations = {
   updateMyStatus: (_, args, { dataSources, req, userAuthentication }) => {
     userAuthentication(req.user);
 
-    const key = req.user.userId;
-    const value = Date.now();
+    const userId = req.user.userId;
+    const lastSeen = Date.now();
 
-    dataSources.userStatusAPI.updateUserStatus(key, value);
+    dataSources.userStatusAPI.updateUserStatus(userId, lastSeen);
 
     const status = {
-      key,
-      value,
+      userId,
+      lastSeen,
     };
 
     pubsub.publish("CURRENT_USERS", {
@@ -31,7 +31,7 @@ const subscriptions = {
     subscribe: withFilter(
       () => pubsub.asyncIterator("CURRENT_USERS"),
       (payload, variables) => {
-        return variables.partners.includes(payload.statusUpdated.key);
+        return variables.partners.includes(payload.statusUpdated.userId);
       }
     ),
   },

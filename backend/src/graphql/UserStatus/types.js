@@ -1,6 +1,6 @@
 module.exports.types = `
     type UserStatus {
-        key: String
-        value: String
+        userId: String
+        lastSeen: String
     } 
 `;
