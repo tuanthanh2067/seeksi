@@ -372,12 +372,12 @@ const EditInfo = ({ id, user, photos }) => {
           </div>
         </div>
       </section>
-      <section className="mt-15">
-        <div className="container mx-auto py-5 md:p-5">
-          <div className="grid grid-cols-3 gap-4">
+      <section className="mt-16">
+        <div className="container mx-auto mt-16 px-5">
+          <div className="grid grid-cols-2 auto-cols-fr sm:grid-cols-3 gap-12">
             {imgArr.map((num, key) => {
               return (
-                <div className="block justify-self-center w-80 h-80">
+                <div className="block justify-self-center w-48 h-48 lg:w-72 lg:h-72">
                   {images[num] ? (
                     <RoundedImage
                       src={images[num]}
