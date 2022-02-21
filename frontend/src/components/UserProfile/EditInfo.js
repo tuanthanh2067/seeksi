@@ -49,14 +49,28 @@ const EditInfo = ({ id, user, photos }) => {
   const hobbyOptions = () => {
     let hobbies = [];
     if (!loading && data.getHobbies) {
-      data.getHobbies.map((hobby) => {
-        hobbies.push({
-          value: hobby,
-          label: hobby,
+      data.getHobbies
+        .filter((hobby, i) => {
+          return data.getHobbies.indexOf(hobby) === i;
+        })
+        .map((hobby, key) => {
+          hobbies.push({
+            value: hobby,
+            label: hobby,
+          });
         });
-      });
     }
     return hobbies;
+  };
+
+  const scrollToTop = () => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }, 100);
   };
 
   const onChange = (e) => {
@@ -84,7 +98,6 @@ const EditInfo = ({ id, user, photos }) => {
       // !email ||
       // !password ||
       !country ||
-      !state ||
       !city ||
       !gender ||
       !genderBias ||
@@ -93,6 +106,7 @@ const EditInfo = ({ id, user, photos }) => {
       !bio
     ) {
       setErr("*Please provide all information");
+      scrollToTop();
       // } else if (email && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       //   setErr("*Please provide a properly formatted email address");
       // } else if (password && password.length < 12) {
@@ -108,6 +122,9 @@ const EditInfo = ({ id, user, photos }) => {
       //   );
       // } else if (password && password !== confirmPassword) {
       //   setErr("*Passwords do not match");
+    } else if (hobbies.length > 5) {
+      setErr("Please select only up to 5 hobbies");
+      scrollToTop();
     } else {
       editUser({
         variables: {
@@ -193,7 +210,7 @@ const EditInfo = ({ id, user, photos }) => {
                 <Dropdown
                   options={countryOptions}
                   placeholder="Country"
-                  singleValue={country}
+                  defaultValue={country}
                   onChange={(e) => {
                     setCountry(e.value);
                     setState("");
@@ -203,7 +220,7 @@ const EditInfo = ({ id, user, photos }) => {
                 <Dropdown
                   options={filterStateBySelectedCountry(country)}
                   placeholder="State"
-                  singleValue={state}
+                  defaultValue={state}
                   onChange={(e) => {
                     setState(e.value);
                     clearErr();
@@ -213,7 +230,7 @@ const EditInfo = ({ id, user, photos }) => {
                 <Dropdown
                   options={filterCity(state, country)}
                   placeholder="City"
-                  singleValue={city}
+                  defaultValue={city}
                   onChange={(e) => {
                     setCity(e.value);
                     clearErr();
@@ -310,9 +327,9 @@ const EditInfo = ({ id, user, photos }) => {
                 options={hobbyOptions()}
                 isMulti="true"
                 placeholder={"Hobbies"}
-                multiValues={hobbies}
+                defaultValue={hobbies}
                 onChange={(e) => {
-                  setHobbies(e.map((hobby) => hobby.value));
+                  setHobbies(e.map((hobby, key) => hobby.value));
                   clearErr();
                 }}
               />
@@ -358,7 +375,7 @@ const EditInfo = ({ id, user, photos }) => {
       <section className="mt-15">
         <div className="container mx-auto py-5 md:p-5">
           <div className="grid grid-cols-3 gap-4">
-            {imgArr.map((num) => {
+            {imgArr.map((num, key) => {
               return (
                 <div className="block justify-self-center w-80 h-80">
                   {images[num] ? (
