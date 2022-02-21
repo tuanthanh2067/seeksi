@@ -17,7 +17,7 @@ const mutations = {
       args.to
     );
 
-    pubsub.publish(`GAME_REQUESTS`, {
+    pubsub.publish("GAME_REQUESTS", {
       gameRequestSent: gameRequest,
     });
 
@@ -34,6 +34,10 @@ const mutations = {
     await dataSources.gameRequestAPI.acceptGameRequest(args.gameRequestId);
 
     await dataSources.gameRoomAPI.createGameRoom(args.chatRoomId);
+
+    pubsub.publish("GAME_ROOMS", {
+      gameRoomCreated: args.chatRoomId,
+    });
 
     return "Accept Successfully";
   },
@@ -57,6 +61,15 @@ const subscriptions = {
       () => pubsub.asyncIterator("GAME_REQUESTS"),
       (payload, variables) => {
         return variables.myId === payload.gameRequestSent.sentTo;
+      }
+    ),
+  },
+
+  gameRoomCreated: {
+    subscribe: withFilter(
+      () => pubsub.asyncIterator("GAME_ROOMS"),
+      (payload, variables) => {
+        return variables.chatRoomId === payload.gameRoomCreated;
       }
     ),
   },
