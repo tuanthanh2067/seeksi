@@ -28,7 +28,7 @@ const mutations = {
   },
   uploadPhotos: async (
     _,
-    { files },
+    { files, replace },
     { dataSources, req, userAuthentication }
   ) => {
     userAuthentication(req.user);
@@ -39,10 +39,17 @@ const mutations = {
 
     const photos = await uploadImages(filePaths);
 
-    await dataSources.userAPI.setPhotos({
-      userId: req.user.userId,
-      photos,
-    });
+    if (replace) {
+      await dataSources.userAPI.setPhotos({
+        userId: req.user.userId,
+        photos,
+      });
+    } else {
+      await dataSources.userAPI.insertPhotos({
+        userId: req.user.userId,
+        photos,
+      });
+    }
 
     for (const filePath of filePaths) {
       await unlink(filePath);
