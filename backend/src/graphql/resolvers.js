@@ -5,6 +5,7 @@ const { PotentialMatch } = require("./PotentialMatch");
 const { Match } = require("./Match");
 const { ChatRoom } = require("./ChatRoom");
 const { Report } = require("./Report");
+const { OpeningLine } = require("./OpeningLine");
 
 const resolvers = {
   Query: {
@@ -15,6 +16,7 @@ const resolvers = {
     ...Match.resolvers.queries,
     ...ChatRoom.resolvers.queries,
     ...Report.resolvers.queries,
+    ...OpeningLine.resolvers.queries,
   },
   Mutation: {
     ...User.resolvers.mutations,
@@ -23,6 +25,7 @@ const resolvers = {
     ...Match.resolvers.mutations,
     ...ChatRoom.resolvers.mutations,
     ...Report.resolvers.mutations,
+    ...OpeningLine.resolvers.mutations
   },
   Subscription: {
     ...ChatRoom.resolvers.subscriptions,

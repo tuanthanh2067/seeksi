@@ -12,6 +12,7 @@ const { PotentialMatch } = require("./PotentialMatch");
 const { Match } = require("./Match");
 const { ChatRoom } = require("./ChatRoom");
 const { Report } = require("./Report");
+const { OpeningLine } = require("./OpeningLine")
 const { SharedType } = require("./SharedType");
 
 const typeDefs = gql`
@@ -27,6 +28,7 @@ const typeDefs = gql`
   ${Match.types}
   ${ChatRoom.types}
   ${Report.types}
+  ${OpeningLine.types}
   
   type Query {
     ${User.queries}
@@ -36,6 +38,7 @@ const typeDefs = gql`
     ${Match.queries}
     ${ChatRoom.queries}
     ${Report.queries}
+    ${OpeningLine.queries}
   }
   
   type Mutation {
@@ -45,6 +48,7 @@ const typeDefs = gql`
     ${Match.mutations}
     ${ChatRoom.mutations}
     ${Report.mutations}
+    ${OpeningLine.mutations}
   }
 `;
 
