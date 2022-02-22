@@ -10,9 +10,4 @@ module.exports.types = `
     hobbies: [String]
     avatar: Image
   }
-
-  type PotentialMatchResponse implements MutationResponse {
-    success: Boolean!
-    message: String!
-  }
 `;

@@ -6,6 +6,7 @@ const Dropdown = ({
   id,
   name,
   options = [],
+  defaultValue,
   width = "50vw",
   placeholder,
   isMulti = false,
@@ -20,7 +21,7 @@ const Dropdown = ({
       borderRadius: "0.375rem",
       boxShadow: "inset 0 4px 4px 0 rgba(0, 0, 0, 0.25)",
       maxWidth: `${width}`,
-      height: "3rem",
+      minHeight: "3rem",
     }),
     menu: (provided) => ({
       ...provided,
@@ -48,6 +49,10 @@ const Dropdown = ({
     }),
   };
 
+  const values = isMulti
+    ? options.filter((option) => defaultValue.includes(option.label))
+    : options.filter((option) => option.label === defaultValue);
+
   return (
     <Select
       id={id}
@@ -57,6 +62,7 @@ const Dropdown = ({
       placeholder={placeholder}
       isMulti={isMulti}
       options={options}
+      value={values}
       styles={customStyles}
       theme={(theme) => ({
         ...theme,

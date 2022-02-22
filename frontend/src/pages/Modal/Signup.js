@@ -107,7 +107,7 @@ const Signup = (props) => {
           localStorage.setItem("token", data.signup.token);
           props.handleShow();
           const decodedToken = jwt_decode(data.signup.token);
-          navigate(`/user/${decodedToken.userId}`);
+          navigate(`/edit/${decodedToken.userId}`);
         },
       });
     }

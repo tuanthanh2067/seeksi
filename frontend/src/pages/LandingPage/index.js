@@ -5,7 +5,7 @@ import Logo from "../../assets/logo.png";
 import Background from "../../assets/banner.png";
 import Signup from "../Modal/Signup";
 import Signin from "../Modal/Signin";
-
+import Chat from "../Chat/Chat";
 const LandingPage = () => {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -13,6 +13,7 @@ const LandingPage = () => {
   const handleSignUpModal = () => setShowSignUpModal(false);
   const handleSignInModal = () => setShowSignInModal(false);
 
+  // return <Chat />;
   return (
     <>
       <div

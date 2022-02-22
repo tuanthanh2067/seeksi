@@ -17,7 +17,7 @@ const Navbar = () => {
   const currentUserID = decodedToken.userId;
 
   return (
-    <div className="sticky top-0 z-50 bg-white">
+    <div className="sticky top-0 z-10 bg-white">
       <header className="bg-gradient-to-b from-[#f06c9b66]">
         <div className="container mx-auto px-4 py-5 md:p-5 sm:flex sm:justify-between sm:items-center">
           <div className="flex items-center justify-between">
@@ -64,7 +64,7 @@ const Navbar = () => {
               Match
             </Link>
             <Link
-              to="/"
+              to="/chat"
               className=" block mt-3 sm:mt-0 sm:ml-10 text-primary font-semibold text-lg lg:text-xl hover:underline"
             >
               Chat

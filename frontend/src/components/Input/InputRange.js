@@ -26,8 +26,9 @@ export const InputSlider = (props) => (
   <Slider
     min={1}
     max={500}
-    defaultValue={10}
+    defaultValue={props.defaultValue}
     handle={handle}
+    tipFormatter={(value) => `${value}`}
     onChange={props.onChange}
     marks={{
       1: "1",
@@ -45,7 +46,7 @@ export const InputRange = (props) => (
     }}
     min={18}
     max={82}
-    defaultValue={[21, 27]}
+    defaultValue={[props.defaultValues[0], props.defaultValues[1]]}
     tipFormatter={(value) => `${value}`}
     onChange={props.onChange}
   />
