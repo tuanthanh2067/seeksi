@@ -39,7 +39,10 @@ const mutations = {
       gameRoomCreated: args.chatRoomId,
     });
 
-    return "Accept Successfully";
+    return {
+      success: true,
+      message: "Accept Successfully",
+    };
   },
 
   rejectGameRequest: async (
@@ -51,7 +54,10 @@ const mutations = {
 
     await dataSources.gameRequestAPI.rejectGameRequest(args.gameRequestId);
 
-    return "Reject Successfully";
+    return {
+      success: true,
+      message: "Reject Successfully",
+    };
   },
 };
 
