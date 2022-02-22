@@ -213,7 +213,7 @@ class UserAPI extends DataSource {
         errors.push("sex is not valid");
       }
       if (errors.length == 0) {
-        let user = await User.findById(userId).catch(err => {
+        let user = await User.findById(userId).catch((err) => {
           throw err;
         });
 
@@ -244,8 +244,8 @@ class UserAPI extends DataSource {
         await this.setUserLocation(updateUserObject, userId);
       }
       return {
-        errors: errors
-      }
+        errors: errors,
+      };
     } catch (err) {
       console.log(err);
       throw new ApolloError("edit user error" + err);
