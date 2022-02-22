@@ -7,6 +7,7 @@ const { ChatRoom } = require("./ChatRoom");
 const { Report } = require("./Report");
 const { GameRoom } = require("./GameRoom");
 const { GameRequest } = require("./GameRequest");
+const { UserStatus } = require("./UserStatus");
 
 const resolvers = {
   Query: {
@@ -19,6 +20,7 @@ const resolvers = {
     ...Report.resolvers.queries,
     ...GameRoom.resolvers.queries,
     ...GameRequest.resolvers.queries,
+    ...UserStatus.resolvers.queries,
   },
   Mutation: {
     ...User.resolvers.mutations,
@@ -34,6 +36,11 @@ const resolvers = {
     ...ChatRoom.resolvers.subscriptions,
     ...GameRoom.resolvers.subscriptions,
     ...GameRequest.resolvers.subscriptions,
+    ...UserStatus.resolvers.mutations,
+  },
+  Subscription: {
+    ...ChatRoom.resolvers.subscriptions,
+    ...UserStatus.resolvers.subscriptions,
   },
 };
 

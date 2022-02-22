@@ -6,6 +6,7 @@ import LandingPage from "./pages/LandingPage/index";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Match from "./pages/Match/Match";
 import ProfilePage from "./pages/ProfilePage/index";
+import EditPage from "./pages/EditPage/EditPage";
 import Chat from "./pages/Chat/Chat";
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/match" element={<Match />} />
         <Route path="/user/:id" element={<ProfilePage />} />
+        <Route path="/edit/:id" element={<EditPage />} />
         <Route path="/chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>

@@ -1,64 +1,76 @@
-import React, { useState } from "react";
-import RoundedButton from "../../../components/Buttons/RoundedButton";
-import Input from "../../../components/Input/Input";
-import { InputSlider, InputRange } from "../../../components/Input/InputRange";
-import Dropdown from "../../../components/Input/Dropdown";
-import Textarea from "../../../components/Input/Textarea";
-import Label from "../../../components/Input/Label";
-import Radio from "../../../components/Input/Radio";
-import Checkbox from "../../../components/Input/Checkbox";
-import RoundedImage from "../../../components/Image/RoundedImage";
-import EditImage from "../../../components/Image/EditImage";
-import { useQuery } from "@apollo/client";
-import { GET_HOBBY } from "../../../graphql/queries/Hobby";
-import { EDIT_PROFILE_MUTATION } from "../../../graphql/mutations/Mutations";
-import { useMutation } from "@apollo/client";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import RoundedButton from "../../components/Buttons/RoundedButton";
+import Input from "../../components/Input/Input";
+import { InputSlider, InputRange } from "../../components/Input/InputRange";
+import Dropdown from "../../components/Input/Dropdown";
+import Textarea from "../../components/Input/Textarea";
+import Label from "../../components/Input/Label";
+import Radio from "../../components/Input/Radio";
+import Checkbox from "../../components/Input/Checkbox";
+import RoundedImage from "../../components/Image/RoundedImage";
+import EditImage from "../../components/Image/EditImage";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_HOBBY } from "../../graphql/queries/Hobby";
+import { EDIT_PROFILE_MUTATION } from "../../graphql/mutations/Mutations";
 
 import {
-  monthOptions,
-  generateDateOptions,
   countryOptions,
-  generateYearOptions,
   filterStateBySelectedCountry,
-  filterCityBySelectedState,
-} from "./data";
+  filterCity,
+} from "../../utils/data";
 
-const EditMode = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const EditInfo = ({ id, user, photos }) => {
+  const navigate = useNavigate();
+
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
   const [err, setErr] = useState("");
   const clearErr = () => setErr("");
-  const [month, setMonth] = useState("");
-  const [date, setDate] = useState("");
-  const [year, setYear] = useState("");
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [gender, setGender] = useState("");
   const [genderBias, setGenderBias] = useState("");
-  const [longTerm, setLongTerm] = useState("");
-  const [shortTerm, setShortTerm] = useState("");
-  const [distance, setDistance] = useState(10);
-  const [ageBias, setAgeBias] = useState([21, 27]);
-  const { loading, data } = useQuery(GET_HOBBY);
-  const [images, setImages] = useState(props.photos);
+  const [longTerm, setLongTerm] = useState(false);
+  const [shortTerm, setShortTerm] = useState(false);
+  const [distance, setDistance] = useState(0);
+  const [ageBias, setAgeBias] = useState([20, 30]);
+  const [images, setImages] = useState(photos);
   const [bio, setBio] = useState("");
   const [hobbies, setHobbies] = useState([]);
   const [length, setLength] = useState(0);
   const imgArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+  const { loading, data } = useQuery(GET_HOBBY);
   const [editUser] = useMutation(EDIT_PROFILE_MUTATION);
 
   const hobbyOptions = () => {
     let hobbies = [];
     if (!loading && data.getHobbies) {
-      data.getHobbies.map((hobby) => {
-        hobbies.push({
-          value: hobby,
-          label: hobby,
+      data.getHobbies
+        .filter((hobby, i) => {
+          return data.getHobbies.indexOf(hobby) === i;
+        })
+        .map((hobby, key) => {
+          hobbies.push({
+            value: hobby,
+            label: hobby,
+          });
         });
-      });
     }
     return hobbies;
+  };
+
+  const scrollToTop = () => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }, 100);
   };
 
   const onChange = (e) => {
@@ -83,13 +95,9 @@ const EditMode = (props) => {
 
   const handleSave = () => {
     if (
-      !email ||
-      !password ||
-      !year ||
-      !month ||
-      !date ||
+      // !email ||
+      // !password ||
       !country ||
-      !state ||
       !city ||
       !gender ||
       !genderBias ||
@@ -98,26 +106,31 @@ const EditMode = (props) => {
       !bio
     ) {
       setErr("*Please provide all information");
-    } else if (email && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      setErr("*Please provide a properly formatted email address");
-    } else if (password && password.length < 12) {
-      setErr("*Password should be at least 12 characters");
-    } else if (
-      password &&
-      !password.match(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{12,})/
-      )
-    ) {
-      setErr(
-        "*Password must contain at least 1 number, 1 uppercase letter and 1 special character"
-      );
+      scrollToTop();
+      // } else if (email && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      //   setErr("*Please provide a properly formatted email address");
+      // } else if (password && password.length < 12) {
+      //   setErr("*Password should be at least 12 characters");
+      // } else if (
+      //   password &&
+      //   !password.match(
+      //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{12,})/
+      //   )
+      // ) {
+      //   setErr(
+      //     "*Password must contain at least 1 number, 1 uppercase letter and 1 special character"
+      //   );
+      // } else if (password && password !== confirmPassword) {
+      //   setErr("*Passwords do not match");
+    } else if (hobbies.length > 5) {
+      setErr("Please select only up to 5 hobbies");
+      scrollToTop();
     } else {
-      setMonth(parseInt(month) - 1);
       editUser({
         variables: {
+          country: country,
           city: city,
           province: state,
-          dob: new Date(`${year}, ${month}, ${date}`),
           sex: gender,
           genderPref: genderBias,
           hobbies: hobbies,
@@ -125,26 +138,49 @@ const EditMode = (props) => {
           distance: distance,
           minAge: ageBias[0],
           maxAge: ageBias[1],
+          longTerm: longTerm,
+          shortTerm: shortTerm,
         },
         onError: (error) => {
+          console.log(error);
           setErr(error);
         },
         onCompleted: (data) => {
-          props.handleCancel();
+          navigate(`/user/${id}`);
         },
       });
     }
   };
+
+  useEffect(() => {
+    if (user.location) {
+      setCountry(user.location.country);
+      setState(user.location.province);
+      setCity(user.location.city);
+    }
+    if (user.preference) {
+      setGenderBias(user.preference.gender);
+      setLongTerm(user.preference.longTerm);
+      setShortTerm(user.preference.shortTerm);
+      setDistance(user.preference.distance);
+      setAgeBias([user.preference.minAge, user.preference.maxAge]);
+    }
+    if (user.hobbies) setHobbies(user.hobbies);
+    if (user.bio) setBio(user.bio);
+    if (user.sex) setGender(user.sex);
+  }, []);
+
   return (
     <>
       <section className="mt-20">
         <div className="grid lg:grid-cols-2">
           <div className="w-full grid gap-y-1.5 justify-items-center">
             {err && <span className="text-red-600 font-medium">{err}</span>}
-            <Input
+            {/* <Input
               type="email"
               width="w-2/3"
               placeholder="Email"
+              value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
                 clearErr();
@@ -159,63 +195,50 @@ const EditMode = (props) => {
                 clearErr();
               }}
             />
-            <div className="pt-1.5 grid grid-cols-3 gap-4 w-2/3">
-              <Dropdown
-                options={countryOptions}
-                placeholder="Country"
-                onChange={(e) => {
-                  setCountry(e.value);
-                  setState("");
-                }}
-              />
-
-              <Dropdown
-                options={filterStateBySelectedCountry(country)}
-                placeholder="State"
-                onChange={(e) => {
-                  setState(e.value);
-                  clearErr();
-                }}
-              />
-
-              <Dropdown
-                options={filterCityBySelectedState(state)}
-                placeholder="City"
-                onChange={(e) => {
-                  setCity(e.value);
-                  clearErr();
-                }}
-              />
-            </div>
+            <Input
+              type="password"
+              width="w-2/3"
+              placeholder="Confirm new password"
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                clearErr();
+              }}
+            /> */}
             <div className="w-2/3">
-              <Label label="Birthday" />
+              <Label label="Location" />
               <div className="my-2 grid grid-cols-3 gap-4 ">
                 <Dropdown
-                  options={monthOptions}
-                  placeholder="Month"
+                  options={countryOptions}
+                  placeholder="Country"
+                  defaultValue={country}
                   onChange={(e) => {
-                    setMonth(e.value);
+                    setCountry(e.value);
+                    setState("");
+                  }}
+                />
+
+                <Dropdown
+                  options={filterStateBySelectedCountry(country)}
+                  placeholder="State"
+                  defaultValue={state}
+                  onChange={(e) => {
+                    setState(e.value);
                     clearErr();
                   }}
                 />
+
                 <Dropdown
-                  options={generateDateOptions()}
-                  placeholder="Day"
+                  options={filterCity(state, country)}
+                  placeholder="City"
+                  defaultValue={city}
                   onChange={(e) => {
-                    setDate(e.value);
-                    clearErr();
-                  }}
-                />
-                <Dropdown
-                  options={generateYearOptions()}
-                  placeholder="Year"
-                  onChange={(e) => {
-                    setYear(e.value);
+                    setCity(e.value);
                     clearErr();
                   }}
                 />
               </div>
             </div>
+
             <div className="w-2/3">
               <Label label="Sex" />
               <div className="grid grid-cols-3 gap-4 ">
@@ -223,7 +246,8 @@ const EditMode = (props) => {
                   value="Male"
                   name="gender"
                   width="w-full"
-                  onClick={() => {
+                  checked={gender === "male" ? "checked" : ""}
+                  onChange={() => {
                     setGender("male");
                     clearErr();
                   }}
@@ -232,7 +256,8 @@ const EditMode = (props) => {
                   value="Female"
                   name="gender"
                   width="w-full"
-                  onClick={() => {
+                  checked={gender === "female" ? "checked" : ""}
+                  onChange={() => {
                     setGender("female");
                     clearErr();
                   }}
@@ -244,7 +269,8 @@ const EditMode = (props) => {
                   value="Male"
                   name="genderBias"
                   width="w-full"
-                  onClick={() => {
+                  checked={genderBias === "male" ? "checked" : ""}
+                  onChange={() => {
                     setGenderBias("male");
                     clearErr();
                   }}
@@ -253,7 +279,8 @@ const EditMode = (props) => {
                   value="Female"
                   name="genderBias"
                   width="w-full"
-                  onClick={() => {
+                  checked={genderBias === "female" ? "checked" : ""}
+                  onChange={() => {
                     setGenderBias("female");
                     clearErr();
                   }}
@@ -262,7 +289,8 @@ const EditMode = (props) => {
                   value="Everyone"
                   name="genderBias"
                   width="w-full"
-                  onClick={() => {
+                  checked={genderBias === "everyone" ? "checked" : ""}
+                  onChange={() => {
                     setGenderBias("everyone");
                     clearErr();
                   }}
@@ -274,8 +302,9 @@ const EditMode = (props) => {
                   value="Short-term"
                   name="Relationship"
                   width="w-full"
-                  onClick={() => {
-                    setShortTerm("shortTerm");
+                  checked={shortTerm ? "checked" : ""}
+                  onChange={() => {
+                    setShortTerm(!shortTerm);
                     clearErr();
                   }}
                 />
@@ -283,8 +312,9 @@ const EditMode = (props) => {
                   value="Long-term"
                   name="Relationship"
                   width="w-full"
-                  onClick={() => {
-                    setLongTerm("longTerm");
+                  checked={longTerm ? "checked" : ""}
+                  onChange={() => {
+                    setLongTerm(!longTerm);
                     clearErr();
                   }}
                 />
@@ -297,8 +327,9 @@ const EditMode = (props) => {
                 options={hobbyOptions()}
                 isMulti="true"
                 placeholder={"Hobbies"}
+                defaultValue={hobbies}
                 onChange={(e) => {
-                  setHobbies(e.map((hobby) => hobby.value));
+                  setHobbies(e.map((hobby, key) => hobby.value));
                   clearErr();
                 }}
               />
@@ -307,6 +338,7 @@ const EditMode = (props) => {
                   placeholder={"Bio"}
                   width="w-full"
                   height="h-36"
+                  value={bio}
                   onChange={(e) => {
                     setBio(e.target.value);
                     clearErr();
@@ -316,6 +348,7 @@ const EditMode = (props) => {
               <Label label={`Distance Preference: ${distance} km`} />
               <div className="pt-5 pb-8 ml-2">
                 <InputSlider
+                  defaultValue={distance}
                   onChange={(value) => {
                     setDistance(value);
                     clearErr();
@@ -328,6 +361,7 @@ const EditMode = (props) => {
               />
               <div className="pt-5 ml-2">
                 <InputRange
+                  defaultValues={ageBias}
                   onChange={(value) => {
                     setAgeBias(value);
                     clearErr();
@@ -338,12 +372,12 @@ const EditMode = (props) => {
           </div>
         </div>
       </section>
-      <section className="mt-15">
-        <div className="container mx-auto py-5 md:p-5">
-          <div className="grid grid-cols-3 gap-4">
-            {imgArr.map((num) => {
+      <section className="mt-16">
+        <div className="container mx-auto mt-16 px-5">
+          <div className="grid grid-cols-2 auto-cols-fr sm:grid-cols-3 gap-12">
+            {imgArr.map((num, key) => {
               return (
-                <div className="block justify-self-center w-80 h-80">
+                <div className="block justify-self-center w-48 h-48 lg:w-72 lg:h-72">
                   {images[num] ? (
                     <RoundedImage
                       src={images[num]}
@@ -379,7 +413,7 @@ const EditMode = (props) => {
             fontSize={"text-lg"}
             paddingLR={"px-2 w-2/3"}
             hover={"hover:bg-white hover:text-primary hover:border-primary"}
-            handleClick={props.handleCancel}
+            handleClick={() => navigate(`/user/${id}`)}
           />
         </div>
       </div>
@@ -387,4 +421,4 @@ const EditMode = (props) => {
   );
 };
 
-export default EditMode;
+export default EditInfo;

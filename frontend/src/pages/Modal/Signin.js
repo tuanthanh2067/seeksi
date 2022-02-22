@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import Input from "../../components/Input/Input";
 import ForgotPassword from "./ForgotPassword";
@@ -12,6 +13,7 @@ const Signin = (props) => {
   const [showSignInModal, setShowSignInModal] = useState(true);
   const [login] = useMutation(USER_LOGIN_MUTATION);
   const clearErr = () => setErr("");
+  const navigate = useNavigate();
 
   const handleClick = () => {
     if (!email || !password) {
@@ -30,6 +32,7 @@ const Signin = (props) => {
         onCompleted: (data) => {
           localStorage.setItem("token", data.login.token);
           props.handleShow();
+          navigate("/match");
         },
       });
     }

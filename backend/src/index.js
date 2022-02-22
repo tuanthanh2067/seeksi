@@ -25,6 +25,7 @@ const dataSources = () => ({
   reportAPI: new datasources.ReportAPI(),
   gameRoomAPI: new datasources.GameRoomAPI(),
   gameRequestAPI: new datasources.GameRequestAPI(),
+  userStatusAPI: new datasources.UserStatusAPI(),
 });
 
 cloudinary.config({

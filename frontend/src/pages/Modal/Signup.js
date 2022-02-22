@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import Input from "../../components/Input/Input";
 import Dropdown from "../../components/Input/Dropdown";
@@ -6,7 +7,6 @@ import Label from "../../components/Input/Label";
 import Radio from "../../components/Input/Radio";
 import { USER_REGISTER_MUTATION } from "../../graphql/mutations/Mutations";
 import { useMutation } from "@apollo/client";
-import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 const Signup = (props) => {
@@ -107,7 +107,7 @@ const Signup = (props) => {
           localStorage.setItem("token", data.signup.token);
           props.handleShow();
           const decodedToken = jwt_decode(data.signup.token);
-          navigate(`/user/${decodedToken.userId}`);
+          navigate(`/edit/${decodedToken.userId}`);
         },
       });
     }

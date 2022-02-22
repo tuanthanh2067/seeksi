@@ -7,10 +7,6 @@ module.exports.types = `
         photo: Image
     }
 
-    type Subscription {
-        messageSent(roomId: String!): Message
-    }
-
     type ChatRoom {
         id: String
         partner: User

@@ -43,24 +43,40 @@ export const filterStateBySelectedCountry = (selectedCountry) => {
   }
 };
 
-export const filterCityBySelectedState = (selectedState) => {
-  let isoCode = stateCodeList.filter((obj) => obj.name === selectedState);
+export const filterCity = (selectedState, selectedCountry) => {
   let cityOptions = [];
-  if (isoCode.length > 0) {
-    City.getAllCities().map((city) => {
-      if (
-        city.stateCode === isoCode[0].isoCode &&
-        city.countryCode === selectedCountryIsoCode
-      ) {
-        cityOptions.push({
-          value: city.name,
-          label: city.name,
-        });
-      }
-      return {};
-    });
-    return cityOptions;
+  if (selectedState) {
+    let isoCode = stateCodeList.filter((obj) => obj.name === selectedState);
+    if (isoCode.length > 0) {
+      City.getAllCities().map((city) => {
+        if (
+          city.stateCode === isoCode[0].isoCode &&
+          city.countryCode === selectedCountryIsoCode
+        ) {
+          cityOptions.push({
+            value: city.name,
+            label: city.name,
+          });
+        }
+        return {};
+      });
+    }
+  } else {
+    let isoCode = isoCodeList.filter((obj) => obj.name === selectedCountry);
+    if (isoCode.length > 0) {
+      selectedCountryIsoCode = isoCode[0].isoCode;
+      City.getAllCities().map((city) => {
+        if (city.countryCode === selectedCountryIsoCode) {
+          cityOptions.push({
+            value: city.name,
+            label: city.name,
+          });
+        }
+        return {};
+      });
+    }
   }
+  return cityOptions;
 };
 
 export const monthOptions = [

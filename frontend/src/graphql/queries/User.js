@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const GET_USER = gql`
   query GetUserProfileById($userId: ID!) {
     userById(userId: $userId) {
+      email
       firstName
       lastName
       bio
@@ -11,6 +12,7 @@ export const GET_USER = gql`
       location {
         city
         province
+        country
       }
       hobbies
       avatar {
@@ -18,6 +20,14 @@ export const GET_USER = gql`
       }
       photo {
         large
+      }
+      preference {
+        gender
+        distance
+        minAge
+        maxAge
+        longTerm
+        shortTerm
       }
     }
   }
