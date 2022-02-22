@@ -32,30 +32,25 @@ const ProfilePage = () => {
       )}
 
       {!loading && data && (
-        <main>
+        <main className="mb-16">
           <UserInfo isEdit={false} user={data.userById} />
 
-          <section className="mt-20">
-            <div className="container mx-auto py-5 md:p-5">
-              <LightGallery
-                speed={500}
-                plugins={[lgZoom]}
-                elementClassNames="grid grid-cols-3 gap-y-7"
-              >
-                {data.userById.photo.map((pic, key) => (
-                  <a
-                    href={`${pic.large}`}
-                    className="block justify-self-center w-80 h-80"
-                  >
-                    <img
-                      src={`${pic.large}`}
-                      alt={key}
-                      className="object-cover object-center"
-                    />
-                  </a>
-                ))}
-              </LightGallery>
-            </div>
+          <section className="container mx-auto mt-16 px-5">
+            <LightGallery
+              speed={500}
+              plugins={[lgZoom]}
+              elementClassNames="grid grid-cols-2 sm:grid-cols-3 gap-12"
+            >
+              {data.userById.photo.map((pic, key) => (
+                <a href={`${pic.large}`} className="block justify-self-center">
+                  <img
+                    src={`${pic.large}`}
+                    alt={key}
+                    className="object-cover object-center"
+                  />
+                </a>
+              ))}
+            </LightGallery>
           </section>
         </main>
       )}
