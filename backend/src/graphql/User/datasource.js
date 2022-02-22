@@ -267,10 +267,6 @@ class UserAPI extends DataSource {
   async insertPhotos({ userId, photos }) {
     const user = await User.findById(userId);
 
-    if (user.photo + photos.length > process.env.MAX_IMAGE_UPLOAD) {
-      throw new UserInputError("New photos overflow photos per user limit!");
-    }
-
     user.photo = user.photo.concat(photos);
 
     await user.save();
