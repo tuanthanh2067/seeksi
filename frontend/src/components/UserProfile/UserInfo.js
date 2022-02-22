@@ -46,8 +46,8 @@ const ProfilePage = (props) => {
   return (
     <>
       <div className="container mx-auto px-4 py-5 sm:p-5">
-        <div className="grid grid-cols-3 gap-5">
-          <div className="w-52 h-52 justify-self-center overflow-hidden rounded-full">
+        <div className="flex flex-col lg:flex-row items-center justify-evenly">
+          <div className="w-36 h-36 sm:w-48 sm:h-48 overflow-hidden rounded-full">
             {props.isEdit ? (
               avt ? (
                 <OvalImage src={avt} handleRemove={handleAvtRemove} />
@@ -62,25 +62,25 @@ const ProfilePage = (props) => {
               />
             )}
           </div>
-          <div className="col-span-2 h-52 self-center flex flex-col justify-between">
-            <div className="block text-lg">
-              <p className="text-2xl text-primary font-bold">
+          <div className="mt-4 lg:mt-0">
+            <div className="flex flex-col items-center justify-center lg:items-start">
+              <p className="text-lg text-primary font-bold">
                 {props.user.firstName} {props.user.lastName}
               </p>
-              <div className="flex gap-16 mt-2">
-                <div className="flex gap-2">
-                  <div className="w-6 h-6">
+              <div className="grid grid-cols-3 w-full justify-items-center sm:justify-items-start mt-4 lg:mt-2">
+                <div className="flex items-center justify-center">
+                  <div className="w-6 h-6 mr-1">
                     <img src={AgeLogo} alt="age logo" />
                   </div>
                   <p>{getAge(props.user.dob)}</p>
                 </div>
-                <div className="flex gap-2">
-                  <div className="w-6 h-6">
+                <div className="flex items-center justify-center">
+                  <div className="w-6 h-6 mr-1">
                     <img src={GenderLogo} alt="gender logo" />
                   </div>
                   <p>{capitalizeFirstLetter(props.user.sex)}</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex items-center justify-center">
                   <div className="w-6 h-6 flex justify-center">
                     <img src={LocationLogo} alt="location logo" />
                   </div>
@@ -93,12 +93,14 @@ const ProfilePage = (props) => {
                   )}
                 </div>
               </div>
-              <p className="mt-2">
+              <p className="mt-4 lg:mt-2">
                 <span className="font-bold">Hobbies: </span>
 
                 {props.user.hobbies ? props.user.hobbies.join(", ") : ""}
               </p>
-              <p className="mt-2">{props.user.bio ? props.user.bio : ""}</p>
+              <p className="mt-4 lg:mt-2">
+                {props.user.bio ? props.user.bio : ""}
+              </p>
             </div>
             {currentUserID === id &&
               (props.isEdit ? (
@@ -107,7 +109,8 @@ const ProfilePage = (props) => {
                   bgColor={"bg-secondary"}
                   borderColor={"border-secondary"}
                   fontSize={"text-lg"}
-                  paddingLR={"px-4 w-1/3"}
+                  paddingLR={"px-6 w-full"}
+                  paddingTB={"py-1 mt-4 lg:mt-2"}
                   hover={
                     "hover:bg-white hover:text-secondary hover:border-secondary"
                   }
@@ -121,7 +124,8 @@ const ProfilePage = (props) => {
                   bgColor={"bg-secondary"}
                   borderColor={"border-secondary"}
                   fontSize={"text-lg"}
-                  paddingLR={"px-6 w-2/3"}
+                  paddingLR={"px-6 w-full"}
+                  paddingTB={"py-1 mt-4 lg:mt-2"}
                   hover={
                     "hover:bg-white hover:text-secondary hover:border-secondary"
                   }

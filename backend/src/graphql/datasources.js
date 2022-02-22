@@ -6,6 +6,7 @@ const { Match } = require("./Match");
 const { ChatRoom } = require("./ChatRoom");
 const { Report } = require("./Report");
 const { OpeningLine } = require("./OpeningLine");
+const { UserStatus } = require("./UserStatus");
 
 module.exports = {
   UserAPI: User.UserAPI,
@@ -15,5 +16,6 @@ module.exports = {
   MatchAPI: Match.MatchAPI,
   ChatRoomAPI: ChatRoom.ChatRoomAPI,
   ReportAPI: Report.ReportAPI,
+  UserStatusAPI: UserStatus.UserStatusAPI,
   OpeningLineAPI: OpeningLine.OpeningLineAPI,
 };

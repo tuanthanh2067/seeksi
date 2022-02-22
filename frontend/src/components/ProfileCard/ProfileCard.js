@@ -1,9 +1,9 @@
+import React, { useState } from "react";
+import { useSpring, a } from "@react-spring/web";
+
 import OvalButton from "../Buttons/OvalButton";
 import Info from "../../assets/info.png";
 import styles from "./ProfileCard.module.css";
-
-import React, { useState } from "react";
-import { useSpring, a } from "@react-spring/web";
 
 function ProfileCard(props) {
   const [flipped, setFlipped] = useState(false);
@@ -126,7 +126,5 @@ function ProfileCard(props) {
     </div>
   );
 }
-
-ProfileCard.defaultProps = {};
 
 export default ProfileCard;
