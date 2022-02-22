@@ -61,10 +61,6 @@ const typeDefs = gql`
   type Subscription {
     ${GameRoom.subscriptions}
     ${GameRequest.subscriptions}
-    ${UserStatus.mutations}
-  }
-
-  type Subscription {
     ${UserStatus.subscriptions}
     ${ChatRoom.subscriptions}
   }
