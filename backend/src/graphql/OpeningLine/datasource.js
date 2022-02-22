@@ -6,6 +6,8 @@ const {
 } = require("apollo-server-core");
 const OpeningLine = require("../../schemas/OpeningLine/OpeningLine");
 
+require("dotenv").config();
+
 class OpeningLineAPI extends DataSource {
     constructor() {
         super();
@@ -21,8 +23,9 @@ class OpeningLineAPI extends DataSource {
             // } else {
             //     throw new ApolloError("something wrong with Page and perPage")
             // }
+            const limit = parseInt(process.env.OPENINGLINE_LIMIT) || 9;
             lines = await OpeningLine.aggregate([{
-                $sample: { size: 9 },
+                $sample: { size: limit },
             }
             ]);
             //we do this because aggregate returns _id instead of id
@@ -30,7 +33,8 @@ class OpeningLineAPI extends DataSource {
                 ...obj, id: obj._id
             }))
         } catch (err) {
-            throw new ApolloError(err);
+            console.log(err);
+            throw new ApolloError("Internal Server Error");
         }
     }
 
@@ -43,7 +47,8 @@ class OpeningLineAPI extends DataSource {
                 }, { new: true });
             return line || null;
         } catch (err) {
-            throw new ApolloError(err);
+            console.log(err);
+            throw new ApolloError("Internal Server Error");
         }
     }
 }
