@@ -22,7 +22,7 @@ class OpeningLineAPI extends DataSource {
             //     throw new ApolloError("something wrong with Page and perPage")
             // }
             lines = await OpeningLine.aggregate([{
-                $sample: { size: 3 },
+                $sample: { size: 9 },
             }
             ]);
             //we do this because aggregate returns _id instead of id
