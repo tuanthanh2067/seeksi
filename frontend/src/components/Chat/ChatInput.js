@@ -41,7 +41,7 @@ function ChatInput(props) {
 
   return (
     <>
-      <div className="flex-none flex gap-x-3 py-5 bottom-0">
+      <div className="flex flex-none gap-x-3 py-5 bottom-0">
         <button
           className="border-primary border-2 focus:outline-2 bg-primary text-white text-md font-semibold rounded w-12 "
           onClick={handleGame}

@@ -8,7 +8,7 @@ function ChatWindow({ data }) {
   const [showEmoji, setShowEmoji] = useState(false);
 
   return data ? (
-    <div className="flex flex-col gap-y-2 container col-start-2 w-2/3 h-full">
+    <div className="flex flex-col items-stretch gap-y-2 container col-start-2 w-2/3 h-full">
       <ChatHeader
         avatar={data.partner.avatar.small}
         firstName={data.partner.firstName}
