@@ -7,7 +7,6 @@ const {
 const bcrypt = require("bcryptjs");
 
 const User = require("../../schemas/User/User");
-//const Image = require("../../schemas/share/Image");
 
 const { createToken } = require("../../utils/jwt");
 

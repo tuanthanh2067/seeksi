@@ -38,6 +38,7 @@ const resolvers = {
     ...GameRoom.resolvers.mutations,
     ...GameRequest.resolvers.mutations,
     ...OpeningLine.resolvers.mutations,
+    ...Upload.resolvers.mutations,
   },
   Subscription: {
     ...ChatRoom.resolvers.subscriptions,

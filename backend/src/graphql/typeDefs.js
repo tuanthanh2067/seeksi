@@ -63,6 +63,7 @@ const typeDefs = gql`
     ${GameRoom.mutations}
     ${GameRequest.mutations}
     ${OpeningLine.mutations}
+    ${Upload.mutations}
   }
 
   type Subscription {
