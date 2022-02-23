@@ -6,7 +6,7 @@ db.reports.insertMany([
   {
     _id: ObjectId("61e761fcfc13ae75bd0000e6"),
     title: "mattis nibh ligula",
-    problem: "Harassment",
+    problem: "harassment",
     description:
       "Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.",
     reportedUserID: ObjectId("6199d9abf6a0af30a800029b"),
@@ -15,7 +15,7 @@ db.reports.insertMany([
   {
     _id: ObjectId("61e761fcfc13ae75bd0000e7"),
     title: "lacus purus aliquet at feugiat",
-    problem: "Something else",
+    problem: "something else",
     description:
       "Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat.",
     reportedUserID: ObjectId("6199d9abf6a0af3047000287"),
@@ -24,7 +24,7 @@ db.reports.insertMany([
   {
     _id: ObjectId("61e761fcfc13ae75bd0000e8"),
     title: "nam dui proin leo odio porttitor",
-    problem: "Fake account",
+    problem: "fake account",
     description:
       "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
     reportedUserID: ObjectId("6199d9abf6a0af30a80002a0"),
@@ -33,7 +33,7 @@ db.reports.insertMany([
   {
     _id: ObjectId("61e761fcfc13ae75bd0000e9"),
     title: "leo odio porttitor id consequat in",
-    problem: "Sharing inappropriate content",
+    problem: "sharing inappropriate content",
     description: "Aliquam erat volutpat. In congue.",
     reportedUserID: ObjectId("6199d9abf6a0af30a800029f"),
     reporterID: ObjectId("6199d9abf6a0af30a0000285"),
@@ -41,7 +41,7 @@ db.reports.insertMany([
   {
     _id: ObjectId("61e761fcfc13ae75bd0000ea"),
     title: "cras in purus eu magna",
-    problem: "Harassment",
+    problem: "harassment",
     description:
       "Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.",
     reportedUserID: ObjectId("6199d9abf6a0af308e000283"),
