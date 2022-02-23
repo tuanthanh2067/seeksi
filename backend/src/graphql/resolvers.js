@@ -36,10 +36,6 @@ const resolvers = {
     ...ChatRoom.resolvers.subscriptions,
     ...GameRoom.resolvers.subscriptions,
     ...GameRequest.resolvers.subscriptions,
-    ...UserStatus.resolvers.mutations,
-  },
-  Subscription: {
-    ...ChatRoom.resolvers.subscriptions,
     ...UserStatus.resolvers.subscriptions,
   },
 };
