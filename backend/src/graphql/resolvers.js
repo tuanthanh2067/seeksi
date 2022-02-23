@@ -8,6 +8,7 @@ const { Report } = require("./Report");
 const { GameRoom } = require("./GameRoom");
 const { GameRequest } = require("./GameRequest");
 const { UserStatus } = require("./UserStatus");
+const { OpeningLine } = require("./OpeningLine");
 
 const resolvers = {
   Query: {
@@ -21,6 +22,7 @@ const resolvers = {
     ...GameRoom.resolvers.queries,
     ...GameRequest.resolvers.queries,
     ...UserStatus.resolvers.queries,
+    ...OpeningLine.resolvers.queries,
   },
   Mutation: {
     ...User.resolvers.mutations,
@@ -31,6 +33,7 @@ const resolvers = {
     ...Report.resolvers.mutations,
     ...GameRoom.resolvers.mutations,
     ...GameRequest.resolvers.mutations,
+    ...OpeningLine.resolvers.mutations,
   },
   Subscription: {
     ...ChatRoom.resolvers.subscriptions,

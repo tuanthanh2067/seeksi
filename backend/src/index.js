@@ -26,6 +26,7 @@ const dataSources = () => ({
   gameRoomAPI: new datasources.GameRoomAPI(),
   gameRequestAPI: new datasources.GameRequestAPI(),
   userStatusAPI: new datasources.UserStatusAPI(),
+  openingLineAPI: new datasources.OpeningLineAPI(),
 });
 
 cloudinary.config({

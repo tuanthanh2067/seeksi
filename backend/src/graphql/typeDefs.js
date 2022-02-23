@@ -13,6 +13,7 @@ const { Match } = require("./Match");
 const { ChatRoom } = require("./ChatRoom");
 const { Report } = require("./Report");
 const { UserStatus } = require("./UserStatus");
+const { OpeningLine } = require("./OpeningLine");
 const { SharedType } = require("./SharedType");
 const { GameRoom } = require("./GameRoom");
 const { GameRequest } = require("./GameRequest");
@@ -33,6 +34,7 @@ const typeDefs = gql`
   ${GameRoom.types}
   ${GameRequest.types}
   ${UserStatus.types}
+  ${OpeningLine.types}
   
   type Query {
     ${User.queries}
@@ -45,6 +47,7 @@ const typeDefs = gql`
     ${GameRoom.queries}
     ${GameRequest.queries}
     ${UserStatus.queries}
+    ${OpeningLine.queries}
   }
   
   type Mutation {
@@ -56,6 +59,7 @@ const typeDefs = gql`
     ${Report.mutations}
     ${GameRoom.mutations}
     ${GameRequest.mutations}
+    ${OpeningLine.mutations}
   }
 
   type Subscription {
