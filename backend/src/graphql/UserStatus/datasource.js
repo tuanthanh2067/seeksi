@@ -10,6 +10,11 @@ class UserStatusAPI extends DataSource {
   updateUserStatus(userId, lastSeen) {
     userStatus[userId] = lastSeen;
   }
+
+  isOnline(userId) {
+    // user status will be updated every 30s
+    return (Date.now() - userStatus[userId]) / 1000 <= 30;
+  }
 }
 
 module.exports.UserStatusAPI = UserStatusAPI;

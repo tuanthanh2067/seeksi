@@ -52,11 +52,7 @@ class GameRequestAPI extends DataSource {
 
   async acceptGameRequest(gameRequestId) {
     try {
-      const gameRequest = await GameRequest.findById(gameRequestId);
-
-      if (!gameRequest) {
-        throw new ApolloError("Game request expired");
-      }
+      const gameRequest = await this.getGameRequest(gameRequestId);
 
       gameRequest.status = [GameRequestEnum.ACCEPTED, GameRequestEnum.ACCEPTED];
 
@@ -71,6 +67,18 @@ class GameRequestAPI extends DataSource {
     try {
       await GameRequest.deleteOne({ id: gameRequestId });
     } catch (err) {
+      throw new ApolloError("Internal Server Error");
+    }
+  }
+
+  async getGameRequest(gameRequestId) {
+    try {
+      const gameRequest = await GameRequest.findById(gameRequestId);
+      if (!gameRequest) throw new ApolloError("Game request expired");
+
+      return gameRequest;
+    } catch (err) {
+      console.error(err);
       throw new ApolloError("Internal Server Error");
     }
   }

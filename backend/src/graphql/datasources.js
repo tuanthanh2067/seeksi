@@ -8,6 +8,7 @@ const { Report } = require("./Report");
 const { GameRoom } = require("./GameRoom");
 const { GameRequest } = require("./GameRequest");
 const { UserStatus } = require("./UserStatus");
+const { PlayingStatus } = require("./PlayingStatus");
 
 module.exports = {
   UserAPI: User.UserAPI,
@@ -19,5 +20,6 @@ module.exports = {
   ReportAPI: Report.ReportAPI,
   GameRoomAPI: GameRoom.GameRoomAPI,
   GameRequestAPI: GameRequest.GameRequestAPI,
-  UserStatusAPI: UserStatus.UserStatusAPI
+  UserStatusAPI: UserStatus.UserStatusAPI,
+  PlayingStatusAPI: PlayingStatus.PlayingStatusAPI,
 };
