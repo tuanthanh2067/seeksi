@@ -1,3 +1,4 @@
+const { GraphQLUpload } = require("graphql-upload");
 const { User } = require("./User");
 const { Token } = require("./Token");
 const { Hobby } = require("./Hobby");
@@ -9,8 +10,10 @@ const { GameRoom } = require("./GameRoom");
 const { GameRequest } = require("./GameRequest");
 const { UserStatus } = require("./UserStatus");
 const { OpeningLine } = require("./OpeningLine");
+const { Upload } = require("./Upload");
 
 const resolvers = {
+  Upload: GraphQLUpload,
   Query: {
     ...User.resolvers.queries,
     ...Token.resolvers.queries,
@@ -23,6 +26,7 @@ const resolvers = {
     ...GameRequest.resolvers.queries,
     ...UserStatus.resolvers.queries,
     ...OpeningLine.resolvers.queries,
+    ...Upload.resolvers.queries,
   },
   Mutation: {
     ...User.resolvers.mutations,
@@ -34,6 +38,7 @@ const resolvers = {
     ...GameRoom.resolvers.mutations,
     ...GameRequest.resolvers.mutations,
     ...OpeningLine.resolvers.mutations,
+    ...Upload.resolvers.mutations,
   },
   Subscription: {
     ...ChatRoom.resolvers.subscriptions,
