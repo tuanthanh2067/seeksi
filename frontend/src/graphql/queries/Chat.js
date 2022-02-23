@@ -38,3 +38,12 @@ export const GET_CHAT_ROOMS = gql`
     }
   }
 `;
+
+export const GET_OPENING_LINES = gql`
+  query getOpeningLine {
+    getOpeningLine {
+      id
+      content
+    }
+  }
+`;

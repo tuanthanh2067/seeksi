@@ -1,0 +1,43 @@
+.carousel .control-arrow,
+.carousel.carousel-slider .control-arrow {
+  opacity: 1;
+}
+
+.carousel .control-next.control-arrow,
+.carousel .control-next.control-arrow:hover {
+  background-color: transparent;
+  right: 15px;
+}
+
+.carousel .control-prev.control-arrow,
+.carousel .control-prev.control-arrow:hover {
+  background-color: transparent;
+  left: 15px;
+}
+
+.carousel .control-next.control-arrow:before {
+  content: "";
+  border: solid #f06c9b;
+  border-width: 0 4px 4px 0;
+  display: inline-block;
+  padding: 7px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.carousel .control-prev.control-arrow:before {
+  content: "";
+  border: solid #f06c9b;
+  border-width: 0 4px 4px 0;
+  display: inline-block;
+  padding: 7px;
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.carousel .slide {
+  min-width: 100%;
+  margin: auto 0;
+  position: relative;
+  text-align: center;
+}
