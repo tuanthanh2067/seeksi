@@ -9,6 +9,7 @@ const { GameRoom } = require("./GameRoom");
 const { GameRequest } = require("./GameRequest");
 const { UserStatus } = require("./UserStatus");
 const { PlayingStatus } = require("./PlayingStatus");
+const { OpeningLine } = require("./OpeningLine");
 
 module.exports = {
   UserAPI: User.UserAPI,
@@ -22,4 +23,5 @@ module.exports = {
   GameRequestAPI: GameRequest.GameRequestAPI,
   UserStatusAPI: UserStatus.UserStatusAPI,
   PlayingStatusAPI: PlayingStatus.PlayingStatusAPI,
+  OpeningLineAPI: OpeningLine.OpeningLineAPI,
 };

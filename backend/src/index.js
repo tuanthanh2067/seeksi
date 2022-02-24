@@ -2,6 +2,7 @@ const { ApolloServer } = require("apollo-server-express");
 const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
 const express = require("express");
 const http = require("http");
+const { graphqlUploadExpress } = require("graphql-upload");
 const Mongoose = require("mongoose");
 const cloudinary = require("cloudinary");
 const { execute, subscribe } = require("graphql");
@@ -27,6 +28,7 @@ const dataSources = () => ({
   gameRequestAPI: new datasources.GameRequestAPI(),
   userStatusAPI: new datasources.UserStatusAPI(),
   playingStatusAPI: new datasources.PlayingStatusAPI(),
+  openingLineAPI: new datasources.OpeningLineAPI(),
 });
 
 cloudinary.config({
@@ -51,6 +53,10 @@ Mongoose.connect(process.env.MONGODB_CONNECTION, {
 
 async function startApolloSever() {
   const app = express();
+
+  app.use(
+    graphqlUploadExpress({ maxFiles: process.env.MAX_IMAGE_UPLOAD || 9 })
+  );
 
   const httpServer = http.createServer(app);
 
@@ -85,6 +91,7 @@ async function startApolloSever() {
         },
       },
     ],
+    uploads: true,
   });
 
   await server.start();

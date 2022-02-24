@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner/Spinner";
 import ChatWindow from "../../components/Chat/ChatWindow";
+import ChatPartner from "../../components/Chat/ChatPartner";
 import Navbar from "../../components/Navbar";
 import { GET_MESSAGE } from "../../graphql/subscriptions/Chat";
 import { GET_CHAT_ROOMS } from "../../graphql/queries/Chat";
@@ -48,7 +49,8 @@ function Chat() {
     return (
       <div className="h-screen">
         <Navbar />
-        <section className="min-h-[85%] max-h-[85%] flex ">
+        <section className="container mx-auto py-5 md:p-5 min-h-[85%] max-h-[85%] flex">
+          <ChatPartner data={data.chatRooms} />
           <ChatWindow data={data.chatRooms[0]} />
         </section>
       </div>

@@ -1,25 +1,36 @@
 const cloudinary = require("cloudinary").v2;
 
+module.exports.SUPPORTED_MIMETYPE = [
+  {
+    mimetype: "image/jpeg",
+    extension: "jpg",
+  },
+  {
+    mimetype: "image/png",
+    extension: "png",
+  },
+  {
+    mimetype: "image/jpeg",
+    extension: "jpeg",
+  },
+];
+
 /**
  *
  * @param {Array} photos array of photo links from client
- * @returns {Array} array of photos links from cloudinary
+ * @returns {Promise<any[]>} array of photos links from cloudinary
  */
 module.exports.uploadImages = async (photos) => {
-  const arrays = await Promise.all(
+  return Promise.all(
     photos.map(async (photo) => {
-      return await cloudinary.uploader.upload(photo, {
+      const { width, height, url } = await cloudinary.uploader.upload(photo, {
         folder: "images/",
         allowed_formats: ["jpg", "png", "jpeg"],
       });
+
+      return generateImages(width, height, url);
     })
   );
-
-  const results = arrays.map((photo) =>
-    generateImages(photo.width, photo.height, photo.url)
-  );
-
-  return results;
 };
 
 // landscape and portrait

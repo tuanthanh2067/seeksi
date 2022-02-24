@@ -7,7 +7,6 @@ const {
 const bcrypt = require("bcryptjs");
 
 const User = require("../../schemas/User/User");
-const preferenceSchema = require("../../schemas/User/Preference");
 
 const { createToken } = require("../../utils/jwt");
 
@@ -250,6 +249,26 @@ class UserAPI extends DataSource {
       console.log(err);
       throw new ApolloError("edit user error" + err);
     }
+  }
+
+  async setAvatar({ userId, avatar }) {
+    const user = await User.findById(userId);
+    user.avatar = avatar;
+    await user.save();
+  }
+
+  async setPhotos({ userId, photos }) {
+    const user = await User.findById(userId);
+    user.photo = photos;
+    await user.save();
+  }
+
+  async insertPhotos({ userId, photos }) {
+    const user = await User.findById(userId);
+
+    user.photo = user.photo.concat(photos);
+
+    await user.save();
   }
 }
 
