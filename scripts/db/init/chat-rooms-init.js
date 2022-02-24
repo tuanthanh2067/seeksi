@@ -333,6 +333,46 @@ db.chatrooms.insertMany([
     isDisabled: true,
   },
   {
+    _id: ObjectId("62114890f032396ddd000001"),
+    pairID: [
+      ObjectId("6207f6f7f0323933be00000a"),
+      ObjectId("6207f6f7f0323933be000009"),
+    ],
+    history: {
+      messages: [
+        {
+          createdAt: ISODate("2022-02-24T02:19:16.023Z"),
+          sendBy: "admin",
+          isSeen: false,
+          content:
+            "fd23cf69eab8c6a395c44248376943fbb5319fe623b97454c99153e7ecaa83506becf919b18713b9e04a4ff7bc67287a3096654d3904bd56e07b6cb3a933541354b3cc9a71a46d7c9dd95390c14c9177454d6d047862cbfde7c4df862fc0372a18cb16bb82e42da66e28cf066a512b4764097120",
+          photo: null,
+          _id: ObjectId("6216ebd9a712d2f318283c97"),
+        },
+        {
+          createdAt: ISODate("2022-02-24T02:19:16.023Z"),
+          sendBy: "admin",
+          isSeen: false,
+          content:
+            "c50ed0947aada18ec224a2f16456bf47a4c58627d697be82abc134b1efc6d2481a34819e5ba0727d5c2e7960a45987ae1c4b09fdba239a425cb67cc700f9e2a5f593dfad76d034d88eb9b9d61c4e470c24419c55408a4c186d32adab054f7f85fdfd3a187b39b8ab4a6cf7fd0d4095",
+          photo: null,
+          _id: ObjectId("6216ebe4a712d2f318283c98"),
+        },
+        {
+          createdAt: ISODate("2022-02-24T02:19:16.023Z"),
+          sendBy: "admin",
+          isSeen: false,
+          content:
+            "005abac837447cc36d11134ac7a1105bdad0852830953ea0a80049f7a06ba3fe1fb7d718a6e1b50b6838d14f8d762df32e6e3ebb6928a69d11da281f5ca4799f93c13a917c11581bade00e54cfeaccc6d2935fea494ad947a541741655a170ca02012a26cb5a69ab709d81af13608cb235645942df952572262b35eef4ba989d994ba0862234d0cd7f4cc5bb4d2e44bd0675c1905730acc3b6cc0b3659834c0ed71e667c6312eb074c6813024fcde5b5a31f3bc9365777f0c8",
+          photo: null,
+          _id: ObjectId("6216ebeda712d2f318283c99"),
+        },
+      ],
+    },
+    gameRoomID: ObjectId("62080553f032392ed5000028"),
+    isDisabled: false,
+  },
+  {
     _id: ObjectId("62114890f03239679f000000"),
     pairID: [
       ObjectId("6207f6f7f0323932e700000d"),
