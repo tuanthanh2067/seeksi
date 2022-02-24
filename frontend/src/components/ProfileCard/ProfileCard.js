@@ -13,12 +13,16 @@ function ProfileCard(props) {
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <div
-      className={` ${
-        styles.card
-      } shadow-card card transition ease-in translate-x-[${props.i * 35}px] `}
-      // className={` ${styles.card} shadow-card card transition ease-in hover:translate-x-[40px] `}
+      // className={` ${
+      //   styles.card
+      // } shadow-card card transition ease-in translate-x-[${props.i * 35}px] `}
+      className={` ${styles.card} shadow-card card transition ease-in hover:translate-x-[40px] `}
       id={props.cardID}
     >
       <a.div
@@ -26,7 +30,7 @@ function ProfileCard(props) {
         style={{
           opacity: opacity.to((o) => 1 - o),
           transform,
-          backgroundImage: `url(${props.avatar})`,
+          backgroundImage: `url(${props.avatar.medium})`,
         }}
       >
         <div className="p-5">
@@ -42,7 +46,7 @@ function ProfileCard(props) {
           </span>
           <span className="float-right">
             <OvalButton
-              btnName={props.distance}
+              btnName={`${props.distance} km`}
               fontSize="text-md"
               hover="hover:bg-white hover:text-primary hover:border-none"
             />
@@ -60,13 +64,15 @@ function ProfileCard(props) {
                 {props.firstName},{" "}
               </span>
               <span className="font-light text-2xl text-white italic">
-                {props.age}, {props.sex}
+                {props.age}, {capitalizeFirstLetter(props.sex)}
               </span>
             </div>
-            <div className="font-thin text-lg text-white">{props.hobbies}</div>
+            <div className="font-thin text-lg text-white">
+              {props.hobbies.join(", ")}
+            </div>
           </div>
           <div className="w-1/6 mx-0 py-3">
-            <a href={`/`}>
+            <a href={`/user/${props.userID}`}>
               <img src={Info} className="w-8 mr-0" alt="info" />
             </a>
           </div>
