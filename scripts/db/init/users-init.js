@@ -6092,7 +6092,7 @@ db.users.insertMany([
       "Board/tabletop games",
       "Cosplaying",
       "Winemaking",
-      "Dance15",
+      "Dance",
     ],
     preference: {
       gender: "everyone",
@@ -9716,7 +9716,7 @@ db.users.insertMany([
     hobbies: [
       "Zumba",
       "Board/tabletop games",
-      "Cooking10",
+      "Cooking",
       "Fashion design",
       "Gunsmithing",
       "Pet adoption & fostering",
@@ -11305,7 +11305,7 @@ db.users.insertMany([
       "Shoemaking",
       "Anime",
       "Meditation",
-      "Dance15",
+      "Dance",
       "Breadmaking",
       "Herp keeping",
       "Airbrushing",
@@ -15315,7 +15315,7 @@ db.users.insertMany([
     hobbies: [
       "Music",
       "Shoemaking",
-      "Dance15",
+      "Dance",
       "Humor",
       "Massaging",
       "Philately",
