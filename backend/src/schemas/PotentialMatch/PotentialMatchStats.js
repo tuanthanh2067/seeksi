@@ -7,21 +7,15 @@ const potentialMatchStats = new Schema({
     ref: "Users",
     required: true,
   },
-  lastPage: {
-    type: Number,
-    default: -1,
+  startPairSearch: {
+    type: [Schema.Types.ObjectId],
+    ref: "Users",
   },
-  prevUserPage: {
-    type: Number,
-    default: -1,
-  },
-  prevCarryOver: {
-    type: Number,
-    default: 0,
+  prevUserSearch: {
+    type: Schema.Types.ObjectId,
+    ref: "Users",
   },
 });
-
-// potentialMatch.plugin(mongoosePaginate);
 
 const PotentialMatchStats = mongoose.model(
   "PotentialMatchStats",

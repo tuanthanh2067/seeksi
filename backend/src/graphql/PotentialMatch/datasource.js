@@ -86,74 +86,54 @@ class PotentialMatchAPI extends DataSource {
     }
   }
 
-  async createPotentialMatches(userId, size, stats) {
-    let hasNextPage = true;
-    let count = stats.prevCarryOver;
-    const user = await User.findById(userId);
+  async createPotentialMatches(size, stats) {
+    const user = await User.findById(stats.userId);
+    let count = 0;
+    let query = {
+      _id: { $ne: user._id },
+      isDisabled: { $ne: true },
+    };
 
-    while (hasNextPage && count < size) {
-      stats.prevUserPage += 1;
-
-      const options = {
-        page: stats.prevUserPage,
-        limit: size,
-      };
-
-      const result = await User.paginate(
-        {
-          _id: { $ne: user._id },
-          isDisabled: { $ne: true },
-        },
-        options
-      );
-
-      for (const partner of result.docs) {
-        const matchAlreadyExists = await PotentialMatch.exists({
-          pairID: { $all: [user._id, partner._id] },
-        });
-
-        if (matchAlreadyExists) {
-          continue;
-        }
-
-        const isCompatible =
-          MatchGender.isCompatibleByGenderPreference(user, partner) &&
-          MatchAge.isCompatibleByAge(user, partner) &&
-          MatchDistance.isCompatibleByDistance(user, partner);
-
-        if (isCompatible) {
-          const potentialMatch = new PotentialMatch({
-            pairID: [user._id, partner._id],
-            matchScore: MatchScore.calculateMatchScore({
-              user,
-              partner,
-              partnerStatus: MatchStatus.PENDING,
-            }),
-          });
-
-          await potentialMatch.save();
-
-          count += 1;
-        }
-      }
-
-      hasNextPage = result.hasNextPage;
+    if (stats.prevUserSearch) {
+      query._id.$gt = stats.prevUserSearch;
     }
 
-    stats.prevCarryOver = count - size;
+    const cursor = User.find(query).sort({ _id: 1 }).cursor();
+    for (
+      let partner = await cursor.next();
+      count < size && partner != null;
+      stats.prevUserSearch = partner._id, partner = await cursor.next()
+    ) {
+      const isCompatible =
+        MatchGender.isCompatibleByGenderPreference(user, partner) &&
+        MatchAge.isCompatibleByAge(user, partner) &&
+        MatchDistance.isCompatibleByDistance(user, partner);
+
+      if (isCompatible) {
+        const potentialMatch = new PotentialMatch({
+          pairID: [user._id, partner._id],
+          matchScore: MatchScore.calculateMatchScore({
+            user,
+            partner,
+            partnerStatus: MatchStatus.PENDING,
+          }),
+        });
+        const { _id } = await potentialMatch.save();
+        count += 1;
+        if (count === 1) {
+          stats.startPairSearch.push(_id);
+        }
+      }
+    }
   }
 
   async findByUserId(userId, page) {
     const _id = mongoose.Types.ObjectId(userId);
     const limit = process.env.POTENTIAL_PARTNER_LIMIT || 10;
-    const query = {
-      pairID: { $in: [_id] },
-      status: { $nin: [MatchStatus.REJECTED] },
-    };
-    const options = {
-      page,
-      limit,
-    };
+
+    if (page <= 0) {
+      throw new ApolloError("Page must be a positive number");
+    }
 
     let stats = await PotentialMatchStats.findOne({ userId: _id });
 
@@ -163,32 +143,36 @@ class PotentialMatchAPI extends DataSource {
       });
     }
 
-    if (stats.lastPage < page) {
-      await this.createPotentialMatches(userId, limit, stats);
-      stats.lastPage = page;
+    if (
+      stats.startPairSearch.length < page ||
+      stats.startPairSearch[page] == null
+    ) {
+      await this.createPotentialMatches(limit, stats);
       await stats.save();
     }
 
-    return await PotentialMatch.paginate(query, {
-      ...options,
-      populate: {
-        path: "pairID",
-        select: {
-          _id: 1,
-          firstName: 1,
-          lastName: 1,
-          bio: 1,
-          dob: 1,
-          sex: 1,
-          location: 1,
-          hobbies: 1,
-          avatar: 1,
-        },
-      },
-      sort: {
-        matchScore: "desc",
-      },
-    });
+    return await PotentialMatch.find({
+      _id: { $gt: stats.startPairSearch[page - 1] },
+      pairID: { $in: [_id] },
+      status: { $nin: [MatchStatus.REJECTED] },
+    })
+      .populate(
+        "pairID",
+        `
+        _id
+        firstName
+        lastName
+        bio
+        dob
+        sex
+        location
+        hobbies
+        avatar
+        `
+      )
+      .sort({ _id: "asc" })
+      .limit(limit)
+      .lean();
   }
 }
 
