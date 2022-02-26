@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useSpring, a } from "@react-spring/web";
-
-import OvalButton from "../Buttons/OvalButton";
-import Info from "../../assets/info.png";
+import CardHeader from "./CardHeader";
+import CardFooter from "./CardFooter";
 import styles from "./ProfileCard.module.css";
 
 function ProfileCard(props) {
@@ -12,10 +11,6 @@ function ProfileCard(props) {
     transform: `rotateY(${flipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 },
   });
-
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
 
   return (
     <div
@@ -33,49 +28,23 @@ function ProfileCard(props) {
           backgroundImage: `url(${props.avatar.medium})`,
         }}
       >
-        <div className="p-5">
-          <span>
-            <OvalButton
-              btnName="Report"
-              borderColor="border-secondary"
-              bgColor="bg-secondary"
-              fontSize="text-md"
-              hover="hover:bg-white hover:text-secondary hover:border-none"
-              handleClick={props.handleReport}
-            />
-          </span>
-          <span className="float-right">
-            <OvalButton
-              btnName={`${props.distance} km`}
-              fontSize="text-md"
-              hover="hover:bg-white hover:text-primary hover:border-none"
-            />
-          </span>
-        </div>
-
+        <CardHeader
+          handleReport={props.handleReport}
+          distance={props.distance}
+        />
         <div
           className="flex h-1/2"
           onClick={() => setFlipped((state) => !state)}
         />
-        <div className="absolute flex w-full bg-black/40 bg-blend-overlay bottom-0 px-5 py-3 rounded-b-2xl">
-          <div className="w-5/6 m-0">
-            <div>
-              <span className="font-bold text-2xl text-white">
-                {props.firstName},{" "}
-              </span>
-              <span className="font-light text-2xl text-white italic">
-                {props.age}, {capitalizeFirstLetter(props.sex)}
-              </span>
-            </div>
-            <div className="font-thin text-lg text-white">
-              {props.hobbies.join(", ")}
-            </div>
-          </div>
-          <div className="w-1/6 mx-0 py-3">
-            <a href={`/user/${props.userID}`}>
-              <img src={Info} className="w-8 mr-0" alt="info" />
-            </a>
-          </div>
+        <div className="absolute w-full bg-black/40 bg-blend-overlay bottom-0 px-5 py-3 rounded-b-2xl">
+          <CardFooter
+            firstName={props.firstName}
+            age={props.age}
+            sex={props.sex}
+            hobbies={props.hobbies}
+            userID={props.userID}
+            textColor="white"
+          />
         </div>
       </a.div>
       <a.div
@@ -86,26 +55,10 @@ function ProfileCard(props) {
           rotateY: "180deg",
         }}
       >
-        <div className="p-5">
-          <span>
-            <OvalButton
-              btnName="Report"
-              borderColor="border-secondary"
-              bgColor="bg-secondary"
-              fontSize="text-md"
-              hover="hover:bg-white hover:text-secondary hover:border-secondary"
-              handleClick={props.handleReport}
-            />
-          </span>
-          <span className="float-right">
-            <OvalButton
-              btnName={props.distance}
-              fontSize="text-md"
-              hover="hover:bg-white hover:text-primary hover:border-primary"
-            />
-          </span>
-        </div>
-
+        <CardHeader
+          handleReport={props.handleReport}
+          distance={props.distance}
+        />
         <div
           className="flex h-1/2"
           onClick={() => setFlipped((state) => !state)}
@@ -114,19 +67,15 @@ function ProfileCard(props) {
             {props.bio}
           </div>
         </div>
-
         <div className="absolute w-full bottom-0 px-5 py-3 rounded-b-2xl">
-          <div>
-            <span className="font-bold text-2xl text-primary">
-              {props.firstName},{" "}
-            </span>
-            <span className="font-normal text-2xl text-primary italic">
-              {props.age}, {props.sex}
-            </span>
-          </div>
-          <div className="font-extralight text-lg text-primary">
-            {props.hobbies}
-          </div>
+          <CardFooter
+            firstName={props.firstName}
+            age={props.age}
+            sex={props.sex}
+            hobbies={props.hobbies}
+            userID={props.userID}
+            textColor="primary"
+          />
         </div>
       </a.div>
     </div>
