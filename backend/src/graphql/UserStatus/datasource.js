@@ -1,5 +1,7 @@
 const { DataSource } = require("apollo-datasource");
 
+require("dotenv").config();
+
 const userStatus = new Object();
 
 class UserStatusAPI extends DataSource {
@@ -13,7 +15,10 @@ class UserStatusAPI extends DataSource {
 
   isOnline(userId) {
     // user status will be updated every 30s
-    return (Date.now() - userStatus[userId]) / 1000 <= 30;
+    return (
+      (Date.now() - userStatus[userId]) / 1000 <=
+      parseInt(process.env.STATUS_EXPIRE_AFTER)
+    );
   }
 }
 
