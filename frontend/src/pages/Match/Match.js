@@ -17,7 +17,7 @@ import "./Match.css";
 
 const Match = () => {
   const [page, setPage] = useState(1);
-
+  const [topCardIndex, setTopCardIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
@@ -29,7 +29,6 @@ const Match = () => {
     variables: { page: page },
   });
 
-  const [topCardIndex, setTopCardIndex] = useState(0);
   const handleError = () => {
     setIsError(true);
     setMessage("An error occurs, please try again later");
@@ -47,20 +46,20 @@ const Match = () => {
         handleError();
       },
       onCompleted: (data) => {
-        if (data.success === false) {
+        if (data.sendMatchRequest.success) {
+          if (data.sendMatchRequest.message === "Matched") {
+            setIsMatched(true);
+            setMessage("it's a match!");
+            setTimeout(() => {
+              handleSelect(true);
+              setIsMatched(false);
+            }, 2400);
+          } else {
+            handleSelect(true);
+          }
+        } else {
           handleError();
         }
-
-        if (data.message === "Matched") {
-          setIsMatched(true);
-          setMessage("it's a match!");
-          setTimeout(() => {
-            handleSelect(true);
-            setIsMatched(false);
-          }, 2400);
-        }
-
-        handleSelect(true);
       },
     });
   };
@@ -74,11 +73,9 @@ const Match = () => {
         handleError();
       },
       onCompleted: (data) => {
-        if (data.success === false) {
-          handleError();
-        }
-
-        handleSelect(false);
+        if (data.sendRejectRequest.success) {
+          handleSelect(false);
+        } else handleError();
       },
     });
   };
@@ -103,6 +100,10 @@ const Match = () => {
     }, 800);
   };
 
+  useEffect(() => {
+    refetch({ page: page });
+  }, [data, refetch, page]);
+
   return (
     <div className="matchPage">
       <Navbar />
@@ -114,6 +115,7 @@ const Match = () => {
             An error occurs, please try again later!
           </div>
         )}
+        {(isMatched || isError) && <MatchConfirm message={message} />}
         {!loading && data && (
           <Deck
             cards={data.getPotentialPartners}
@@ -122,7 +124,6 @@ const Match = () => {
           />
         )}
       </div>
-      {(isMatched || isError) && <MatchConfirm message={message} />}
 
       <div className="container flex space-x-24 max-w-sm h-1/5 mx-auto px-20 py-[2%]">
         <CircleButton
