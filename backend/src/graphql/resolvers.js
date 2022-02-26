@@ -37,6 +37,7 @@ const resolvers = {
     ...Report.resolvers.mutations,
     ...GameRoom.resolvers.mutations,
     ...GameRequest.resolvers.mutations,
+    ...UserStatus.resolvers.mutations,
     ...OpeningLine.resolvers.mutations,
     ...Upload.resolvers.mutations,
   },

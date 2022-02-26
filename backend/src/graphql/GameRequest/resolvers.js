@@ -1,4 +1,5 @@
 const { PubSub, withFilter } = require("graphql-subscriptions");
+const mongoose = require("mongoose");
 
 const pubsub = new PubSub();
 
@@ -30,6 +31,37 @@ const mutations = {
     { dataSources, req, userAuthentication }
   ) => {
     userAuthentication(req.user);
+
+    const gameRequest = await dataSources.gameRequestAPI.getGameRequest(
+      args.gameRequestId
+    );
+
+    // check partner online status
+    const partnerIndex =
+      1 - gameRequest.pairID.indexOf(mongoose.Types.ObjectId(req.user.userId));
+
+    const partnerId = gameRequest.pairID[partnerIndex].toString();
+
+    const isPartnerOnline = dataSources.userStatusAPI.isOnline(partnerId);
+
+    if (!isPartnerOnline) {
+      return {
+        success: false,
+        message: "Partner is offline",
+      };
+    }
+    // check partner if they are playing game with anyone else
+    if (dataSources.playingStatusAPI.isPlaying(partnerId)) {
+      return {
+        success: false,
+        message: "Partner is playing game.",
+      };
+    }
+
+    // update me and the partner to playing games if all checks pass
+    dataSources.playingStatusAPI.updatePlayingStatus(req.user.userId, true);
+
+    dataSources.playingStatusAPI.updatePlayingStatus(partnerId, true);
 
     await dataSources.gameRequestAPI.acceptGameRequest(args.gameRequestId);
 

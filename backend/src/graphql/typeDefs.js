@@ -62,6 +62,7 @@ const typeDefs = gql`
     ${Report.mutations}
     ${GameRoom.mutations}
     ${GameRequest.mutations}
+    ${UserStatus.mutations}
     ${OpeningLine.mutations}
     ${Upload.mutations}
   }
