@@ -1,7 +1,7 @@
 const { DataSource } = require("apollo-datasource");
 const { ApolloError } = require("apollo-server-core");
+const { ObjectId } = require("mongoose").Types;
 const Cryptr = require("cryptr");
-const mongoose = require("mongoose");
 require("dotenv").config();
 
 const ChatRoom = require("../../schemas/ChatRoom/ChatRoom");
@@ -14,10 +14,10 @@ class ChatRoomAPI extends DataSource {
 
   async createChatRoom(userId, partnerId) {
     try {
-      const user = mongoose.Types.ObjectId(userId);
-      const partner = mongoose.Types.ObjectId(partnerId);
+      const user = ObjectId(userId);
+      const partner = ObjectId(partnerId);
 
-      const roomId = mongoose.Types.ObjectId();
+      const roomId = ObjectId();
 
       let secretKey = process.env.ENCRYPT_KEY;
       if (process.env.NODE_ENV === "production") {
@@ -81,7 +81,7 @@ class ChatRoomAPI extends DataSource {
   }
 
   async sendMessageToChatRoom(roomId, content, photo = null, sendBy) {
-    const id = mongoose.Types.ObjectId();
+    const id = ObjectId();
 
     let secretKey = process.env.ENCRYPT_KEY;
     if (process.env.NODE_ENV === "production") {
@@ -158,6 +158,20 @@ class ChatRoomAPI extends DataSource {
     });
 
     return res;
+  }
+
+  async disableByUserId(userId, partnerId) {
+    const pairID = [ObjectId(userId), ObjectId(partnerId)];
+
+    const chatroom = await ChatRoom.findOne({ pairID: { $all: pairID } });
+
+    if (!chatroom) {
+      throw new ApolloError("Chat room can't be found!");
+    }
+
+    chatroom.isDisabled = true;
+
+    await chatroom.save();
   }
 }
 
