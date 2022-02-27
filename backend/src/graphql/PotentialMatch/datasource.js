@@ -19,7 +19,7 @@ class PotentialMatchAPI extends DataSource {
     super();
   }
 
-  async isMatched(s1, s2) {
+  isMatched(s1, s2) {
     return s1 === MatchStatus.LIKED && s2 === MatchStatus.LIKED;
   }
 
