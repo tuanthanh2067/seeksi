@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "apollo-upload-client": "^17.0.0",
     "country-state-city": "^3.0.1",
     "emoji-mart": "^3.0.1",
     "graphql": "^16.2.0",

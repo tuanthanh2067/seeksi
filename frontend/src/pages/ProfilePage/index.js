@@ -41,15 +41,31 @@ const ProfilePage = () => {
               plugins={[lgZoom]}
               elementClassNames="grid grid-cols-2 sm:grid-cols-3 gap-12"
             >
-              {data.userById.photo.map((pic, key) => (
-                <a href={`${pic.large}`} className="block justify-self-center">
-                  <img
-                    src={`${pic.large}`}
-                    alt={key}
-                    className="object-cover object-center"
-                  />
-                </a>
-              ))}
+              {data.userById.photo.map((pic, key) =>
+                pic.large ? (
+                  <a
+                    href={`${pic.large}`}
+                    className="block justify-self-center"
+                  >
+                    <img
+                      src={`${pic.large}`}
+                      alt={key}
+                      className="object-cover object-center"
+                    />
+                  </a>
+                ) : (
+                  <a
+                    href={`${pic.origin}`}
+                    className="block justify-self-center"
+                  >
+                    <img
+                      src={`${pic.origin}`}
+                      alt={key}
+                      className="object-cover object-center"
+                    />
+                  </a>
+                )
+              )}
             </LightGallery>
           </section>
         </main>

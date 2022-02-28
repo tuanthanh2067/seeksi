@@ -6,14 +6,15 @@ import reportWebVitals from "./reportWebVitals";
 
 import {
   ApolloClient,
-  createHttpLink,
   InMemoryCache,
   ApolloProvider,
   split,
+  ApolloLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { createUploadLink } from "apollo-upload-client";
 
 const token = localStorage.getItem("token");
 const wsLink = new WebSocketLink({
@@ -26,7 +27,7 @@ const wsLink = new WebSocketLink({
   },
 });
 
-const httpLink = createHttpLink({
+const uploadLink = createUploadLink({
   uri: process.env.REACT_APP_GRAPHQL_URI,
 });
 
@@ -48,11 +49,11 @@ const splitLink = split(
     );
   },
   wsLink,
-  authLink.concat(httpLink)
+  authLink.concat(uploadLink)
 );
 
 const apolloClient = new ApolloClient({
-  link: splitLink,
+  link: ApolloLink.from([splitLink, uploadLink]),
   cache: new InMemoryCache(),
 });
 

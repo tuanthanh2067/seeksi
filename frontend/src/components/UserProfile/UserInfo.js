@@ -15,15 +15,19 @@ import "lightgallery/css/lg-zoom.css";
 const ProfilePage = (props) => {
   const navigate = useNavigate();
   const [avt, setAvt] = useState(
-    props.user.avatar ? props.user.avatar.medium : defaultAvt
+    props.user.avatar ? props.user.avatar.origin : defaultAvt
   );
+
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const decodedToken = jwt_decode(token);
   const currentUserID = decodedToken.userId;
 
   const handleEdit = () => navigate(`/edit/${id}`);
-  const onAvtChange = (e) => setAvt(URL.createObjectURL(e.target.files[0]));
+  const onAvtChange = (e) => {
+    setAvt(URL.createObjectURL(e.target.files[0]));
+    props.newAvt(e.target.files[0]);
+  };
   const handleAvtRemove = () => setAvt("");
 
   const getAge = (birthday) => {
@@ -56,7 +60,7 @@ const ProfilePage = (props) => {
               )
             ) : (
               <img
-                src={props.user.avatar ? props.user.avatar.medium : defaultAvt}
+                src={props.user.avatar ? props.user.avatar.origin : defaultAvt}
                 alt="user avatar"
                 className="object-contain"
               />
