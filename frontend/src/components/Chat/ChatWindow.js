@@ -4,7 +4,7 @@ import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import ChatMessageList from "./ChatMessageList";
 
-function ChatWindow({ data }) {
+function ChatWindow({ data, setShowConfirmation }) {
   const [showEmoji, setShowEmoji] = useState(false);
 
   return data ? (
@@ -12,6 +12,7 @@ function ChatWindow({ data }) {
       <ChatHeader
         avatar={data.partner.avatar.small}
         firstName={data.partner.firstName}
+        setShowConfirmation={setShowConfirmation}
       />
       <ChatMessageList data={data} />
       <ChatInput

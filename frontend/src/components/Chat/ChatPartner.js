@@ -2,7 +2,7 @@ import { useState } from "react";
 import Input from "../Input/Input";
 import defaultAvt from "../../assets/mock_avatar.png";
 
-const ChatPartner = ({ data, onRoomSelect }) => {
+const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
   const [searchInputText, setSearchInputText] = useState("");
   const searchInputHandler = (e) => {
     setSearchInputText(e.target.value.toLowerCase());
@@ -36,6 +36,7 @@ const ChatPartner = ({ data, onRoomSelect }) => {
 
     return {
       roomId,
+      partnerId,
       partnerAvatar,
       partnerName,
       latestMsgContent,
@@ -62,7 +63,10 @@ const ChatPartner = ({ data, onRoomSelect }) => {
         <button
           key={room.roomId}
           className="w-full text-left hover:bg-[#c4c4c44d] focus:bg-[#f06c9b1f]"
-          onClick={() => onRoomSelect(room.roomId)}
+          onClick={() => {
+            onRoomSelect(room.roomId);
+            setPartnerId(room.partnerId);
+          }}
         >
           <div className="flex items-center p-4">
             <img

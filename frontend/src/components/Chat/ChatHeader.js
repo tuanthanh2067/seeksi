@@ -4,7 +4,6 @@ import OvalButton from "../Buttons/OvalButton";
 
 function ChatHeader(props) {
   const handleReport = () => {};
-  const handleUnmatch = () => {};
 
   return (
     <div>
@@ -29,7 +28,9 @@ function ChatHeader(props) {
               bgColor="bg-secondary"
               hover="hover:bg-white hover:text-secondary hover:border-secondary"
               btnName="Unmatch"
-              handleClick={handleUnmatch}
+              handleClick={() => {
+                props.setShowConfirmation(true);
+              }}
             />
             <OvalButton
               fontSize="text-sm"

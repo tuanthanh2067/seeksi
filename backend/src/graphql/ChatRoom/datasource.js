@@ -138,7 +138,6 @@ class ChatRoomAPI extends DataSource {
   async getUserChatRooms(userId) {
     const chatRooms = await ChatRoom.find({
       pairID: { $in: [userId] },
-      isDisabled: false,
     })
       .populate("pairID")
       .exec();
