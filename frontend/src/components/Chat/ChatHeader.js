@@ -20,7 +20,12 @@ function ChatHeader(props) {
               />
             </div>
             <div className="mx-3 text-lg text-black self-center">
-              {props.firstName}
+              <span className="text-lg font-bold inline-block">
+                {props.firstName}
+              </span>
+              {props.isOnline && (
+                <span className="h-3 w-3 bg-green inline-block rounded-full ml-1"></span>
+              )}
             </div>
           </div>
           <div className=" flex py-2 place-content-end gap-x-3">

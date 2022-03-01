@@ -12,8 +12,9 @@ function ChatWindow({ data, setShowConfirmation, refetch }) {
       <ChatHeader
         avatar={data.partner.avatar.small}
         firstName={data.partner.firstName}
-        setShowConfirmation={setShowConfirmation}
+        isOnline={data.partner.isOnline}
         isDisabled={data.isDisabled}
+        setShowConfirmation={setShowConfirmation}
       />
       <ChatMessageList data={data} />
       {data.isDisabled ? (

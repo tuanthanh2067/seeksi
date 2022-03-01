@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Input from "../Input/Input";
 import defaultAvt from "../../assets/mock_avatar.png";
 
 const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
   const [searchInputText, setSearchInputText] = useState("");
+
   const searchInputHandler = (e) => {
     setSearchInputText(e.target.value.toLowerCase());
   };
@@ -15,6 +16,8 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
         id: partnerId,
         avatar: { small: partnerAvatar },
         firstName: partnerName,
+        isOnline,
+        partnerLastSeen,
       },
       history,
       isDisabled,
@@ -36,6 +39,8 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
       isDisabled,
       roomId,
       partnerId,
+      isOnline,
+      partnerLastSeen,
       partnerAvatar,
       partnerName,
       latestMsgContent,
@@ -58,7 +63,7 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
         placeholder="Search"
         onChange={searchInputHandler}
       />
-      {roomsDataFiltered.map((room) => (
+      {roomsDataFiltered.map((room, key) => (
         <button
           key={room.roomId}
           className="w-full text-left hover:bg-[#c4c4c44d] focus:bg-[#f06c9b1f]"
@@ -80,7 +85,14 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
               />
             </div>
             <div className="col-start-2 col-span-5 flex flex-col justify-center">
-              <p className="text-lg font-bold">{room.partnerName}</p>
+              <p>
+                {room.isOnline && (
+                  <span className="h-3 w-3 bg-green inline-block rounded-full mr-2"></span>
+                )}
+                <span className="text-lg font-bold inline-block">
+                  {room.partnerName}
+                </span>
+              </p>
               <p className="text-ellipsis overflow-hidden whitespace-nowrap">
                 {room.isDisabled ? "User unmatched" : room.latestMsgContent}
               </p>
