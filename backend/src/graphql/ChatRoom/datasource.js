@@ -1,6 +1,6 @@
 const { DataSource } = require("apollo-datasource");
 const { ApolloError } = require("apollo-server-core");
-const { ObjectId } = require("mongoose").Types;
+const mongoose = require("mongoose");
 const Cryptr = require("cryptr");
 require("dotenv").config();
 
@@ -14,10 +14,10 @@ class ChatRoomAPI extends DataSource {
 
   async createChatRoom(userId, partnerId) {
     try {
-      const user = ObjectId(userId);
-      const partner = ObjectId(partnerId);
+      const user = mongoose.Types.ObjectId(userId);
+      const partner = mongoose.Types.ObjectId(partnerId);
 
-      const roomId = ObjectId();
+      const roomId = mongoose.Types.ObjectId();
 
       let secretKey = process.env.ENCRYPT_KEY;
       if (process.env.NODE_ENV === "production") {
@@ -81,7 +81,7 @@ class ChatRoomAPI extends DataSource {
   }
 
   async sendMessageToChatRoom(roomId, content, photo = null, sendBy) {
-    const id = ObjectId();
+    const id = mongoose.Types.ObjectId();
 
     let secretKey = process.env.ENCRYPT_KEY;
     if (process.env.NODE_ENV === "production") {
@@ -162,7 +162,10 @@ class ChatRoomAPI extends DataSource {
   }
 
   async disableByUserId(userId, partnerId) {
-    const pairID = [ObjectId(userId), ObjectId(partnerId)];
+    const pairID = [
+      mongoose.Types.ObjectId(userId),
+      mongoose.Types.ObjectId(partnerId),
+    ];
 
     const chatroom = await ChatRoom.findOne({ pairID: { $all: pairID } });
 
