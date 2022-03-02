@@ -17,9 +17,11 @@ export const GET_USER = gql`
       hobbies
       avatar {
         medium
+        origin
       }
       photo {
         large
+        origin
       }
       preference {
         gender

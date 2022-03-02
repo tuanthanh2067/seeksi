@@ -14,6 +14,7 @@ import "lightgallery/css/lg-zoom.css";
 const ProfilePage = () => {
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [avt, setAvt] = useState("");
   const [err, setErr] = useState("");
   const [deleteAccount] = useMutation(DELETE_ACCOUNT_MUTATION);
   const { id } = useParams();
@@ -38,7 +39,11 @@ const ProfilePage = () => {
   const getImgArr = () => {
     let images = [];
     if (data.userById.photo)
-      data.userById.photo.map((pic) => images.push(pic.large));
+      data.userById.photo.map((pic) => {
+        pic.large ? images.push(pic.large) : images.push(pic.origin);
+        return "";
+      });
+
     return images;
   };
 
@@ -81,9 +86,15 @@ const ProfilePage = () => {
             <UserInfo
               isEdit={true}
               user={data.userById}
+              newAvt={setAvt}
               showDeleteConfirm={setShowConfirmation}
             />
-            <EditInfo id={id} user={data.userById} photos={getImgArr()} />
+            <EditInfo
+              id={id}
+              user={data.userById}
+              avt={avt}
+              photos={getImgArr()}
+            />
           </>
         </main>
       )}

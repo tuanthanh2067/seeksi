@@ -13,6 +13,8 @@ import EditImage from "../../components/Image/EditImage";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_HOBBY } from "../../graphql/queries/Hobby";
 import { EDIT_PROFILE_MUTATION } from "../../graphql/mutations/Mutations";
+import { UPLOAD_AVATAR } from "../../graphql/mutations/Photos";
+import { UPLOAD_PHOTOS } from "../../graphql/mutations/Photos";
 
 import {
   countryOptions,
@@ -20,9 +22,9 @@ import {
   filterCity,
 } from "../../utils/data";
 
-const EditInfo = ({ id, user, photos }) => {
+const EditInfo = ({ id, user, photos, avt }) => {
   const navigate = useNavigate();
-
+  const [replace, setReplace] = useState(false);
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
@@ -40,11 +42,15 @@ const EditInfo = ({ id, user, photos }) => {
   const [images, setImages] = useState(photos);
   const [bio, setBio] = useState("");
   const [hobbies, setHobbies] = useState([]);
-  const [length, setLength] = useState(0);
+  const [length, setLength] = useState(photos.length);
+  const [render, setRender] = useState(0);
+  const [uploadImgs, setUploadImgs] = useState([]);
   const imgArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
   const { loading, data } = useQuery(GET_HOBBY);
   const [editUser] = useMutation(EDIT_PROFILE_MUTATION);
+  const [uploadAvatar] = useMutation(UPLOAD_AVATAR);
+  const [uploadPhotos] = useMutation(UPLOAD_PHOTOS);
 
   const hobbyOptions = () => {
     let hobbies = [];
@@ -58,6 +64,7 @@ const EditInfo = ({ id, user, photos }) => {
             value: hobby,
             label: hobby,
           });
+          return "";
         });
     }
     return hobbies;
@@ -78,19 +85,27 @@ const EditInfo = ({ id, user, photos }) => {
     newImgs.push(URL.createObjectURL(e.target.files[0]));
     // No use but make img render immediately
     let idx = newImgs.length;
-    setLength(idx);
+    setRender(idx);
     //*********
     setImages(newImgs);
+    newImgs = uploadImgs;
+    newImgs.push(e.target.files[0]);
+    setUploadImgs(newImgs);
+    console.log(uploadImgs);
   };
 
   const handleRemove = (e) => {
     let newImgs = images;
     newImgs.splice(e.target.id, 1);
-    // No use but make img render immediately
     let idx = newImgs.length;
-    setLength(idx);
-    //*********
+    setRender(idx); // No use but make img render immediately
     setImages(newImgs);
+    if (images.length === 0) {
+      setReplace(true);
+    }
+    newImgs = uploadImgs;
+    newImgs.splice(e.target.id, 1);
+    setUploadImgs(newImgs);
   };
 
   const handleSave = () => {
@@ -126,6 +141,35 @@ const EditInfo = ({ id, user, photos }) => {
       setErr("Please select only up to 5 hobbies");
       scrollToTop();
     } else {
+      if (avt !== "") {
+        uploadAvatar({
+          variables: { file: avt },
+          onError: (error) => {
+            console.log(error);
+            setErr(error);
+          },
+          onCompleted: (data) => {
+            navigate(`/user/${id}`);
+          },
+        });
+      }
+
+      if (uploadImgs.length !== 0) {
+        uploadPhotos({
+          variables: {
+            files: uploadImgs,
+            replace: replace,
+          },
+          onError: (error) => {
+            console.log(error);
+            setErr(error);
+          },
+          onCompleted: (data) => {
+            navigate(`/user/${id}`);
+          },
+        });
+      }
+
       editUser({
         variables: {
           country: country,
