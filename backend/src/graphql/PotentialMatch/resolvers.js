@@ -14,6 +14,8 @@ const queries = {
     const { page } = args;
     const docs = await dataSources.potentialMatchAPI.findByUserId(userId, page);
 
+    console.log(docs);
+
     const findPartnerIndex = (match) => {
       const userIndex = match.pairID.findIndex(
         (user) => user._id.toString() === userId
@@ -37,14 +39,10 @@ const queries = {
       return partner;
     };
     const isUserPending = (match) => {
-      const userIndex = 1 - findPartnerIndex(match);
-
-      return match.status[userIndex] === MatchStatus.PENDING;
+      return first.status;
     };
-    const isLikedByPartner = (match) => {
-      const partnerIndex = findPartnerIndex(match);
-
-      return match.status[partnerIndex] === MatchStatus.LIKED ? 1 : -1;
+    const isLikedByPartner = (first, second) => {
+      return first.status.localeCompare(second.status);
     };
     const byMatchScore = (first, second) => {
       return second.matchScore - first.matchScore;

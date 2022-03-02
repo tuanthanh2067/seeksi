@@ -1,27 +1,19 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
 const { Schema } = mongoose;
 
-const MatchStatus = require("../../enum/MatchStatus");
+const potentialPartnerSchema = require("./PotentialPartner");
 
 const potentialMatch = new Schema({
-  pairID: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Users",
-    },
-  ],
-  matchScore: {
-    type: Number,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "Users",
+    required: true,
   },
-  status: {
-    type: [String],
-    enum: [MatchStatus.PENDING, MatchStatus.LIKED, MatchStatus.REJECTED],
-    default: [MatchStatus.PENDING, MatchStatus.PENDING],
+  potentialPartners: {
+    type: Schema.Types.Map,
+    of: potentialPartnerSchema,
   },
 });
-
-potentialMatch.plugin(mongoosePaginate);
 
 const PotentialMatch = mongoose.model("PotentialMatches", potentialMatch);
 
