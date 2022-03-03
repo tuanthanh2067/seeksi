@@ -11,7 +11,7 @@ const Spinner = () => {
               dx="0"
               dy="0"
               stdDeviation="1.3"
-              flood-color="#F06C9B"
+              floodColor="#F06C9B"
             />
           </filter>
         </defs>

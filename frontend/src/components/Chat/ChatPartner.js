@@ -2,14 +2,15 @@ import { useState } from "react";
 import Input from "../Input/Input";
 import defaultAvt from "../../assets/mock_avatar.png";
 
-const ChatPartner = (props) => {
+const ChatPartner = ({ data, onRoomSelect }) => {
   const [searchInputText, setSearchInputText] = useState("");
   const searchInputHandler = (e) => {
     setSearchInputText(e.target.value.toLowerCase());
   };
 
-  const roomsData = props.data.map((chatRoom) => {
+  const roomsData = data.map((chatRoom) => {
     const {
+      id: roomId,
       partner: {
         id: partnerId,
         avatar: { small: partnerAvatar },
@@ -25,6 +26,7 @@ const ChatPartner = (props) => {
       : `${sentBy} sent a photo.`;
 
     return {
+      roomId,
       partnerAvatar,
       partnerName,
       latestMsgContent,
@@ -43,13 +45,17 @@ const ChatPartner = (props) => {
     <section className="w-1/3 min-h-[85%] max-h-[85%] pr-6 mr-6 border-r-[1px] border-r-primary">
       <Input
         type="text"
-        width="w-full"
+        width="w-full mb-4"
         placeholder="Search"
         onChange={searchInputHandler}
       />
       {roomsDataFiltered.map((room) => (
-        <div id="partner-card" className="mt-6 w-full">
-          <div className="flex items-center py-4">
+        <button
+          key={room.roomId}
+          className="w-full text-left hover:bg-[#c4c4c44d] focus:bg-[#f06c9b1f]"
+          onClick={() => onRoomSelect(room.roomId)}
+        >
+          <div className="flex items-center p-4">
             <img
               src={room.partnerAvatar ? room.partnerAvatar : defaultAvt}
               alt="user's avatar"
@@ -60,7 +66,7 @@ const ChatPartner = (props) => {
               <p>{room.latestMsgContent}</p>
             </div>
           </div>
-        </div>
+        </button>
       ))}
     </section>
   );

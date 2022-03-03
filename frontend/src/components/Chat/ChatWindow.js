@@ -7,7 +7,7 @@ import ChatMessageList from "./ChatMessageList";
 function ChatWindow({ data }) {
   const [showEmoji, setShowEmoji] = useState(false);
 
-  return (
+  return data ? (
     <div className="flex flex-col gap-y-2 container col-start-2 w-2/3 h-full">
       <ChatHeader
         avatar={data.partner.avatar.small}
@@ -19,6 +19,13 @@ function ChatWindow({ data }) {
         showEmoji={showEmoji}
         setShowEmoji={setShowEmoji}
       />
+    </div>
+  ) : (
+    <div className="flex flex-col gap-y-2 container col-start-2 w-2/3 min-h-[85%] max-h-[85%] items-center justify-center">
+      <p className="text-3xl text-primary font-bold">
+        There's nothing here. 😢
+      </p>
+      <p>Select a partner to start talking!</p>
     </div>
   );
 }
