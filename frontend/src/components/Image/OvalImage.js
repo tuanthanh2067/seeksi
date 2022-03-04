@@ -1,4 +1,6 @@
 import React from "react";
+import { Image } from "react-shimmer";
+import FallBack from "../FallBack/FallBack";
 
 const OvalImage = (props) => {
   return (
@@ -9,7 +11,16 @@ const OvalImage = (props) => {
       >
         Remove
       </button>
-      <img src={props.src} alt={"avt"} className="object-contain" />
+      <Image
+        src={props.src}
+        alt={"avt"}
+        fallback={<FallBack avt={true} />}
+        NativeImgProps={{
+          style: {
+            objectFit: "contain",
+          },
+        }}
+      />
     </div>
   );
 };
