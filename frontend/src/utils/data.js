@@ -80,26 +80,42 @@ export const filterCity = (selectedState, selectedCountry) => {
 };
 
 export const monthOptions = [
-  { value: "January", label: "Jan" },
-  { value: "February", label: "Feb" },
-  { value: "March", label: "Mar" },
-  { value: "April", label: "Apr" },
+  { value: "January", label: "January" },
+  { value: "February", label: "February" },
+  { value: "March", label: "March" },
+  { value: "April", label: "April" },
   { value: "May", label: "May" },
-  { value: "June", label: "Jun" },
-  { value: "July", label: "Jul" },
-  { value: "August", label: "Aug" },
-  { value: "September", label: "Sept" },
-  { value: "October", label: "Oct" },
-  { value: "November", label: "Nov" },
-  { value: "December", label: "Dec" },
+  { value: "June", label: "June" },
+  { value: "July", label: "July" },
+  { value: "August", label: "August" },
+  { value: "September", label: "September" },
+  { value: "October", label: "October" },
+  { value: "November", label: "November" },
+  { value: "December", label: "December" },
 ];
 
-export const generateDateOptions = () => {
+export const generateDateOptions = (month) => {
+  let totalDays = 30;
+  let maxDays = [
+    "January",
+    "March",
+    "May",
+    "July",
+    "August",
+    "October",
+    "December",
+  ];
+  if (maxDays.includes(month)) {
+    totalDays = 31;
+  } else if (month === "February") {
+    totalDays = 29;
+  }
+
   let date = [];
-  for (let i = 1; i <= 31; i++) {
+  for (let i = 1; i <= totalDays; i++) {
     date.push({
       value: i,
-      label: i < 10 ? `0${i}` : i,
+      label: i,
     });
   }
   return date;
@@ -107,7 +123,7 @@ export const generateDateOptions = () => {
 
 export const generateYearOptions = () => {
   let year = [];
-  for (let i = new Date().getFullYear() - 19; i >= 1900; i--) {
+  for (let i = new Date().getFullYear() - 19; i >= 1940; i--) {
     year.push({
       value: i,
       label: i,

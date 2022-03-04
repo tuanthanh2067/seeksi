@@ -41,7 +41,7 @@ const Report = (props) => {
 
   return (
     <div
-      className={`bg-black bg-opacity-50 absolute overflow-auto inset-0 flex justify-center items-center h-screen`}
+      className={`bg-black bg-opacity-50 inset-0 fixed z-50 flex justify-center items-center h-screen`}
     >
       <div className="px-8 bg-white w-5/6 lg:w-1/3 md:max-w-3xl rounded-md ">
         <h3 className="text-primary font-bold pt-8 pb-4 text-2xl text-center">
@@ -51,7 +51,7 @@ const Report = (props) => {
         {err && (
           <div className="text-red-600 text-center font-medium">{err}</div>
         )}
-        <Label label="Title: " addStyle={"text-primary text-lg"} />
+        <Label label="Title: " addStyle={"!text-primary text-lg"} />
         <Input
           type="text"
           width="w-full"
@@ -62,7 +62,7 @@ const Report = (props) => {
         />
         <Label
           label="Please select a problem: "
-          addStyle={"text-primary text-lg"}
+          addStyle={"!text-primary text-lg"}
         />
         <div className="mt-3 mb-2">
           <label
@@ -112,7 +112,7 @@ const Report = (props) => {
           </label>
         </div>
 
-        <Label label="Description: " addStyle={"text-primary text-lg"} />
+        <Label label="Description: " addStyle={"!text-primary text-lg"} />
         <div className="pt-2.5">
           <Textarea
             width="w-full"

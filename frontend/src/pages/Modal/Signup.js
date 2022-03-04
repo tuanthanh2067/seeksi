@@ -8,6 +8,11 @@ import Radio from "../../components/Input/Radio";
 import { USER_REGISTER_MUTATION } from "../../graphql/mutations/Mutations";
 import { useMutation } from "@apollo/client";
 import jwt_decode from "jwt-decode";
+import {
+  monthOptions,
+  generateDateOptions,
+  generateYearOptions,
+} from "../../utils/data";
 
 const Signup = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -22,43 +27,6 @@ const Signup = (props) => {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const [signup] = useMutation(USER_REGISTER_MUTATION);
-
-  const monthOptions = [
-    { value: "January", label: "Jan" },
-    { value: "February", label: "Feb" },
-    { value: "March", label: "Mar" },
-    { value: "April", label: "Apr" },
-    { value: "May", label: "May" },
-    { value: "June", label: "Jun" },
-    { value: "July", label: "Jul" },
-    { value: "August", label: "Aug" },
-    { value: "September", label: "Sept" },
-    { value: "October", label: "Oct" },
-    { value: "November", label: "Nov" },
-    { value: "December", label: "Dec" },
-  ];
-
-  const generateDateOptions = () => {
-    let date = [];
-    for (let i = 1; i <= 31; i++) {
-      date.push({
-        value: i,
-        label: i < 10 ? `0${i}` : i,
-      });
-    }
-    return date;
-  };
-
-  const generateYearOptions = () => {
-    let year = [];
-    for (let i = new Date().getFullYear() - 19; i >= 1900; i--) {
-      year.push({
-        value: i,
-        label: i,
-      });
-    }
-    return year;
-  };
 
   const clearErr = () => setErr("");
 
@@ -180,14 +148,16 @@ const Signup = (props) => {
               <Dropdown
                 options={monthOptions}
                 placeholder="Month"
+                defaultValue={month}
                 onChange={(e) => {
                   setMonth(e.value);
                   clearErr();
                 }}
               />
               <Dropdown
-                options={generateDateOptions()}
+                options={generateDateOptions(month)}
                 placeholder="Day"
+                defaultValue={date}
                 onChange={(e) => {
                   setDate(e.value);
                   clearErr();
@@ -196,6 +166,7 @@ const Signup = (props) => {
               <Dropdown
                 options={generateYearOptions()}
                 placeholder="Year"
+                defaultValue={year}
                 onChange={(e) => {
                   setYear(e.value);
                   clearErr();
