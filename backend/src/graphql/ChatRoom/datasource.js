@@ -1,7 +1,7 @@
 const { DataSource } = require("apollo-datasource");
 const { ApolloError } = require("apollo-server-core");
-const Cryptr = require("cryptr");
 const mongoose = require("mongoose");
+const Cryptr = require("cryptr");
 require("dotenv").config();
 
 const ChatRoom = require("../../schemas/ChatRoom/ChatRoom");
@@ -138,6 +138,7 @@ class ChatRoomAPI extends DataSource {
   async getUserChatRooms(userId) {
     const chatRooms = await ChatRoom.find({
       pairID: { $in: [userId] },
+      isDisabled: false,
     })
       .populate("pairID")
       .exec();
@@ -158,6 +159,23 @@ class ChatRoomAPI extends DataSource {
     });
 
     return res;
+  }
+
+  async disableByUserId(userId, partnerId) {
+    const pairID = [
+      mongoose.Types.ObjectId(userId),
+      mongoose.Types.ObjectId(partnerId),
+    ];
+
+    const chatroom = await ChatRoom.findOne({ pairID: { $all: pairID } });
+
+    if (!chatroom) {
+      throw new ApolloError("Chat room can't be found!");
+    }
+
+    chatroom.isDisabled = true;
+
+    await chatroom.save();
   }
 }
 
