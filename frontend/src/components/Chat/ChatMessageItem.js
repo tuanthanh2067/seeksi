@@ -13,7 +13,7 @@ function ChatMessageItem(props) {
                 ? "bg-slate-200  place-self-end text-right"
                 : "border-[1px] border-slate-400"
             } my-1`
-      } rounded-md px-2 py-1 mx-3 max-w-[40%] whitespace-normal `}
+      } rounded-md px-2 py-1 mx-3 max-w-[40%] whitespace-normal break-all `}
     >
       {props.message}
     </div>

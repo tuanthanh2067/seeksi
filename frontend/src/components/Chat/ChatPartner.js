@@ -72,7 +72,7 @@ const ChatPartner = ({ data, onRoomSelect }) => {
             />
             <div className="w-full text-ellipsis">
               <p className="text-lg font-bold">{room.partnerName}</p>
-              <p>{room.latestMsgContent}</p>
+              <p className="break-all">{room.latestMsgContent}</p>
             </div>
           </div>
         </button>
