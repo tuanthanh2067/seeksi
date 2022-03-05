@@ -4,7 +4,7 @@ module.exports.types = `
         sendBy: String!
         isSeen: Boolean
         content: String
-        photo: Image
+        photos: [Image]
     }
 
     type ChatRoom {

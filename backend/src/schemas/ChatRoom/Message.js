@@ -19,9 +19,9 @@ const messageSchema = new Schema({
     type: String,
     default: "",
   },
-  photo: {
-    type: imageSchema,
-    default: null,
+  photos: {
+    type: [imageSchema],
+    default: [],
   },
 });
 

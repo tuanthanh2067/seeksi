@@ -1,4 +1,9 @@
 const { PubSub } = require("graphql-subscriptions");
+const { UserInputError } = require("apollo-server-core");
+const { unlink } = require("fs/promises");
+
+const { writeFileUpload } = require("../../../storage/upload");
+const { uploadImages } = require("../../../storage/cloudinary");
 
 const pubsub = new PubSub();
 
@@ -20,19 +25,46 @@ const mutations = {
   sendMessage: async (_, args, { dataSources, req, userAuthentication }) => {
     userAuthentication(req.user);
 
-    const roomId = args.roomId;
-    const content = args.content || "";
-    const photo = null;
+    if (args.photos && Array.isArray(args.photos)) {
+      const filePaths = await Promise.all(
+        args.photos.map(async (photo) => await writeFileUpload(photo))
+      );
+
+      const photos = await uploadImages(filePaths);
+
+      const message = await dataSources.chatRoomAPI.sendMessageToChatRoom(
+        args.roomId,
+        req.user.userId,
+        args.content,
+        photos
+      );
+
+      for (const filePath of filePaths) {
+        await unlink(filePath);
+      }
+
+      // publish to channel
+      pubsub.publish(`CHANNEL_${args.roomId}`, {
+        messageSent: message,
+      });
+
+      return {
+        ...message,
+      };
+    }
+
+    if (!args.content && typeof args.content !== "string") {
+      throw new UserInputError("Invalid message");
+    }
 
     const message = await dataSources.chatRoomAPI.sendMessageToChatRoom(
-      roomId,
-      content,
-      photo,
-      req.user.userId
+      args.roomId,
+      req.user.userId,
+      args.content
     );
 
     // publish to channel
-    pubsub.publish(`CHANNEL_${roomId}`, {
+    pubsub.publish(`CHANNEL_${args.roomId}`, {
       messageSent: message,
     });
 

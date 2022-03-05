@@ -1,3 +1,3 @@
 module.exports.mutations = `
-    sendMessage(content: String, photo: String, roomId: ID!): Message
+    sendMessage(content: String, photos: [Upload!], roomId: ID!): Message
 `;
