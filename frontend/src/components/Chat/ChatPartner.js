@@ -17,6 +17,7 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
         firstName: partnerName,
       },
       history,
+      isDisabled,
     } = chatRoom;
 
     const latestMsg = history[history.length - 1];
@@ -35,6 +36,7 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
     }
 
     return {
+      isDisabled,
       roomId,
       partnerId,
       partnerAvatar,
@@ -70,13 +72,19 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
         >
           <div className="flex items-center p-4">
             <img
-              src={room.partnerAvatar ? room.partnerAvatar : defaultAvt}
+              src={
+                room.partnerAvatar && !room.isDisabled
+                  ? room.partnerAvatar
+                  : defaultAvt
+              }
               alt="user's avatar"
               className="object-contain w-20 h-20 mr-4 rounded-full"
             />
             <div className="w-full text-ellipsis">
               <p className="text-lg font-bold">{room.partnerName}</p>
-              <p className="break-all">{room.latestMsgContent}</p>
+              <p>
+                {room.isDisabled ? "User unmatched" : room.latestMsgContent}
+              </p>
             </div>
           </div>
         </button>

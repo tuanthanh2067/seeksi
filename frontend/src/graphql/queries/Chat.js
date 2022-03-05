@@ -34,6 +34,7 @@ export const GET_CHAT_ROOMS = gql`
           medium
         }
       }
+      isDisabled
     }
   }
 `;

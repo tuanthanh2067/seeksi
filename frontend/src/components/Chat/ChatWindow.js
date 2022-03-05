@@ -13,13 +13,23 @@ function ChatWindow({ data, setShowConfirmation }) {
         avatar={data.partner.avatar.small}
         firstName={data.partner.firstName}
         setShowConfirmation={setShowConfirmation}
+        isDisabled={data.isDisabled}
       />
       <ChatMessageList data={data} />
-      <ChatInput
-        roomId={data.id}
-        showEmoji={showEmoji}
-        setShowEmoji={setShowEmoji}
-      />
+      {data.isDisabled ? (
+        <div className="flex items-center justify-center py-5">
+          <div className="font-medium place-self-center my-auto">
+            🔒 {data.partner.firstName} is unmatched. You are now unable to send
+            message to {data.partner.firstName} 🔒
+          </div>
+        </div>
+      ) : (
+        <ChatInput
+          roomId={data.id}
+          showEmoji={showEmoji}
+          setShowEmoji={setShowEmoji}
+        />
+      )}
     </div>
   ) : (
     <div className="flex flex-col gap-y-2 container col-start-2 w-2/3 min-h-[85%] max-h-[85%] items-center justify-center">

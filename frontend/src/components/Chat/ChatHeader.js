@@ -1,6 +1,6 @@
 import React from "react";
-
 import OvalButton from "../Buttons/OvalButton";
+import defaultAvt from "../../assets/mock_avatar.png";
 
 function ChatHeader(props) {
   const handleReport = () => {};
@@ -12,7 +12,9 @@ function ChatHeader(props) {
           <div className="overflow-hidden flex">
             <div className="h-10 w-10 justify-self-center overflow-hidden rounded-full">
               <img
-                src={props.avatar}
+                src={
+                  props.avatar && !props.isDisabled ? props.avatar : defaultAvt
+                }
                 alt="user avatar"
                 className=" object-contain"
               />
