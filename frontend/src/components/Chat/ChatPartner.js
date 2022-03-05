@@ -29,10 +29,7 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
     } else {
       if (latestMsg.sendBy !== partnerId && latestMsg.sendBy !== "admin")
         latestMsgContent = "You: ";
-      latestMsgContent +=
-        latestMsg.content.split(" ").length > 4
-          ? `${latestMsg.content.split(" ").slice(0, 4).join(" ")}...`
-          : latestMsg.content;
+      latestMsgContent += latestMsg.content;
     }
 
     return {
@@ -70,19 +67,21 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
             setPartnerId(room.partnerId);
           }}
         >
-          <div className="flex items-center p-4">
-            <img
-              src={
-                room.partnerAvatar && !room.isDisabled
-                  ? room.partnerAvatar
-                  : defaultAvt
-              }
-              alt="user's avatar"
-              className="object-contain w-20 h-20 mr-4 rounded-full"
-            />
-            <div className="w-full text-ellipsis">
+          <div className="grid grid-cols-5 gap-x-4 p-3">
+            <div className="">
+              <img
+                src={
+                  room.partnerAvatar && !room.isDisabled
+                    ? room.partnerAvatar
+                    : defaultAvt
+                }
+                alt="user's avatar"
+                className="object-contain w-full rounded-full"
+              />
+            </div>
+            <div className="col-start-2 col-span-5 flex flex-col justify-center">
               <p className="text-lg font-bold">{room.partnerName}</p>
-              <p>
+              <p className="text-ellipsis overflow-hidden whitespace-nowrap">
                 {room.isDisabled ? "User unmatched" : room.latestMsgContent}
               </p>
             </div>
