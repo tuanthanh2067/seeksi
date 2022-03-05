@@ -17,3 +17,12 @@ export const SEND_REJECT_REQUEST = gql`
     }
   }
 `;
+
+export const UNMATCH = gql`
+  mutation unmatch($id: String!) {
+    unmatch(id: $id) {
+      success
+      message
+    }
+  }
+`;

@@ -2,5 +2,6 @@
   //this is to make sure everyone uses the same prettier extension
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": false
+  "editor.formatOnPaste": false,
+  "cSpell.words": ["Unmatch"]
 }

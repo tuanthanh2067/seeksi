@@ -1,10 +1,9 @@
 import React from "react";
-
 import OvalButton from "../Buttons/OvalButton";
+import defaultAvt from "../../assets/mock_avatar.png";
 
 function ChatHeader(props) {
   const handleReport = () => {};
-  const handleUnmatch = () => {};
 
   return (
     <div>
@@ -13,7 +12,9 @@ function ChatHeader(props) {
           <div className="overflow-hidden flex">
             <div className="h-10 w-10 justify-self-center overflow-hidden rounded-full">
               <img
-                src={props.avatar}
+                src={
+                  props.avatar && !props.isDisabled ? props.avatar : defaultAvt
+                }
                 alt="user avatar"
                 className=" object-contain"
               />
@@ -29,7 +30,9 @@ function ChatHeader(props) {
               bgColor="bg-secondary"
               hover="hover:bg-white hover:text-secondary hover:border-secondary"
               btnName="Unmatch"
-              handleClick={handleUnmatch}
+              handleClick={() => {
+                props.setShowConfirmation(true);
+              }}
             />
             <OvalButton
               fontSize="text-sm"
