@@ -12,10 +12,10 @@ function ChatMessageList({ data }) {
   });
 
   return (
-    <div className="h-[28rem] flex flex-col">
+    <div className="flex flex-col max-h-full">
       <div
         id="scrollWindow"
-        className="relative min-h-[80%] grow flex flex-col overflow-x-hidden overflow-y-scroll scroll-smooth"
+        className="relative  grow flex flex-col overflow-x-hidden overflow-y-scroll scroll-smooth"
       >
         {data.history.map((message) => (
           <ChatMessageItem message={message.content} sendBy={message.sendBy} />

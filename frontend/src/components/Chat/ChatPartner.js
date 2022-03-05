@@ -21,9 +21,18 @@ const ChatPartner = ({ data, onRoomSelect }) => {
 
     const latestMsg = history[history.length - 1];
     const sentBy = latestMsg.sendBy === partnerId ? partnerName : "You";
-    const latestMsgContent = !latestMsg.photo
-      ? `${latestMsg.content.split(" ").slice(0, 5).join(" ")}...`
-      : `${sentBy} sent a photo.`;
+
+    let latestMsgContent = "";
+    if (latestMsg.photo) {
+      latestMsgContent = `${sentBy} sent a photo.`;
+    } else {
+      if (latestMsg.sendBy !== partnerId && latestMsg.sendBy !== "admin")
+        latestMsgContent = "You: ";
+      latestMsgContent +=
+        latestMsg.content.split(" ").length > 4
+          ? `${latestMsg.content.split(" ").slice(0, 4).join(" ")}...`
+          : latestMsg.content;
+    }
 
     return {
       roomId,
@@ -63,7 +72,7 @@ const ChatPartner = ({ data, onRoomSelect }) => {
             />
             <div className="w-full text-ellipsis">
               <p className="text-lg font-bold">{room.partnerName}</p>
-              <p>{room.latestMsgContent}</p>
+              <p className="break-all">{room.latestMsgContent}</p>
             </div>
           </div>
         </button>
