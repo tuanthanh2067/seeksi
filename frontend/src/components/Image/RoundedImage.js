@@ -1,4 +1,6 @@
 import React from "react";
+import { Image } from "react-shimmer";
+import FallBack from "../FallBack/FallBack";
 
 const RoundedImage = (props) => {
   return (
@@ -10,10 +12,17 @@ const RoundedImage = (props) => {
       >
         Remove
       </button>
-      <img
+      <Image
         src={props.src}
         alt={`img${props.idx}`}
-        className="w-full h-full object-contain"
+        fallback={<FallBack />}
+        NativeImgProps={{
+          style: {
+            objectFit: "contain",
+            width: "100%",
+            height: "100%",
+          },
+        }}
       />
     </div>
   );

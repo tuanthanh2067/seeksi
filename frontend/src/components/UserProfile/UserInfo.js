@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import defaultAvt from "../../assets/mock_avatar.png";
 import AgeLogo from "../../assets/age_logo.png";
@@ -8,9 +8,10 @@ import RoundedButton from "../Buttons/RoundedButton";
 import EditAvatar from "../Image/EditAvatar";
 import OvalImage from "../Image/OvalImage";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Image } from "react-shimmer";
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
+import FallBack from "../FallBack/FallBack";
 
 const ProfilePage = (props) => {
   const navigate = useNavigate();
@@ -59,10 +60,15 @@ const ProfilePage = (props) => {
                 <EditAvatar handleChange={onAvtChange} avatar={defaultAvt} />
               )
             ) : (
-              <img
+              <Image
                 src={props.user.avatar ? props.user.avatar.origin : defaultAvt}
                 alt="user avatar"
-                className="object-contain"
+                fallback={<FallBack avt={true} />}
+                NativeImgProps={{
+                  style: {
+                    objectFit: "contain",
+                  },
+                }}
               />
             )}
           </div>

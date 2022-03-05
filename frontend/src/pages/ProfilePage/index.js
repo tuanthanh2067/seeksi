@@ -9,6 +9,8 @@ import React, { useEffect } from "react";
 import UserInfo from "../../components/UserProfile/UserInfo";
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
+import { Image } from "react-shimmer";
+import FallBack from "../../components/FallBack/FallBack";
 
 const ProfilePage = () => {
   const { id } = useParams();
@@ -47,10 +49,16 @@ const ProfilePage = () => {
                     href={`${pic.large}`}
                     className="block justify-self-center"
                   >
-                    <img
+                    <Image
                       src={`${pic.large}`}
                       alt={key}
-                      className="object-cover object-center"
+                      fallback={<FallBack />}
+                      NativeImgProps={{
+                        style: {
+                          objectFit: "cover",
+                          objectPosition: "center",
+                        },
+                      }}
                     />
                   </a>
                 ) : (
@@ -58,10 +66,16 @@ const ProfilePage = () => {
                     href={`${pic.origin}`}
                     className="block justify-self-center"
                   >
-                    <img
+                    <Image
                       src={`${pic.origin}`}
                       alt={key}
-                      className="object-cover object-center"
+                      fallback={<FallBack />}
+                      NativeImgProps={{
+                        style: {
+                          objectFit: "cover",
+                          objectPosition: "center",
+                        },
+                      }}
                     />
                   </a>
                 )
