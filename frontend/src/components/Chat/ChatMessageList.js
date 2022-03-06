@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import ChatMessageItem from "./ChatMessageItem";
+import ChatSuggestLines from "./ChatSuggestLines";
+
+const ADMIN_MESSAGE_COUNT = 3;
 
 function ChatMessageList({ data }) {
   const setScroll = () => {
@@ -21,6 +24,9 @@ function ChatMessageList({ data }) {
           <ChatMessageItem message={message.content} sendBy={message.sendBy} />
         ))}
       </div>
+      {data.history.length <= ADMIN_MESSAGE_COUNT && (
+        <ChatSuggestLines roomId={data.id} />
+      )}
     </div>
   );
 }

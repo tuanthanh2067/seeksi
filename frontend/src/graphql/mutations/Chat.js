@@ -13,3 +13,12 @@ export const SEND_MESSAGE = gql`
     }
   }
 `;
+
+export const INCREMENT_USE_COUNT = gql`
+  mutation incrementUseCount($lineId: ID!) {
+    incrementUseCount(lineId: $lineId) {
+      success
+      message
+    }
+  }
+`;
