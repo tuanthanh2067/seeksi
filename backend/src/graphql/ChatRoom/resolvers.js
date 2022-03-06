@@ -53,7 +53,7 @@ const mutations = {
       };
     }
 
-    if (!args.content && typeof args.content !== "string") {
+    if (!args.content || typeof args.content !== "string") {
       throw new UserInputError("Invalid message");
     }
 
