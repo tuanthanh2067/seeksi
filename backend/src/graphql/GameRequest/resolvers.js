@@ -1,3 +1,4 @@
+const { ApolloError } = require("apollo-server-core");
 const { PubSub, withFilter } = require("graphql-subscriptions");
 const mongoose = require("mongoose");
 
@@ -12,6 +13,12 @@ const mutations = {
     { dataSources, req, userAuthentication }
   ) => {
     userAuthentication(req.user);
+
+    // check partner's online status
+    const isPartnerOnline = dataSources.userStatusAPI.isOnline(args.to);
+    if (!isPartnerOnline) {
+      throw new ApolloError("Partner is offline");
+    }
 
     const gameRequest = await dataSources.gameRequestAPI.sendGameRequestTo(
       req.user.userId,
