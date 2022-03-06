@@ -176,6 +176,12 @@ class ChatRoomAPI extends DataSource {
 
     await chatroom.save();
   }
+
+  async isChatRoomDisabled(roomId) {
+    const chatRoom = await ChatRoom.findById(roomId);
+
+    return chatRoom.isDisabled;
+  }
 }
 
 module.exports.ChatRoomAPI = ChatRoomAPI;
