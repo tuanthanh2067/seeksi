@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 
 export const SEND_MESSAGE = gql`
-  mutation SendMessage($content: String, $photo: String, $roomId: ID!) {
-    sendMessage(content: $content, photo: $photo, roomId: $roomId) {
+  mutation SendMessage($content: String, $photos: [Upload!], $roomId: ID!) {
+    sendMessage(content: $content, photos: $photos, roomId: $roomId) {
       id
       sendBy
       content
-      photo {
+      photos {
         medium
       }
       isSeen

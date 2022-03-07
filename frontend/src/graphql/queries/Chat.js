@@ -7,8 +7,9 @@ export const GET_MESSAGE_HISTORY = gql`
       sendBy
       content
       isSeen
-      photo {
+      photos {
         medium
+        origin
       }
     }
   }
@@ -30,8 +31,9 @@ export const GET_CHAT_ROOMS = gql`
         isSeen
         sendBy
         content
-        photo {
+        photos {
           medium
+          origin
         }
       }
       isDisabled

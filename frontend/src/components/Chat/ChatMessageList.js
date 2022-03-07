@@ -21,7 +21,11 @@ function ChatMessageList({ data }) {
         className="relative min-h-[80%] grow flex flex-col overflow-x-hidden overflow-y-scroll scroll-smooth"
       >
         {data.history.map((message) => (
-          <ChatMessageItem message={message.content} sendBy={message.sendBy} />
+          <ChatMessageItem
+            message={message.content}
+            photos={message.photos}
+            sendBy={message.sendBy}
+          />
         ))}
       </div>
       {data.history.length <= ADMIN_MESSAGE_COUNT && (
