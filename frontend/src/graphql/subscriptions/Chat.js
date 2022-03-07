@@ -7,8 +7,9 @@ export const GET_MESSAGE = gql`
       sendBy
       isSeen
       content
-      photo {
+      photos {
         medium
+        origin
       }
     }
   }

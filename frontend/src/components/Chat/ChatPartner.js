@@ -24,7 +24,7 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
     const sentBy = latestMsg.sendBy === partnerId ? partnerName : "You";
 
     let latestMsgContent = "";
-    if (latestMsg.photo) {
+    if (latestMsg.photos.length) {
       latestMsgContent = `${sentBy} sent a photo.`;
     } else {
       if (latestMsg.sendBy !== partnerId && latestMsg.sendBy !== "admin")
