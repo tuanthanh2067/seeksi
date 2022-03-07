@@ -2,7 +2,105 @@ db = new Mongo().getDB("seeksi");
 
 db.createCollection("users", { capped: false });
 
+var admins = [
+  {
+    firstName: "Admin",
+    lastName: "User",
+    role: "admin",
+    email: "admin@seeksi.com",
+    dob: ISODate("2000-01-01T00:00:00Z"),
+    sex: "female",
+    location: {
+      city: "Toronto",
+      province: "Ontario",
+      latitude: 43.65107,
+      longitude: -79.347015,
+    },
+    hobbies: [
+      "Poi",
+      "Diving",
+      "Candy making",
+      "Stand-up comedy",
+      "Tattooing",
+      "Yoga",
+    ],
+    preference: {
+      gender: "male",
+      distance: 95,
+      minAge: 26,
+      maxAge: 56,
+      longTerm: true,
+      shortTerm: true,
+    },
+    avatar: {
+      origin: "https://picsum.photos/1000",
+      small: "https://picsum.photos/250",
+      medium: "https://picsum.photos/500",
+      large: "https://picsum.photos/900",
+    },
+    photo: [
+      {
+        origin: "https://picsum.photos/1000",
+        small: "https://picsum.photos/250",
+        medium: "https://picsum.photos/500",
+        large: "https://picsum.photos/900",
+      },
+      {
+        origin: "https://picsum.photos/1000",
+        small: "https://picsum.photos/250",
+        medium: "https://picsum.photos/500",
+        large: "https://picsum.photos/900",
+      },
+      {
+        origin: "https://picsum.photos/1000",
+        small: "https://picsum.photos/250",
+        medium: "https://picsum.photos/500",
+        large: "https://picsum.photos/900",
+      },
+      {
+        origin: "https://picsum.photos/1000",
+        small: "https://picsum.photos/250",
+        medium: "https://picsum.photos/500",
+        large: "https://picsum.photos/900",
+      },
+      {
+        origin: "https://picsum.photos/1000",
+        small: "https://picsum.photos/250",
+        medium: "https://picsum.photos/500",
+        large: "https://picsum.photos/900",
+      },
+      {
+        origin: "https://picsum.photos/1000",
+        small: "https://picsum.photos/250",
+        medium: "https://picsum.photos/500",
+        large: "https://picsum.photos/900",
+      },
+      {
+        origin: "https://picsum.photos/1000",
+        small: "https://picsum.photos/250",
+        medium: "https://picsum.photos/500",
+        large: "https://picsum.photos/900",
+      },
+      {
+        origin: "https://picsum.photos/1000",
+        small: "https://picsum.photos/250",
+        medium: "https://picsum.photos/500",
+        large: "https://picsum.photos/900",
+      },
+      {
+        origin: "https://picsum.photos/1000",
+        small: "https://picsum.photos/250",
+        medium: "https://picsum.photos/500",
+        large: "https://picsum.photos/900",
+      },
+    ],
+    bio: "I'm the admin",
+    password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+  },
+];
+
 db.users.insertMany([
+  ...admins,
   {
     _id: ObjectId("6207f6f7f0323933be000008"),
     firstName: "Ashley",
