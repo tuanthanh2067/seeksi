@@ -80,8 +80,9 @@ class ChatRoomAPI extends DataSource {
     }
   }
 
-  async sendMessageToChatRoom(roomId, content, photo = null, sendBy) {
+  async sendMessageToChatRoom(roomId, sendBy, content = "", photos = []) {
     const id = mongoose.Types.ObjectId();
+    const isSeen = false;
 
     let secretKey = process.env.ENCRYPT_KEY;
     if (process.env.NODE_ENV === "production") {
@@ -94,7 +95,8 @@ class ChatRoomAPI extends DataSource {
     const message = {
       sendBy,
       content,
-      photo,
+      photos,
+      isSeen,
     };
 
     // create a message to save to db
