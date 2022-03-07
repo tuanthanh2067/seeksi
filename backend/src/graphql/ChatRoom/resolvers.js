@@ -1,3 +1,4 @@
+const { ApolloError } = require("apollo-server-core");
 const { PubSub } = require("graphql-subscriptions");
 
 const pubsub = new PubSub();
@@ -23,6 +24,13 @@ const mutations = {
     const roomId = args.roomId;
     const content = args.content || "";
     const photo = null;
+
+    const isDisabled = await dataSources.chatRoomAPI.isChatRoomDisabled(
+      args.roomId
+    );
+    if (isDisabled) {
+      throw new ApolloError("Chat room has been disabled");
+    }
 
     const message = await dataSources.chatRoomAPI.sendMessageToChatRoom(
       roomId,
