@@ -6,7 +6,7 @@ var admins = [
   {
     firstName: "Admin",
     lastName: "User",
-    role: "admin",
+    role: ["user", "admin"],
     email: "admin@seeksi.com",
     dob: ISODate("2000-01-01T00:00:00Z"),
     sex: "female",
@@ -96,6 +96,7 @@ var admins = [
     ],
     bio: "I'm the admin",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
 ];
 
@@ -194,6 +195,7 @@ db.users.insertMany([
     ],
     bio: "Don't follow your dream. Follow me.",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323933be000009"),
@@ -262,6 +264,7 @@ db.users.insertMany([
     ],
     bio: "When it rains look for rainbows when it’s dark I look for stars.",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323933be00000a"),
@@ -362,6 +365,7 @@ db.users.insertMany([
     ],
     bio: "Adaptive background focus group",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323933be00000b"),
@@ -420,6 +424,7 @@ db.users.insertMany([
     ],
     bio: "Stand-alone multi-tasking Graphical User Interface",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323933be00000c"),
@@ -465,6 +470,7 @@ db.users.insertMany([
     ],
     bio: "Profound dynamic functionalities",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323933be00000d"),
@@ -600,6 +606,7 @@ db.users.insertMany([
     ],
     bio: "Organic modular definition",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323933be00000e"),
@@ -753,6 +760,7 @@ db.users.insertMany([
     ],
     bio: "Synchronised national knowledge user",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323933be00000f"),
@@ -916,6 +924,7 @@ db.users.insertMany([
     ],
     bio: "Future-proofed neutral synergy",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393207000008"),
@@ -1057,6 +1066,7 @@ db.users.insertMany([
     ],
     bio: "Digitized national standardization",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393207000009"),
@@ -1114,6 +1124,7 @@ db.users.insertMany([
     ],
     bio: "Horizontal actuating instruction set",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320700000a"),
@@ -1201,6 +1212,7 @@ db.users.insertMany([
     ],
     bio: "Secured 5th generation process improvement",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320700000b"),
@@ -1265,6 +1277,7 @@ db.users.insertMany([
     ],
     bio: "Cross-platform needs-based framework",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320700000c"),
@@ -1387,6 +1400,7 @@ db.users.insertMany([
     ],
     bio: "Self-enabling intermediate project",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320700000d"),
@@ -1512,6 +1526,7 @@ db.users.insertMany([
     ],
     bio: "Organized bi-directional implementation",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320700000e"),
@@ -1601,6 +1616,7 @@ db.users.insertMany([
     ],
     bio: "Face to face actuating success",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320700000f"),
@@ -1765,6 +1781,7 @@ db.users.insertMany([
     ],
     bio: "Visionary cohesive service-desk",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392eaf000008"),
@@ -1816,6 +1833,7 @@ db.users.insertMany([
     ],
     bio: "Robust responsive application",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392eaf000009"),
@@ -1961,6 +1979,7 @@ db.users.insertMany([
     ],
     bio: "Configurable encompassing intranet",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392eaf00000a"),
@@ -2075,6 +2094,7 @@ db.users.insertMany([
     ],
     bio: "Triple-buffered executive Graphical User Interface",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392eaf00000b"),
@@ -2202,6 +2222,7 @@ db.users.insertMany([
     ],
     bio: "Organic uniform success",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392eaf00000c"),
@@ -2263,6 +2284,7 @@ db.users.insertMany([
     ],
     bio: "Total directional standardization",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392eaf00000d"),
@@ -2356,6 +2378,7 @@ db.users.insertMany([
     ],
     bio: "Implemented exuding service-desk",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392eaf00000e"),
@@ -2425,6 +2448,7 @@ db.users.insertMany([
     ],
     bio: "Progressive next generation capacity",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392eaf00000f"),
@@ -2562,6 +2586,7 @@ db.users.insertMany([
     ],
     bio: "Quality-focused tangible array",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392ed5000008"),
@@ -2652,6 +2677,7 @@ db.users.insertMany([
     ],
     bio: "Fully-configurable bi-directional complexity",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392ed5000009"),
@@ -2776,6 +2802,7 @@ db.users.insertMany([
     ],
     bio: "Cloned demand-driven instruction set",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392ed500000a"),
@@ -2857,6 +2884,7 @@ db.users.insertMany([
     ],
     bio: "Ergonomic composite task-force",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392ed500000b"),
@@ -2968,6 +2996,7 @@ db.users.insertMany([
     ],
     bio: "Open-architected mobile toolset",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392ed500000c"),
@@ -3089,6 +3118,7 @@ db.users.insertMany([
     ],
     bio: "Versatile human-resource extranet",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392ed500000d"),
@@ -3170,6 +3200,7 @@ db.users.insertMany([
     ],
     bio: "Compatible non-volatile internet solution",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392ed500000e"),
@@ -3281,6 +3312,7 @@ db.users.insertMany([
     ],
     bio: "Devolved client-server core",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392ed500000f"),
@@ -3326,6 +3358,7 @@ db.users.insertMany([
     ],
     bio: "Horizontal neutral open architecture",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393828000008"),
@@ -3400,6 +3433,7 @@ db.users.insertMany([
     ],
     bio: "Devolved systemic functionalities",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393828000009"),
@@ -3560,6 +3594,7 @@ db.users.insertMany([
     ],
     bio: "Adaptive zero tolerance instruction set",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239382800000a"),
@@ -3703,6 +3738,7 @@ db.users.insertMany([
     ],
     bio: "Visionary system-worthy conglomeration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239382800000b"),
@@ -3751,6 +3787,7 @@ db.users.insertMany([
     ],
     bio: "Intuitive asynchronous groupware",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239382800000c"),
@@ -3797,6 +3834,7 @@ db.users.insertMany([
     ],
     bio: "Compatible systemic leverage",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239382800000d"),
@@ -3881,6 +3919,7 @@ db.users.insertMany([
     ],
     bio: "Decentralized maximized implementation",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239382800000e"),
@@ -4022,6 +4061,7 @@ db.users.insertMany([
     ],
     bio: "Reactive upward-trending circuit",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239382800000f"),
@@ -4133,6 +4173,7 @@ db.users.insertMany([
     ],
     bio: "Configurable context-sensitive workforce",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323937b7000008"),
@@ -4282,6 +4323,7 @@ db.users.insertMany([
     ],
     bio: "Multi-lateral holistic system engine",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323937b7000009"),
@@ -4381,6 +4423,7 @@ db.users.insertMany([
     ],
     bio: "Business-focused optimizing solution",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323937b700000a"),
@@ -4478,6 +4521,7 @@ db.users.insertMany([
     ],
     bio: "Up-sized cohesive conglomeration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323937b700000b"),
@@ -4574,6 +4618,7 @@ db.users.insertMany([
     ],
     bio: "Monitored analyzing analyzer",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323937b700000c"),
@@ -4697,6 +4742,7 @@ db.users.insertMany([
     ],
     bio: "Upgradable 24 hour budgetary management",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323937b700000d"),
@@ -4818,6 +4864,7 @@ db.users.insertMany([
     ],
     bio: "Profit-focused bottom-line secured line",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323937b700000e"),
@@ -4881,6 +4928,7 @@ db.users.insertMany([
     ],
     bio: "Persevering background toolset",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323937b700000f"),
@@ -5018,6 +5066,7 @@ db.users.insertMany([
     ],
     bio: "Re-engineered client-server attitude",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392c7d000008"),
@@ -5180,6 +5229,7 @@ db.users.insertMany([
     ],
     bio: "Extended fresh-thinking monitoring",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392c7d000009"),
@@ -5219,6 +5269,7 @@ db.users.insertMany([
     ],
     bio: "Optional bottom-line matrices",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392c7d00000a"),
@@ -5354,6 +5405,7 @@ db.users.insertMany([
     ],
     bio: "Horizontal directional paradigm",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392c7d00000b"),
@@ -5411,6 +5463,7 @@ db.users.insertMany([
     ],
     bio: "Organic holistic Graphic Interface",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392c7d00000c"),
@@ -5457,6 +5510,7 @@ db.users.insertMany([
     ],
     bio: "Up-sized composite concept",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392c7d00000d"),
@@ -5568,6 +5622,7 @@ db.users.insertMany([
     ],
     bio: "Distributed tangible focus group",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392c7d00000e"),
@@ -5612,6 +5667,7 @@ db.users.insertMany([
     ],
     bio: "Enterprise-wide even-keeled toolset",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392c7d00000f"),
@@ -5709,6 +5765,7 @@ db.users.insertMany([
     ],
     bio: "Virtual contextually-based knowledge user",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320e000008"),
@@ -5858,6 +5915,7 @@ db.users.insertMany([
     ],
     bio: "Innovative 6th generation ability",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320e000009"),
@@ -5909,6 +5967,7 @@ db.users.insertMany([
     ],
     bio: "Object-based modular local area network",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320e00000a"),
@@ -5984,6 +6043,7 @@ db.users.insertMany([
     ],
     bio: "Grass-roots background infrastructure",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320e00000b"),
@@ -6098,6 +6158,7 @@ db.users.insertMany([
     ],
     bio: "Open-architected static encoding",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320e00000c"),
@@ -6167,6 +6228,7 @@ db.users.insertMany([
     ],
     bio: "Compatible needs-based migration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320e00000d"),
@@ -6294,6 +6356,7 @@ db.users.insertMany([
     ],
     bio: "Programmable transitional encryption",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320e00000e"),
@@ -6413,6 +6476,7 @@ db.users.insertMany([
     ],
     bio: "Decentralized mission-critical moderator",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239320e00000f"),
@@ -6511,6 +6575,7 @@ db.users.insertMany([
     ],
     bio: "Sharable bifurcated contingency",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392f15000008"),
@@ -6565,6 +6630,7 @@ db.users.insertMany([
     ],
     bio: "User-friendly zero administration groupware",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392f15000009"),
@@ -6670,6 +6736,7 @@ db.users.insertMany([
     ],
     bio: "Future-proofed next generation task-force",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392f1500000a"),
@@ -6787,6 +6854,7 @@ db.users.insertMany([
     ],
     bio: "Face to face composite open system",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392f1500000b"),
@@ -6898,6 +6966,7 @@ db.users.insertMany([
     ],
     bio: "Front-line 24 hour conglomeration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392f1500000c"),
@@ -6946,6 +7015,7 @@ db.users.insertMany([
     ],
     bio: "Function-based value-added capability",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392f1500000d"),
@@ -7075,6 +7145,7 @@ db.users.insertMany([
     ],
     bio: "Reverse-engineered mobile orchestration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392f1500000e"),
@@ -7192,6 +7263,7 @@ db.users.insertMany([
     ],
     bio: "Business-focused scalable paradigm",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392f1500000f"),
@@ -7243,6 +7315,7 @@ db.users.insertMany([
     ],
     bio: "Team-oriented regional product",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dda000008"),
@@ -7377,6 +7450,7 @@ db.users.insertMany([
     ],
     bio: "Balanced optimizing installation",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dda000009"),
@@ -7458,6 +7532,7 @@ db.users.insertMany([
     ],
     bio: "Ergonomic national artificial intelligence",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dda00000a"),
@@ -7531,6 +7606,7 @@ db.users.insertMany([
     ],
     bio: "Programmable context-sensitive alliance",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dda00000b"),
@@ -7591,6 +7667,7 @@ db.users.insertMany([
     ],
     bio: "Expanded didactic methodology",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dda00000c"),
@@ -7686,6 +7763,7 @@ db.users.insertMany([
     ],
     bio: "Profound encompassing productivity",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dda00000d"),
@@ -7767,6 +7845,7 @@ db.users.insertMany([
     ],
     bio: "User-centric cohesive middleware",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dda00000e"),
@@ -7877,6 +7956,7 @@ db.users.insertMany([
     ],
     bio: "Proactive regional knowledge user",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dda00000f"),
@@ -8032,6 +8112,7 @@ db.users.insertMany([
     ],
     bio: "Switchable 24 hour methodology",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392e69000008"),
@@ -8133,6 +8214,7 @@ db.users.insertMany([
     ],
     bio: "Business-focused coherent collaboration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392e69000009"),
@@ -8196,6 +8278,7 @@ db.users.insertMany([
     ],
     bio: "Quality-focused needs-based circuit",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392e6900000a"),
@@ -8334,6 +8417,7 @@ db.users.insertMany([
     ],
     bio: "Re-contextualized 4th generation Graphic Interface",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392e6900000b"),
@@ -8469,6 +8553,7 @@ db.users.insertMany([
     ],
     bio: "Robust asynchronous budgetary management",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392e6900000c"),
@@ -8603,6 +8688,7 @@ db.users.insertMany([
     ],
     bio: "Operative static frame",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392e6900000d"),
@@ -8684,6 +8770,7 @@ db.users.insertMany([
     ],
     bio: "Synchronised intangible concept",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392e6900000e"),
@@ -8729,6 +8816,7 @@ db.users.insertMany([
     ],
     bio: "Realigned asynchronous database",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392e6900000f"),
@@ -8784,6 +8872,7 @@ db.users.insertMany([
     ],
     bio: "Re-engineered transitional open architecture",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393236000008"),
@@ -8832,6 +8921,7 @@ db.users.insertMany([
     ],
     bio: "Intuitive encompassing archive",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393236000009"),
@@ -8929,6 +9019,7 @@ db.users.insertMany([
     ],
     bio: "Optional leading edge implementation",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239323600000a"),
@@ -9052,6 +9143,7 @@ db.users.insertMany([
     ],
     bio: "Focused 24 hour contingency",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239323600000b"),
@@ -9180,6 +9272,7 @@ db.users.insertMany([
     ],
     bio: "Mandatory heuristic Graphical User Interface",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239323600000c"),
@@ -9237,6 +9330,7 @@ db.users.insertMany([
     ],
     bio: "Adaptive value-added collaboration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239323600000d"),
@@ -9376,6 +9470,7 @@ db.users.insertMany([
     ],
     bio: "Self-enabling logistical solution",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239323600000e"),
@@ -9446,6 +9541,7 @@ db.users.insertMany([
     ],
     bio: "Synchronised responsive methodology",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239323600000f"),
@@ -9592,6 +9688,7 @@ db.users.insertMany([
     ],
     bio: "Cloned non-volatile leverage",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239329d000008"),
@@ -9685,6 +9782,7 @@ db.users.insertMany([
     ],
     bio: "Persevering needs-based database",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239329d000009"),
@@ -9797,6 +9895,7 @@ db.users.insertMany([
     ],
     bio: "Exclusive asynchronous orchestration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239329d00000a"),
@@ -9900,6 +9999,7 @@ db.users.insertMany([
     ],
     bio: "Progressive methodical complexity",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239329d00000b"),
@@ -9998,6 +10098,7 @@ db.users.insertMany([
     ],
     bio: "Ameliorated heuristic function",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239329d00000c"),
@@ -10046,6 +10147,7 @@ db.users.insertMany([
     ],
     bio: "Focused contextually-based Graphical User Interface",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239329d00000d"),
@@ -10163,6 +10265,7 @@ db.users.insertMany([
     ],
     bio: "Synergized static collaboration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239329d00000e"),
@@ -10283,6 +10386,7 @@ db.users.insertMany([
     ],
     bio: "Customer-focused 6th generation policy",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f03239329d00000f"),
@@ -10394,6 +10498,7 @@ db.users.insertMany([
     ],
     bio: "Enterprise-wide logistical array",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392bed000008"),
@@ -10458,6 +10563,7 @@ db.users.insertMany([
     ],
     bio: "Multi-tiered regional encoding",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392bed000009"),
@@ -10569,6 +10675,7 @@ db.users.insertMany([
     ],
     bio: "Multi-layered multi-tasking model",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392bed00000a"),
@@ -10710,6 +10817,7 @@ db.users.insertMany([
     ],
     bio: "Ergonomic actuating installation",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392bed00000b"),
@@ -10761,6 +10869,7 @@ db.users.insertMany([
     ],
     bio: "Centralized content-based utilisation",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392bed00000c"),
@@ -10896,6 +11005,7 @@ db.users.insertMany([
     ],
     bio: "Versatile mission-critical hierarchy",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392bed00000d"),
@@ -10983,6 +11093,7 @@ db.users.insertMany([
     ],
     bio: "Reactive fault-tolerant data-warehouse",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392bed00000e"),
@@ -11058,6 +11169,7 @@ db.users.insertMany([
     ],
     bio: "Customer-focused grid-enabled project",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392bed00000f"),
@@ -11199,6 +11311,7 @@ db.users.insertMany([
     ],
     bio: "Front-line background open system",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dde000008"),
@@ -11238,6 +11351,7 @@ db.users.insertMany([
     ],
     bio: "Multi-channelled multi-state open architecture",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dde000009"),
@@ -11327,6 +11441,7 @@ db.users.insertMany([
     ],
     bio: "Reduced zero administration software",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dde00000a"),
@@ -11385,6 +11500,7 @@ db.users.insertMany([
     ],
     bio: "Multi-layered heuristic service-desk",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dde00000b"),
@@ -11464,6 +11580,7 @@ db.users.insertMany([
     ],
     bio: "Proactive bottom-line productivity",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dde00000c"),
@@ -11593,6 +11710,7 @@ db.users.insertMany([
     ],
     bio: "Enterprise-wide non-volatile pricing structure",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dde00000d"),
@@ -11659,6 +11777,7 @@ db.users.insertMany([
     ],
     bio: "Organized reciprocal workforce",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dde00000e"),
@@ -11776,6 +11895,7 @@ db.users.insertMany([
     ],
     bio: "Customer-focused radical approach",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392dde00000f"),
@@ -11881,6 +12001,7 @@ db.users.insertMany([
     ],
     bio: "Function-based scalable knowledge user",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392de1000008"),
@@ -12016,6 +12137,7 @@ db.users.insertMany([
     ],
     bio: "Assimilated didactic focus group",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392de1000009"),
@@ -12090,6 +12212,7 @@ db.users.insertMany([
     ],
     bio: "Function-based intermediate conglomeration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392de100000a"),
@@ -12170,6 +12293,7 @@ db.users.insertMany([
     ],
     bio: "Open-source optimizing architecture",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392de100000b"),
@@ -12218,6 +12342,7 @@ db.users.insertMany([
     ],
     bio: "Configurable composite task-force",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392de100000c"),
@@ -12281,6 +12406,7 @@ db.users.insertMany([
     ],
     bio: "Compatible 24 hour extranet",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392de100000d"),
@@ -12363,6 +12489,7 @@ db.users.insertMany([
     ],
     bio: "Secured secondary installation",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392de100000e"),
@@ -12450,6 +12577,7 @@ db.users.insertMany([
     ],
     bio: "Seamless grid-enabled Graphic Interface",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392de100000f"),
@@ -12561,6 +12689,7 @@ db.users.insertMany([
     ],
     bio: "Organic executive budgetary management",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f03239383c000008"),
@@ -12676,6 +12805,7 @@ db.users.insertMany([
     ],
     bio: "Integrated user-facing matrix",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f03239383c000009"),
@@ -12789,6 +12919,7 @@ db.users.insertMany([
     ],
     bio: "Decentralized real-time artificial intelligence",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f03239383c00000a"),
@@ -12929,6 +13060,7 @@ db.users.insertMany([
     ],
     bio: "Monitored actuating portal",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f03239383c00000b"),
@@ -13038,6 +13170,7 @@ db.users.insertMany([
     ],
     bio: "Vision-oriented reciprocal firmware",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f03239383c00000c"),
@@ -13155,6 +13288,7 @@ db.users.insertMany([
     ],
     bio: "Configurable content-based framework",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f03239383c00000d"),
@@ -13232,6 +13366,7 @@ db.users.insertMany([
     ],
     bio: "Up-sized interactive definition",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f8f03239383c00000e"),
@@ -13378,6 +13513,7 @@ db.users.insertMany([
     ],
     bio: "Customer-focused contextually-based neural-net",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f8f03239383c00000f"),
@@ -13487,6 +13623,7 @@ db.users.insertMany([
     ],
     bio: "Mandatory coherent analyzer",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f032392e03000008"),
@@ -13560,6 +13697,7 @@ db.users.insertMany([
     ],
     bio: "Cross-group web-enabled success",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f032392e03000009"),
@@ -13623,6 +13761,7 @@ db.users.insertMany([
     ],
     bio: "Diverse local matrices",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f032392e0300000a"),
@@ -13675,6 +13814,7 @@ db.users.insertMany([
     ],
     bio: "Assimilated system-worthy groupware",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f032392e0300000b"),
@@ -13734,6 +13874,7 @@ db.users.insertMany([
     ],
     bio: "Persistent homogeneous workforce",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f032392e0300000c"),
@@ -13847,6 +13988,7 @@ db.users.insertMany([
     ],
     bio: "Multi-lateral multimedia open system",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f032392e0300000d"),
@@ -13958,6 +14100,7 @@ db.users.insertMany([
     ],
     bio: "Innovative multi-tasking contingency",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f032392e0300000e"),
@@ -13997,6 +14140,7 @@ db.users.insertMany([
     ],
     bio: "Public-key encompassing structure",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f032392e0300000f"),
@@ -14144,6 +14288,7 @@ db.users.insertMany([
     ],
     bio: "Multi-tiered logistical emulation",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323930a7000008"),
@@ -14280,6 +14425,7 @@ db.users.insertMany([
     ],
     bio: "Devolved needs-based policy",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323930a7000009"),
@@ -14339,6 +14485,7 @@ db.users.insertMany([
     ],
     bio: "Compatible solution-oriented time-frame",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323930a700000a"),
@@ -14430,6 +14577,7 @@ db.users.insertMany([
     ],
     bio: "Implemented well-modulated definition",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323930a700000b"),
@@ -14515,6 +14663,7 @@ db.users.insertMany([
     ],
     bio: "Vision-oriented client-server service-desk",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323930a700000c"),
@@ -14575,6 +14724,7 @@ db.users.insertMany([
     ],
     bio: "Centralized impactful process improvement",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323930a700000d"),
@@ -14727,6 +14877,7 @@ db.users.insertMany([
     ],
     bio: "Diverse stable adapter",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323930a700000e"),
@@ -14795,6 +14946,7 @@ db.users.insertMany([
     ],
     bio: "Profound neutral collaboration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323930a700000f"),
@@ -14908,6 +15060,7 @@ db.users.insertMany([
     ],
     bio: "Realigned 4th generation customer loyalty",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323931fe000008"),
@@ -15016,6 +15169,7 @@ db.users.insertMany([
     ],
     bio: "Seamless dedicated concept",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323931fe000009"),
@@ -15157,6 +15311,7 @@ db.users.insertMany([
     ],
     bio: "Programmable even-keeled intranet",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323931fe00000a"),
@@ -15249,6 +15404,7 @@ db.users.insertMany([
     ],
     bio: "Versatile attitude-oriented protocol",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323931fe00000b"),
@@ -15326,6 +15482,7 @@ db.users.insertMany([
     ],
     bio: "Multi-tiered logistical application",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323931fe00000c"),
@@ -15396,6 +15553,7 @@ db.users.insertMany([
     ],
     bio: "Up-sized neutral array",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323931fe00000d"),
@@ -15547,6 +15705,7 @@ db.users.insertMany([
     ],
     bio: "Fundamental holistic info-mediaries",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323931fe00000e"),
@@ -15646,6 +15805,7 @@ db.users.insertMany([
     ],
     bio: "Object-based multimedia service-desk",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323931fe00000f"),
@@ -15778,6 +15938,7 @@ db.users.insertMany([
     ],
     bio: "Total zero tolerance info-mediaries",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392d1c000008"),
@@ -15838,6 +15999,7 @@ db.users.insertMany([
     ],
     bio: "Enhanced coherent attitude",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392d1c000009"),
@@ -15942,6 +16104,7 @@ db.users.insertMany([
     ],
     bio: "De-engineered bottom-line complexity",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392d1c00000a"),
@@ -16031,6 +16194,7 @@ db.users.insertMany([
     ],
     bio: "Future-proofed empowering installation",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392d1c00000b"),
@@ -16154,6 +16318,7 @@ db.users.insertMany([
     ],
     bio: "Up-sized analyzing conglomeration",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392d1c00000c"),
@@ -16193,6 +16358,7 @@ db.users.insertMany([
     ],
     bio: "Ameliorated foreground task-force",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392d1c00000d"),
@@ -16336,6 +16502,7 @@ db.users.insertMany([
     ],
     bio: "Object-based full-range circuit",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392d1c00000e"),
@@ -16448,6 +16615,7 @@ db.users.insertMany([
     ],
     bio: "Devolved well-modulated ability",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032392d1c00000f"),
@@ -16589,6 +16757,7 @@ db.users.insertMany([
     ],
     bio: "Grass-roots fault-tolerant product",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f0323932e7000008"),
@@ -16682,6 +16851,7 @@ db.users.insertMany([
     ],
     bio: "Phased multimedia complexity",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323932e7000009"),
@@ -16750,6 +16920,7 @@ db.users.insertMany([
     ],
     bio: "Monitored reciprocal alliance",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323932e700000a"),
@@ -16889,6 +17060,7 @@ db.users.insertMany([
     ],
     bio: "Re-contextualized logistical extranet",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323932e700000b"),
@@ -16967,6 +17139,7 @@ db.users.insertMany([
     ],
     bio: "Ameliorated attitude-oriented Graphical User Interface",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323932e700000c"),
@@ -17100,6 +17273,7 @@ db.users.insertMany([
     ],
     bio: "Pre-emptive foreground process improvement",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323932e700000d"),
@@ -17186,6 +17360,7 @@ db.users.insertMany([
     ],
     bio: "Open-source 24/7 infrastructure",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323932e700000e"),
@@ -17255,6 +17430,7 @@ db.users.insertMany([
     ],
     bio: "Seamless systematic knowledge base",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f7f0323932e700000f"),
@@ -17400,6 +17576,7 @@ db.users.insertMany([
     ],
     bio: "Synergized holistic firmware",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a12000008"),
@@ -17467,6 +17644,7 @@ db.users.insertMany([
     ],
     bio: "Stand-alone bottom-line structure",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a12000009"),
@@ -17532,6 +17710,7 @@ db.users.insertMany([
     ],
     bio: "Cloned composite strategy",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1200000a"),
@@ -17595,6 +17774,7 @@ db.users.insertMany([
     ],
     bio: "Optional secondary encryption",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1200000b"),
@@ -17713,6 +17893,7 @@ db.users.insertMany([
     ],
     bio: "Future-proofed full-range local area network",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1200000c"),
@@ -17809,6 +17990,7 @@ db.users.insertMany([
     ],
     bio: "Reverse-engineered well-modulated knowledge base",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1200000d"),
@@ -17932,6 +18114,7 @@ db.users.insertMany([
     ],
     bio: "Down-sized optimizing extranet",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1200000e"),
@@ -17983,6 +18166,7 @@ db.users.insertMany([
     ],
     bio: "Digitized real-time approach",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1200000f"),
@@ -18106,6 +18290,7 @@ db.users.insertMany([
     ],
     bio: "Face to face dedicated array",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000010"),
@@ -18145,6 +18330,7 @@ db.users.insertMany([
     ],
     bio: "Pre-emptive content-based database",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000011"),
@@ -18301,6 +18487,7 @@ db.users.insertMany([
     ],
     bio: "Down-sized non-volatile contingency",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000012"),
@@ -18418,6 +18605,7 @@ db.users.insertMany([
     ],
     bio: "Self-enabling coherent open system",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000013"),
@@ -18497,6 +18685,7 @@ db.users.insertMany([
     ],
     bio: "De-engineered encompassing superstructure",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000014"),
@@ -18631,6 +18820,7 @@ db.users.insertMany([
     ],
     bio: "Organic optimizing algorithm",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000015"),
@@ -18687,6 +18877,7 @@ db.users.insertMany([
     ],
     bio: "Centralized modular knowledge base",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000016"),
@@ -18834,6 +19025,7 @@ db.users.insertMany([
     ],
     bio: "Open-architected optimal moderator",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000017"),
@@ -18993,6 +19185,7 @@ db.users.insertMany([
     ],
     bio: "Persevering responsive instruction set",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000018"),
@@ -19116,6 +19309,7 @@ db.users.insertMany([
     ],
     bio: "Stand-alone stable process improvement",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f000019"),
@@ -19219,6 +19413,7 @@ db.users.insertMany([
     ],
     bio: "Right-sized radical firmware",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f00001a"),
@@ -19360,6 +19555,7 @@ db.users.insertMany([
     ],
     bio: "Right-sized human-resource forecast",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f00001b"),
@@ -19471,6 +19667,7 @@ db.users.insertMany([
     ],
     bio: "Optimized cohesive toolset",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f00001c"),
@@ -19548,6 +19745,7 @@ db.users.insertMany([
     ],
     bio: "Proactive eco-centric solution",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f00001d"),
@@ -19609,6 +19807,7 @@ db.users.insertMany([
     ],
     bio: "User-centric systemic database",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f00001e"),
@@ -19698,6 +19897,7 @@ db.users.insertMany([
     ],
     bio: "Monitored coherent moderator",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
   {
     _id: ObjectId("6207f6f6f032393a1f00001f"),
@@ -19768,5 +19968,6 @@ db.users.insertMany([
     ],
     bio: "Seamless multi-tasking customer loyalty",
     password: "$2a$10$CDuT38b8g/NddK7F4dKqoeNjK4BmOeQJQgCmPBD41RHXA12Qq4CAu",
+    role: ["user"],
   },
 ]);

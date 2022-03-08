@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const { Schema } = mongoose;
 
+const UserType = require("../../enum/UserType");
+
 const { imageSchema } = require("../share/Image");
 const { locationSchema } = require("../share/Location");
 const { preferenceSchema } = require("./Preference");
@@ -49,9 +51,9 @@ const userSchema = new Schema({
     type: [imageSchema],
   },
   role: {
-    type: String,
+    type: [String],
     required: true,
-    default: "user",
+    default: [UserType.USER],
   },
   isDisabled: {
     type: Boolean,
