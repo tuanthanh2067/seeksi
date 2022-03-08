@@ -4,12 +4,14 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.7",
+    "@craco/craco": "^6.4.3",
     "@tailwindcss/forms": "^0.4.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "apollo-upload-client": "^17.0.0",
     "country-state-city": "^3.0.1",
+    "craco-swc": "^0.2.0",
     "emoji-mart": "^3.0.1",
     "graphql": "^16.2.0",
     "jwt-decode": "^3.1.2",
@@ -27,9 +29,9 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
