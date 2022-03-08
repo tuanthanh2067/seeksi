@@ -287,12 +287,7 @@ class UserAPI extends DataSource {
   async deletePhoto(userId, photoIndex) {
     const user = await User.findById(userId);
 
-    user.photo[photoIndex] = {
-      origin: null,
-      small: null,
-      medium: null,
-      large: null,
-    };
+    user.photo.splice(photoIndex, 1);
 
     await user.save();
   }
