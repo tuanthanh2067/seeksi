@@ -26,6 +26,8 @@ const mutations = {
   sendMessage: async (_, args, { dataSources, req, userAuthentication }) => {
     userAuthentication(req.user);
 
+    const user = await dataSources.userAPI.getUserProfileById(req.user.userId);
+
     if (args.photos && Array.isArray(args.photos)) {
       const filePaths = await Promise.all(
         args.photos.map(async (photo) => await writeFileUpload(photo))
@@ -43,6 +45,8 @@ const mutations = {
       for (const filePath of filePaths) {
         await unlink(filePath);
       }
+
+      message.name = user.firstName + " " + user.lastName;
 
       // publish to channel
       pubsub.publish(`CHANNEL_${args.roomId}`, {
@@ -70,6 +74,10 @@ const mutations = {
       req.user.userId,
       args.content
     );
+
+    message.name = user.firstName + " " + user.lastName;
+
+    console.log(message);
 
     // publish to channel
     pubsub.publish(`CHANNEL_${args.roomId}`, {

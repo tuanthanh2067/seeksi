@@ -6,7 +6,7 @@ import Background from "../../assets/banner.png";
 import Signup from "../Modal/Signup";
 import Signin from "../Modal/Signin";
 import Chat from "../Chat/Chat";
-const LandingPage = () => {
+const LandingPage = ({ setIsLoggedIn, setUserToken }) => {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
 
@@ -59,7 +59,11 @@ const LandingPage = () => {
               }
             }}
           >
-            <Signin handleShow={handleSignInModal} />
+            <Signin
+              handleShow={handleSignInModal}
+              setIsLoggedIn={setIsLoggedIn}
+              setUserToken={setUserToken}
+            />
           </div>
         ) : null}
         {showSignUpModal ? (
