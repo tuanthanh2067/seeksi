@@ -1,5 +1,4 @@
 {
-  "minify": true,
   "jsc": {
     "parser": {
       "syntax": "ecmascript",
@@ -35,12 +34,6 @@
     "target": "es5",
     "loose": false,
     "externalHelpers": false,
-    "keepClassNames": true,
-    "minify": {
-      "compress": {
-        "unused": true
-      },
-      "mangle": true
-    }
+    "keepClassNames": false
   }
 }
