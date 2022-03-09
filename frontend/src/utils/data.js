@@ -1,17 +1,24 @@
 import { Country, State, City } from "country-state-city";
 
-export let countryOptions = [];
-let isoCodeList = [];
-let stateCodeList = [];
-let selectedCountryIsoCode;
-
-State.getAllStates().map((state) => {
-  stateCodeList.push({
+export const countryOptions = Country.getAllCountries().map((country) => {
+  return {
+    value: country.name,
+    label: country.name,
+  };
+});
+const isoCodeList = Country.getAllCountries().map((country) => {
+  return {
+    name: country.name,
+    isoCode: country.isoCode,
+  };
+});
+const stateCodeList = State.getAllStates().map((state) => {
+  return {
     name: state.name,
     isoCode: state.isoCode,
-  });
-  return {};
+  };
 });
+let selectedCountryIsoCode;
 
 Country.getAllCountries().map((country) => {
   countryOptions.push({
