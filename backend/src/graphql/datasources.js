@@ -10,6 +10,7 @@ const { GameRequest } = require("./GameRequest");
 const { UserStatus } = require("./UserStatus");
 const { PlayingStatus } = require("./PlayingStatus");
 const { OpeningLine } = require("./OpeningLine");
+const { Image } = require("./Image");
 
 module.exports = {
   UserAPI: User.UserAPI,
@@ -24,4 +25,5 @@ module.exports = {
   UserStatusAPI: UserStatus.UserStatusAPI,
   PlayingStatusAPI: PlayingStatus.PlayingStatusAPI,
   OpeningLineAPI: OpeningLine.OpeningLineAPI,
+  ImageAPI: Image.ImageAPI,
 };

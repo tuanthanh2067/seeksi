@@ -270,6 +270,27 @@ class UserAPI extends DataSource {
 
     await user.save();
   }
+
+  async deleteAvatar(userId) {
+    const user = await User.findById(userId);
+
+    user.avatar = {
+      origin: null,
+      small: null,
+      medium: null,
+      large: null,
+    };
+
+    await user.save();
+  }
+
+  async deletePhoto(userId, photoIndex) {
+    const user = await User.findById(userId);
+
+    user.photo.splice(photoIndex, 1);
+
+    await user.save();
+  }
 }
 
 module.exports.UserAPI = UserAPI;

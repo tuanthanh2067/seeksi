@@ -51,6 +51,7 @@ const typeDefs = gql`
     ${UserStatus.queries}
     ${OpeningLine.queries}
     ${Upload.queries}
+    ${Image.queries}
   }
   
   type Mutation {
@@ -65,6 +66,7 @@ const typeDefs = gql`
     ${UserStatus.mutations}
     ${OpeningLine.mutations}
     ${Upload.mutations}
+    ${Image.mutations}
   }
 
   type Subscription {
