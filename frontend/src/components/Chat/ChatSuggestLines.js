@@ -1,7 +1,7 @@
 import React from "react";
 import Spinner from "../Spinner/Spinner";
 import { Carousel } from "react-responsive-carousel";
-import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./ChatSuggestLines.css";
 
 import { useQuery, useMutation } from "@apollo/client";
