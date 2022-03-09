@@ -35,7 +35,7 @@
     "target": "es5",
     "loose": false,
     "externalHelpers": false,
-    "keepClassNames": false,
+    "keepClassNames": true,
     "minify": {
       "compress": {
         "unused": true
