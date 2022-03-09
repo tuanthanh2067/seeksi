@@ -51,20 +51,23 @@ function ChatInput(props) {
   };
 
   const handleSendMessage = () => {
-    sendMessage({
-      variables: {
-        roomId: props.roomId,
-        content: message,
-        photos: uploadImgs,
-      },
-      onError: (err) => {
-        // do something
-        console.log(err);
-      },
-      onCompleted: (data) => {
-        console.log(data);
-      },
-    });
+    if (message !== "" || uploadImgs.length !== 0) {
+      sendMessage({
+        variables: {
+          roomId: props.roomId,
+          content: message,
+          photos: uploadImgs,
+        },
+        onError: (err) => {
+          console.log(err);
+          if (err.message === "Chat room has been disabled") props.refetch();
+          //toaster here
+        },
+        onCompleted: (data) => {
+          console.log(data);
+        },
+      });
+    }
     setMessage("");
     setImages([]);
     setErr("");

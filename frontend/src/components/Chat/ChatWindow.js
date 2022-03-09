@@ -4,7 +4,7 @@ import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import ChatMessageList from "./ChatMessageList";
 
-function ChatWindow({ data, setShowConfirmation }) {
+function ChatWindow({ data, setShowConfirmation, refetch }) {
   const [showEmoji, setShowEmoji] = useState(false);
 
   return data ? (
@@ -28,6 +28,7 @@ function ChatWindow({ data, setShowConfirmation }) {
           roomId={data.id}
           showEmoji={showEmoji}
           setShowEmoji={setShowEmoji}
+          refetch={refetch}
         />
       )}
     </div>
