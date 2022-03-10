@@ -1,6 +1,8 @@
 import toast from "react-hot-toast";
 
-const DescriptiveToast = (content, name) => {
+import MessagesIcon from "../../assets/messages.png";
+
+const DescriptiveToast = (content, length, name, type) => {
   return toast.custom(
     (t) => (
       <div
@@ -13,13 +15,15 @@ const DescriptiveToast = (content, name) => {
             <div className="flex-shrink-0 pt-0.5">
               <img
                 className="h-10 w-10 rounded-full"
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=6GHAjsWpt9&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                alt=""
+                src={type === "message" ? MessagesIcon : null}
+                alt="message icon"
               />
             </div>
             <div className="ml-3 flex-1">
               <p className="text-sm font-medium text-gray-900">{name}</p>
-              <p className="mt-1 text-sm text-gray-500">{content}</p>
+              <p className="mt-1 text-sm text-gray-500">
+                {content ? content : `${name} has sent ${length} photo(s)`}
+              </p>
             </div>
           </div>
         </div>
@@ -34,7 +38,7 @@ const DescriptiveToast = (content, name) => {
       </div>
     ),
     {
-      duration: 2000,
+      duration: 1500,
     }
   );
 };

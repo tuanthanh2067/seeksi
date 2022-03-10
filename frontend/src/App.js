@@ -33,12 +33,14 @@ function App() {
   const { loading, error, data, subscribeToMore, refetch } =
     useQuery(GET_CHAT_ROOMS);
 
-  const showToast = (content, name, sendBy) => {
+  const showToast = (content, photos, name, sendBy) => {
     if (currentUser) {
       if (currentUser.userId === sendBy || window.location.pathname === "/chat")
         return;
 
-      return DescriptiveToast(content, name);
+      const type = "message";
+
+      return DescriptiveToast(content, photos.length, name, type);
     }
     return;
   };
@@ -66,7 +68,12 @@ function App() {
 
                 const newChat = subscriptionData.data.messageSent;
 
-                showToast(newChat.content, newChat.name, newChat.sendBy);
+                showToast(
+                  newChat.content,
+                  newChat.photos,
+                  newChat.name,
+                  newChat.sendBy
+                );
 
                 const room = prev.chatRooms.find(
                   (room) => room.id === chatRoom.id
