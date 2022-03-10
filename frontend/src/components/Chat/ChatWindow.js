@@ -10,6 +10,7 @@ function ChatWindow({
   setShowReport,
   refetch,
   userStatus,
+  handleGame,
 }) {
   const [showEmoji, setShowEmoji] = useState(false);
 
@@ -37,6 +38,7 @@ function ChatWindow({
           showEmoji={showEmoji}
           setShowEmoji={setShowEmoji}
           refetch={refetch}
+          handleGame={handleGame}
         />
       )}
     </div>
