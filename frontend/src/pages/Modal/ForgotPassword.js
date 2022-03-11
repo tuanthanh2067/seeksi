@@ -27,11 +27,11 @@ const ForgotPassword = () => {
         },
         onError: (error) => {
           setStyle("text-red-600 font-bold");
-          setMessage(`${error.graphQLErrors[0].message}`);
+          setMessage("No account is associated with this email.");
         },
         onCompleted: (data) => {
           setStyle("text-green font-bold");
-          setMessage(`${data.requestResetPassword.message}`);
+          setMessage(data.requestResetPassword.message);
         },
       });
     }

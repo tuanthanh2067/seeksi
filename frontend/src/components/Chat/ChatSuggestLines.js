@@ -1,7 +1,8 @@
 import React from "react";
 import Spinner from "../Spinner/Spinner";
 import { Carousel } from "react-responsive-carousel";
-import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
+import toast from "react-hot-toast";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./ChatSuggestLines.css";
 
 import { useQuery, useMutation } from "@apollo/client";
@@ -38,7 +39,10 @@ const ChatSuggestLines = (props) => {
         roomId: props.roomId,
         content: content,
       },
-      onError: (err) => {},
+      onError: (err) => {
+        toast.error(err.message);
+        if (err.message === "Chat room has been disabled") props.refetch();
+      },
       onCompleted: (data) => {
         incrementUseCount({
           variables: {
