@@ -27,7 +27,7 @@ const Signin = (props) => {
           password: password,
         },
         onError: (error) => {
-          setErr(error);
+          setErr(error.message);
         },
         onCompleted: (data) => {
           localStorage.setItem("token", data.login.token);
