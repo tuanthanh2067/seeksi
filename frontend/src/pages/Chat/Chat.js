@@ -71,6 +71,7 @@ function Chat({ loading, error, data, refetch }) {
           <ChatWindow
             data={data.chatRooms.find((room) => room.id === activeRoomId)}
             setShowConfirmation={setShowConfirmation}
+            refetch={refetch}
           />
         </section>
       </div>

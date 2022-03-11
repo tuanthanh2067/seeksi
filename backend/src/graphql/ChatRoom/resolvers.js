@@ -27,6 +27,12 @@ const mutations = {
     userAuthentication(req.user);
 
     const user = await dataSources.userAPI.getUserProfileById(req.user.userId);
+    const isDisabled = await dataSources.chatRoomAPI.isChatRoomDisabled(
+      args.roomId
+    );
+    if (isDisabled) {
+      throw new ApolloError("Chat room has been disabled");
+    }
 
     if (args.photos && Array.isArray(args.photos)) {
       const filePaths = await Promise.all(
@@ -60,13 +66,6 @@ const mutations = {
 
     if (!args.content || typeof args.content !== "string") {
       throw new UserInputError("Invalid message");
-    }
-
-    const isDisabled = await dataSources.chatRoomAPI.isChatRoomDisabled(
-      args.roomId
-    );
-    if (isDisabled) {
-      throw new ApolloError("Chat room has been disabled");
     }
 
     const message = await dataSources.chatRoomAPI.sendMessageToChatRoom(

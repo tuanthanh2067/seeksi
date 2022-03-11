@@ -93,3 +93,19 @@ const generateImages = (width, height, oriLink) => {
     origin: oriLink,
   };
 };
+
+// delete an image in cloudinary
+module.exports.deleteImage = async (path) => {
+  // get public_id of the path
+  try {
+    const splitString = path.split("/images/");
+
+    // get public id
+    const publicId = `images/${splitString[1].replace(/\.[^/.]+$/, "")}`;
+
+    // destroy in cloudinary
+    return await cloudinary.uploader.destroy(publicId);
+  } catch (err) {
+    throw err;
+  }
+};
