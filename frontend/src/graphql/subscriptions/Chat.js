@@ -11,6 +11,7 @@ export const GET_MESSAGE = gql`
         medium
         origin
       }
+      name
     }
   }
 `;

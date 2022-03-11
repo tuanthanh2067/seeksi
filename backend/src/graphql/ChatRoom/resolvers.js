@@ -26,6 +26,7 @@ const mutations = {
   sendMessage: async (_, args, { dataSources, req, userAuthentication }) => {
     userAuthentication(req.user);
 
+    const user = await dataSources.userAPI.getUserProfileById(req.user.userId);
     const isDisabled = await dataSources.chatRoomAPI.isChatRoomDisabled(
       args.roomId
     );
@@ -51,6 +52,8 @@ const mutations = {
         await unlink(filePath);
       }
 
+      message.name = user.firstName + " " + user.lastName;
+
       // publish to channel
       pubsub.publish(`CHANNEL_${args.roomId}`, {
         messageSent: message,
@@ -70,6 +73,10 @@ const mutations = {
       req.user.userId,
       args.content
     );
+
+    message.name = user.firstName + " " + user.lastName;
+
+    console.log(message);
 
     // publish to channel
     pubsub.publish(`CHANNEL_${args.roomId}`, {

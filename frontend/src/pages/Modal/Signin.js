@@ -31,6 +31,8 @@ const Signin = (props) => {
         },
         onCompleted: (data) => {
           localStorage.setItem("token", data.login.token);
+          props.setIsLoggedIn(true);
+          props.setUserToken(data.login.token);
           props.handleShow();
           navigate("/match");
         },

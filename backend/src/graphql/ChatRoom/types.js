@@ -5,6 +5,7 @@ module.exports.types = `
         isSeen: Boolean
         content: String
         photos: [Image]
+        name: String
     }
 
     type ChatRoom {
