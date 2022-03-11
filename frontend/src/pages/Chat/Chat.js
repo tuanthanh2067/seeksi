@@ -44,38 +44,36 @@ function Chat({ loading, error, data, refetch }) {
 
   if (data) {
     return (
-      <>
-        <div className="h-screen">
-          {showConfirmation && (
-            <div
-              onClick={(e) => {
-                if (e.currentTarget.firstChild === e.target) {
-                  setShowConfirmation(false);
-                }
-              }}
-            >
-              <Confirmation
-                title="Unmatch"
-                content={`Are you sure to unmatch?`}
-                handleCancel={() => setShowConfirmation(false)}
-                handleConfirm={handleUnmatch}
-              />
-            </div>
-          )}
-          <Navbar />
-          <section className="container mx-auto py-5 md:p-5 min-h-[85%] max-h-[85%] flex">
-            <ChatPartner
-              data={data.chatRooms}
-              onRoomSelect={handleRoomSelect}
-              setPartnerId={setPartnerId}
+      <div className="h-screen">
+        {showConfirmation && (
+          <div
+            onClick={(e) => {
+              if (e.currentTarget.firstChild === e.target) {
+                setShowConfirmation(false);
+              }
+            }}
+          >
+            <Confirmation
+              title="Unmatch"
+              content={`Are you sure to unmatch?`}
+              handleCancel={() => setShowConfirmation(false)}
+              handleConfirm={handleUnmatch}
             />
-            <ChatWindow
-              data={data.chatRooms.find((room) => room.id === activeRoomId)}
-              setShowConfirmation={setShowConfirmation}
-            />
-          </section>
-        </div>
-      </>
+          </div>
+        )}
+        <Navbar />
+        <section className="container mx-auto py-5 md:p-5 min-h-[85%] max-h-[85%] flex">
+          <ChatPartner
+            data={data.chatRooms}
+            onRoomSelect={handleRoomSelect}
+            setPartnerId={setPartnerId}
+          />
+          <ChatWindow
+            data={data.chatRooms.find((room) => room.id === activeRoomId)}
+            setShowConfirmation={setShowConfirmation}
+          />
+        </section>
+      </div>
     );
   }
 }
