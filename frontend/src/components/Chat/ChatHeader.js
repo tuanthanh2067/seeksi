@@ -23,7 +23,7 @@ function ChatHeader(props) {
               <span className="text-lg font-bold inline-block">
                 {props.firstName}
               </span>
-              {props.isOnline && (
+              {props.userStatus && (
                 <span className="h-3 w-3 bg-green inline-block rounded-full ml-1"></span>
               )}
             </div>

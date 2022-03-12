@@ -107,10 +107,8 @@ function App() {
     if (isLoggedIn) {
       const updateStatus = () => {
         updateMyStatus({
-          onError: (err) => console.log(err),
-          onCompleted: (data) => {
-            console.log(new Date(data.updateMyStatus.lastSeen * 1));
-          },
+          onError: (err) => console.log(err.message),
+          onCompleted: (data) => {},
         });
       };
 
@@ -147,9 +145,9 @@ function App() {
             path="/chat"
             element={
               <Chat
-                loading={loading}
+                roomsLoading={loading}
                 roomsData={data}
-                error={error}
+                roomsError={error}
                 refetch={refetch}
               />
             }

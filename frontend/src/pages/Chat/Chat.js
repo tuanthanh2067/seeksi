@@ -4,59 +4,90 @@ import ChatWindow from "../../components/Chat/ChatWindow";
 import ChatPartner from "../../components/Chat/ChatPartner";
 import Navbar from "../../components/Navbar";
 import Confirmation from "../Modal/Confirmation";
-import { useSubscription, useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { UNMATCH } from "../../graphql/mutations/Match";
 import { STATUS_UPDATED } from "../../graphql/subscriptions/User";
+import { GET_USER_STATUSES } from "../../graphql/queries/User";
 
-function Chat({ loading, error, roomsData, refetch }) {
+function Chat({ roomsLoading, roomsError, roomsData, refetch }) {
   const [activeRoomId, setActiveRoomId] = useState({});
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [partnerId, setPartnerId] = useState("");
   const [chatRooms, setChatRooms] = useState([]);
+  const [userStatuses, setUserStatuses] = useState({});
 
   const [unmatch] = useMutation(UNMATCH);
-  const { data } = useSubscription(STATUS_UPDATED, {
-    variables: {
-      partners: chatRooms.map((room) => room.partner.id),
-    },
+
+  const { data, subscribeToMore } = useQuery(GET_USER_STATUSES, {
+    variables: { partnerIds: chatRooms.map((room) => room.partner.id) },
   });
 
+  // set up chatRooms
   useEffect(() => {
-    if (roomsData) {
+    if (roomsData) setChatRooms(roomsData.chatRooms);
+  }, [roomsData]);
+
+  // subscribe to partners' statuses
+  useEffect(() => {
+    const unsubscribe = subscribeToMore({
+      document: STATUS_UPDATED,
+      variables: { partners: chatRooms.map((room) => room.partner.id) },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) {
+          return prev;
+        }
+
+        const newStatus = subscriptionData.data.statusUpdated;
+        let newStatuses = prev.getUserStatuses.filter(
+          (status) => status.userId === newStatus.userId
+        );
+
+        return Object.assign({}, prev, {
+          getUserStatuses: [newStatuses, newStatus],
+        });
+      },
+    });
+
+    return () => unsubscribe();
+  }, [data, subscribeToMore, chatRooms]);
+
+  // update partners' statuses every 10 seconds
+  useEffect(() => {
+    if (chatRooms) {
       const getStatus = () => {
-        const updatedChatRooms = roomsData.chatRooms.map((room) => {
-          let partnerLastSeen, isOnline;
-          if (data && data.statusUpdated.userId === room.partner.id) {
-            console.log(data.statusUpdated.lastSeen);
-            partnerLastSeen = new Date(data.statusUpdated.lastSeen * 1);
+        let statuses = {};
+        chatRooms.forEach((room) => {
+          let partnerLastSeen = 0;
+
+          if (data && data.getUserStatuses.length !== 0) {
+            const status = data.getUserStatuses.find(
+              (status) => status.userId === room.partner.id
+            );
+            if (status) partnerLastSeen = new Date(status.lastSeen * 1);
           }
 
-          isOnline =
+          const isOnline =
             (new Date() - partnerLastSeen) / 1000 <=
             process.env.REACT_APP_STATUS_EXPIRE_AFTER
               ? true
               : false;
 
-          return {
-            ...room,
-            partner: {
-              ...room.partner,
-              isOnline: isOnline,
-              partnerLastSeen: partnerLastSeen,
-            },
-          };
+          statuses[room.partner.id] = isOnline;
         });
 
-        setChatRooms(updatedChatRooms);
+        setUserStatuses(statuses);
       };
 
       getStatus();
-      const interval = setInterval(getStatus, 30000);
+      const interval = setInterval(
+        getStatus,
+        process.env.REACT_APP_STATUS_UPDATE_AFTER * 1000
+      );
       return () => {
         clearInterval(interval);
       };
     }
-  }, [roomsData, data]);
+  }, [chatRooms, data]);
 
   const handleUnmatch = () => {
     unmatch({
@@ -78,8 +109,8 @@ function Chat({ loading, error, roomsData, refetch }) {
     setActiveRoomId(roomId);
   };
 
-  if (loading) return <Spinner />;
-  if (error)
+  if (roomsLoading) return <Spinner />;
+  if (roomsError)
     return (
       <div className="italic place-self-center my-auto">
         An error occurs, please try again later!
@@ -111,11 +142,13 @@ function Chat({ loading, error, roomsData, refetch }) {
             data={chatRooms}
             onRoomSelect={handleRoomSelect}
             setPartnerId={setPartnerId}
+            userStatuses={userStatuses}
           />
           <ChatWindow
             data={chatRooms.find((room) => room.id === activeRoomId)}
             setShowConfirmation={setShowConfirmation}
             refetch={refetch}
+            userStatus={userStatuses[partnerId]}
           />
         </section>
       </div>

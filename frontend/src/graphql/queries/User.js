@@ -34,3 +34,12 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const GET_USER_STATUSES = gql`
+  query getUserStatuses($partnerIds: [String!]!) {
+    getUserStatuses(partnerIds: $partnerIds) {
+      userId
+      lastSeen
+    }
+  }
+`;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Input from "../Input/Input";
 import defaultAvt from "../../assets/mock_avatar.png";
 
-const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
+const ChatPartner = ({ data, onRoomSelect, setPartnerId, userStatuses }) => {
   const [searchInputText, setSearchInputText] = useState("");
 
   const searchInputHandler = (e) => {
@@ -16,8 +16,6 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
         id: partnerId,
         avatar: { small: partnerAvatar },
         firstName: partnerName,
-        isOnline,
-        partnerLastSeen,
       },
       history,
       isDisabled,
@@ -39,8 +37,6 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
       isDisabled,
       roomId,
       partnerId,
-      isOnline,
-      partnerLastSeen,
       partnerAvatar,
       partnerName,
       latestMsgContent,
@@ -86,7 +82,7 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId }) => {
             </div>
             <div className="col-start-2 col-span-5 flex flex-col justify-center">
               <p>
-                {room.isOnline && (
+                {userStatuses[room.partnerId] && (
                   <span className="h-3 w-3 bg-green inline-block rounded-full mr-2"></span>
                 )}
                 <span className="text-lg font-bold inline-block">
