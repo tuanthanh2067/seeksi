@@ -5,10 +5,6 @@ db.createCollection("gamerooms", { capped: false });
 db.gamerooms.insertMany([
   {
     _id: ObjectId("62080553f0323933be000029"),
-    pairID: [
-      ObjectId("6207f6f7f0323933be000008"),
-      ObjectId("6207f6f7f0323933be000009"),
-    ],
     questions: [
       ObjectId("622a260f21beda3b8f2607e5"),
       ObjectId("622a260f21beda3b8f260911"),
@@ -56,10 +52,6 @@ db.gamerooms.insertMany([
   },
   {
     _id: ObjectId("62080554f03239320700002e"),
-    pairID: [
-      ObjectId("6207f6f7f0323933be000009"),
-      ObjectId("6207f6f7f0323933be00000a"),
-    ],
     questions: [
       ObjectId("622a260f21beda3b8f2607dc"),
       ObjectId("622a260f21beda3b8f260850"),
@@ -107,10 +99,6 @@ db.gamerooms.insertMany([
   },
   {
     _id: ObjectId("62080553f032392eaf00001b"),
-    pairID: [
-      ObjectId("6207f6f6f032393a1f000017"),
-      ObjectId("6207f6f6f03239382800000a"),
-    ],
     questions: [
       ObjectId("622a260f21beda3b8f2607fc"),
       ObjectId("622a260f21beda3b8f26091d"),
@@ -158,10 +146,6 @@ db.gamerooms.insertMany([
   },
   {
     _id: ObjectId("62080553f032392ed5000027"),
-    pairID: [
-      ObjectId("6207f6f6f032392dda00000e"),
-      ObjectId("6207f6f6f0323937b700000f"),
-    ],
     questions: [
       ObjectId("622a260f21beda3b8f260795"),
       ObjectId("622a260f21beda3b8f260772"),
@@ -209,10 +193,6 @@ db.gamerooms.insertMany([
   },
   {
     _id: ObjectId("62080553f03239382800001b"),
-    pairID: [
-      ObjectId("6207f6f6f032393a1f000017"),
-      ObjectId("6207f6f6f03239382800000a"),
-    ],
     questions: [
       ObjectId("622a260f21beda3b8f260777"),
       ObjectId("622a260f21beda3b8f260838"),
