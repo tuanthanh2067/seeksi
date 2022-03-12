@@ -304,7 +304,7 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080553f032392ed5000027"),
+    gameRoom: ObjectId("62080553f0323933be000029"),
     isDisabled: false,
   },
   {
@@ -359,7 +359,6 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080553f0323933be000029"),
     isDisabled: true,
   },
   {
@@ -399,7 +398,6 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080553f032392ed5000028"),
     isDisabled: false,
   },
   {
@@ -913,7 +911,7 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080553f032392eaf00001b"),
+    gameRoom: ObjectId("62080553f032392eaf00001b"),
     isDisabled: true,
   },
   {
@@ -1193,7 +1191,7 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080553f03239382800001b"),
+    gameRoom: ObjectId("62080553f03239382800001b"),
     isDisabled: true,
   },
   {
@@ -1832,7 +1830,7 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080553f032392ed5000027"),
+    gameRoom: ObjectId("62080553f032392ed5000027"),
     isDisabled: false,
   },
   {
@@ -1861,7 +1859,6 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080553f032392eaf00001b"),
     isDisabled: false,
   },
   {
@@ -2236,7 +2233,6 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080553f03239382800001b"),
     isDisabled: true,
   },
   {
@@ -2320,7 +2316,7 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080554f03239320700002e"),
+    gameRoom: ObjectId("62080554f03239320700002e"),
     isDisabled: false,
   },
   {
@@ -3094,7 +3090,6 @@ db.chatrooms.insertMany([
         },
       ],
     },
-    gameRoomID: ObjectId("62080553f032392ed5000027"),
     isDisabled: true,
   },
   {
