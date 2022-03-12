@@ -2,7 +2,18 @@ const { PubSub, withFilter } = require("graphql-subscriptions");
 
 const pubsub = new PubSub();
 
-const queries = {};
+const queries = {
+  getUserStatuses: (_, args, { dataSources, req, userAuthentication }) => {
+    userAuthentication(req.user);
+
+    return args.partnerIds.map((p) => {
+      return {
+        userId: p,
+        lastSeen: dataSources.userStatusAPI.getUserStatus(p),
+      };
+    });
+  },
+};
 
 const mutations = {
   updateMyStatus: (_, args, { dataSources, req, userAuthentication }) => {
