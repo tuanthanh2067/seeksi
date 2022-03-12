@@ -59,13 +59,14 @@ class GameRoomAPI extends DataSource {
         throw new ApolloError("Game room does not exist");
       }
 
-      const id = mongoose.Types.ObjectId(userId);
+      const firstUser = gameRoom.answers[0].user.toString();
+      const secondUser = gameRoom.answers[1].user.toString();
       // check to see if this user belongs to this game room
-      if (gameRoom.answers[0].user !== id && gameRoom.answers[1].user !== id) {
+      if (firstUser !== userId && secondUser !== userId) {
         throw new ApolloError("Can not submit answers to this game room");
       }
 
-      const index = gameRoom.answers[0].user === id ? 0 : 1;
+      const index = firstUser === userId ? 0 : 1;
 
       gameRoom.answers[index].answers = answers;
 
