@@ -13,6 +13,10 @@ class UserStatusAPI extends DataSource {
     userStatus[userId] = lastSeen;
   }
 
+  getUserStatus(userId) {
+    return userStatus[userId];
+  }
+
   isOnline(userId) {
     // user status will be updated every 30s
     return (
