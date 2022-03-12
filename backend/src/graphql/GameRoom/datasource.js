@@ -28,9 +28,9 @@ class GameRoomAPI extends DataSource {
           answers: new Array(10).fill(GameAnswerEnum.NOT_ANSWERED),
         },
       ];
+
       // add 10 questions
       const gameRoom = new GameRoom({
-        pairID: chatRoom.pairID,
         _id,
         answers,
       });
@@ -50,8 +50,6 @@ class GameRoomAPI extends DataSource {
   async submitAnswer(gameRoomId, userId, answers) {
     try {
       const gameRoom = await GameRoom.findById(gameRoomId);
-
-      answers = answers.split(",");
 
       const index =
         gameRoom.answers[0].user === mongoose.Types.ObjectId(userId) ? 0 : 1;
