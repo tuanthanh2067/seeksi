@@ -30,7 +30,6 @@ const dataSources = () => ({
   playingStatusAPI: new datasources.PlayingStatusAPI(),
   openingLineAPI: new datasources.OpeningLineAPI(),
   imageAPI: new datasources.ImageAPI(),
-  questionAPI: new datasources.QuestionAPI(),
 });
 
 cloudinary.config({

@@ -4,10 +4,12 @@ const { Schema } = mongoose;
 const { gameAnswerSchema } = require("./GameAnswer");
 
 const gameRoom = new Schema({
-  questions: {
-    type: [Schema.Types.ObjectId],
-    ref: "Questions",
-  },
+  questions: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Questions",
+    },
+  ],
   answers: [gameAnswerSchema],
 });
 

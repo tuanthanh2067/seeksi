@@ -11,7 +11,6 @@ const { UserStatus } = require("./UserStatus");
 const { PlayingStatus } = require("./PlayingStatus");
 const { OpeningLine } = require("./OpeningLine");
 const { Image } = require("./Image");
-const { Question } = require("./Question");
 
 module.exports = {
   UserAPI: User.UserAPI,
@@ -27,5 +26,4 @@ module.exports = {
   PlayingStatusAPI: PlayingStatus.PlayingStatusAPI,
   OpeningLineAPI: OpeningLine.OpeningLineAPI,
   ImageAPI: Image.ImageAPI,
-  QuestionAPI: Question.QuestionAPI,
 };
