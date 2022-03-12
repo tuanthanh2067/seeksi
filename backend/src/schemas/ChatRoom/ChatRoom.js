@@ -15,6 +15,7 @@ const chatRoomSchema = new Schema({
   gameRoom: {
     type: mongoose.Types.ObjectId,
     ref: "GameRooms",
+    default: null,
   },
   isDisabled: {
     type: Boolean,

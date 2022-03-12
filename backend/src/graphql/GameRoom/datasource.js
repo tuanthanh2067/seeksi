@@ -1,5 +1,5 @@
 const { DataSource } = require("apollo-datasource");
-const { ApolloError } = require("apollo-server-core");
+const { ApolloError, UserInputError } = require("apollo-server-core");
 const mongoose = require("mongoose");
 
 const ChatRoom = require("../../schemas/ChatRoom/ChatRoom");
@@ -15,6 +15,10 @@ class GameRoomAPI extends DataSource {
   async createGameRoom(chatRoomId) {
     try {
       const chatRoom = await ChatRoom.findById(chatRoomId);
+
+      if (chatRoom.gameRoom) {
+        throw new UserInputError("You already played this game");
+      }
 
       const _id = mongoose.Types.ObjectId();
 
@@ -51,8 +55,17 @@ class GameRoomAPI extends DataSource {
     try {
       const gameRoom = await GameRoom.findById(gameRoomId);
 
-      const index =
-        gameRoom.answers[0].user === mongoose.Types.ObjectId(userId) ? 0 : 1;
+      if (!gameRoom) {
+        throw new ApolloError("Game room does not exist");
+      }
+
+      const id = mongoose.Types.ObjectId(userId);
+      // check to see if this user belongs to this game room
+      if (gameRoom.answers[0].user !== id && gameRoom.answers[1].user !== id) {
+        throw new ApolloError("Can not submit answers to this game room");
+      }
+
+      const index = gameRoom.answers[0].user === id ? 0 : 1;
 
       gameRoom.answers[index].answers = answers;
 
