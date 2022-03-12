@@ -2,8 +2,12 @@ const { AuthenticationError, ApolloError } = require("apollo-server-core");
 
 const queries = {
   getQuestion: async (_, __, { dataSources, req, userAuthentication }) => {
-    userAuthentication(req.user);
-    return await dataSources.questionAPI.getQuestion();
+    try {
+      userAuthentication(req.user);
+      return await dataSources.questionAPI.getQuestion();
+    } catch (err) {
+      throw new ApolloError(err);
+    }
   },
 };
 
