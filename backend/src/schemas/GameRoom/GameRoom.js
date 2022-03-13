@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const { gameQuestionSchema } = require("./GameAnswer");
+const { gameAnswerSchema } = require("./GameAnswer");
 
 const gameRoomSchema = new Schema({
   questions: {
@@ -9,7 +9,8 @@ const gameRoomSchema = new Schema({
     ref: "Questions",
   },
   answers: {
-    type: [gameQuestionSchema],
+    type: [gameAnswerSchema],
+    default: null,
   },
 });
 

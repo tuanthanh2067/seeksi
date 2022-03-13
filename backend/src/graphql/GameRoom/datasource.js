@@ -15,10 +15,10 @@ class GameRoomAPI extends DataSource {
     try {
       const chatRoom = await ChatRoom.findById(chatRoomId);
 
-      const id = mongoose.Types.ObjectId();
-
+      //initiates new gameRoom
+      const gameRoomId = new mongoose.Types.ObjectId();
       const gameRoom = new GameRoom({
-        _id: id,
+        _id: gameRoomId,
         questions: [],
       });
       //populates gameRoom with questions
@@ -26,14 +26,24 @@ class GameRoomAPI extends DataSource {
       questions.forEach((ques) => {
         gameRoom.questions.push(ques._id);
       });
+      //persists gameRoom
+      await gameRoom.save();
+      let persistedGameRoom = await GameRoom.findById(gameRoomId);
+      //updates chatRoom.gameRoom data
+      if (!chatRoom.gameRoom) {
+        chatRoom.gameRoom = new GameRoom({
+          _id: persistedGameRoom._id,
+          questions: persistedGameRoom.questions,
+        });
+      } else {
+        chatRoom.gameRoom._id = persistedGameRoom._id;
+        chatRoom.gameRoom.questions = persistedGameRoom.questions;
+      }
 
-      chatRoom.gameRoom = gameRoom._id;
-
-      //persists gameRoom and chatRoom
-      gameRoom.save();
-      chatRoom.save();
-
-      return id;
+      //persists chatRoom
+      await chatRoom.save();
+      let updatedChatRoom = await ChatRoom.findById(chatRoomId);
+      return updatedChatRoom.gameRoom.id.toString();
     } catch (err) {
       console.error(err);
       throw new ApolloError("Internal Server Error");
