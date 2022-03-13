@@ -86,3 +86,12 @@ export const EDIT_PROFILE_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_STATUS = gql`
+  mutation updateMyStatus {
+    updateMyStatus {
+      userId
+      lastSeen
+    }
+  }
+`;

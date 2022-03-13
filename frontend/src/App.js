@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import { useQuery } from "@apollo/client";
 import { Toaster } from "react-hot-toast";
 
 import LandingPage from "./pages/LandingPage/index";
@@ -10,26 +9,18 @@ import Match from "./pages/Match/Match";
 import ProfilePage from "./pages/ProfilePage/index";
 import EditPage from "./pages/EditPage/EditPage";
 import Chat from "./pages/Chat/Chat";
+import DescriptiveToast from "./components/Toast/DescriptiveToast";
+
 import { GET_CHAT_ROOMS } from "./graphql/queries/Chat";
 import { GET_MESSAGE } from "./graphql/subscriptions/Chat";
-
-import DescriptiveToast from "./components/Toast/DescriptiveToast";
+import { UPDATE_STATUS } from "../src/graphql/mutations/Mutations";
+import { useQuery, useMutation } from "@apollo/client";
 
 function App() {
   const [userToken, setUserToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-
-  useEffect(() => {
-    setUserToken(localStorage.getItem("token"));
-    if (userToken) {
-      setCurrentUser(jwt_decode(localStorage.getItem("token")));
-    }
-    if (currentUser) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
+  const [updateMyStatus] = useMutation(UPDATE_STATUS);
   const { loading, error, data, subscribeToMore, refetch } =
     useQuery(GET_CHAT_ROOMS);
 
@@ -45,12 +36,16 @@ function App() {
     return;
   };
 
+  // set up userId on log in
   useEffect(() => {
+    setUserToken(localStorage.getItem("token"));
     if (userToken) {
-      setCurrentUser(jwt_decode(localStorage.getItem("token")));
+      setCurrentUser(jwt_decode(userToken));
     }
+    if (currentUser) setIsLoggedIn(true);
   }, [userToken]);
 
+  // subscribe for new messages
   useEffect(() => {
     let unsubscribe = [];
 
@@ -106,6 +101,29 @@ function App() {
     };
   }, [data, subscribeToMore, isLoggedIn]);
 
+  // update user status
+  useEffect(() => {
+    let interval;
+    if (isLoggedIn) {
+      const updateStatus = () => {
+        updateMyStatus({
+          onError: (err) => console.log(err.message),
+          onCompleted: (data) => {},
+        });
+      };
+
+      updateStatus();
+      interval = setInterval(
+        updateStatus,
+        process.env.REACT_APP_STATUS_UPDATE_AFTER * 1000
+      );
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [updateMyStatus, isLoggedIn]);
+
   return (
     <>
       <BrowserRouter>
@@ -127,9 +145,9 @@ function App() {
             path="/chat"
             element={
               <Chat
-                loading={loading}
-                data={data}
-                error={error}
+                roomsLoading={loading}
+                roomsData={data || { chatRooms: [] }}
+                roomsError={error}
                 refetch={refetch}
               />
             }
