@@ -9,11 +9,10 @@ import { UNMATCH } from "../../graphql/mutations/Match";
 import { STATUS_UPDATED } from "../../graphql/subscriptions/User";
 import { GET_USER_STATUSES } from "../../graphql/queries/User";
 
-function Chat({ roomsLoading, roomsError, roomsData, refetch }) {
+function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
   const [activeRoomId, setActiveRoomId] = useState({});
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [partnerId, setPartnerId] = useState("");
-  const [chatRooms, setChatRooms] = useState([]);
   const [userStatuses, setUserStatuses] = useState({});
 
   const [unmatch] = useMutation(UNMATCH);
@@ -21,11 +20,6 @@ function Chat({ roomsLoading, roomsError, roomsData, refetch }) {
   const { data, subscribeToMore } = useQuery(GET_USER_STATUSES, {
     variables: { partnerIds: chatRooms.map((room) => room.partner.id) },
   });
-
-  // set up chatRooms
-  useEffect(() => {
-    if (roomsData) setChatRooms(roomsData.chatRooms);
-  }, [roomsData]);
 
   // subscribe to partners' statuses
   useEffect(() => {
@@ -117,7 +111,7 @@ function Chat({ roomsLoading, roomsError, roomsData, refetch }) {
       </div>
     );
 
-  if (roomsData) {
+  if (chatRooms.length > 0) {
     return (
       <div className="h-screen">
         {showConfirmation && (

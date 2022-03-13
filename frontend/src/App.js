@@ -146,7 +146,7 @@ function App() {
             element={
               <Chat
                 roomsLoading={loading}
-                roomsData={data}
+                roomsData={data || { chatRooms: [] }}
                 roomsError={error}
                 refetch={refetch}
               />
