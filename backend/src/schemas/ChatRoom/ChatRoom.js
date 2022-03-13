@@ -4,8 +4,6 @@ const { Schema } = mongoose;
 
 const { messageHistorySchema } = require("./MessageHistory");
 
-const { gameRoomSchema } = require("../GameRoom/GameRoom");
-
 const chatRoomSchema = new Schema({
   pairID: {
     type: [Schema.Types.ObjectId],
@@ -15,7 +13,8 @@ const chatRoomSchema = new Schema({
     type: messageHistorySchema,
   },
   gameRoom: {
-    type: gameRoomSchema,
+    type: mongoose.Types.ObjectId,
+    ref: "GameRooms",
     default: null,
   },
   isDisabled: {

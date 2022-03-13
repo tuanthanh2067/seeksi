@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const { gameQuestionSchema } = require("./GameQuestion");
+const { gameAnswerSchema } = require("./GameAnswer");
 
-const gameRoomSchema = new Schema({
+const gameRoom = new Schema({
   questions: {
-    type: [gameQuestionSchema],
+    type: [Schema.Types.ObjectId],
+    ref: "Questions",
   },
+  answers: [gameAnswerSchema],
 });
 
-module.exports.gameRoomSchema = gameRoomSchema;
+const GameRoom = mongoose.model("GameRooms", gameRoom);
+
+module.exports = GameRoom;

@@ -72,10 +72,15 @@ const mutations = {
 
     await dataSources.gameRequestAPI.acceptGameRequest(args.gameRequestId);
 
-    await dataSources.gameRoomAPI.createGameRoom(args.chatRoomId);
+    const gameRoomId = await dataSources.gameRoomAPI.createGameRoom(
+      args.chatRoomId
+    );
 
     pubsub.publish("GAME_ROOMS", {
-      gameRoomCreated: args.chatRoomId,
+      gameRoomCreated: {
+        chatRoomId: args.chatRoomId,
+        gameRoomId: gameRoomId,
+      },
     });
 
     return {
@@ -114,7 +119,7 @@ const subscriptions = {
     subscribe: withFilter(
       () => pubsub.asyncIterator("GAME_ROOMS"),
       (payload, variables) => {
-        return variables.chatRoomId === payload.gameRoomCreated;
+        return variables.chatRoomId === payload.gameRoomCreated.chatRoomId;
       }
     ),
   },

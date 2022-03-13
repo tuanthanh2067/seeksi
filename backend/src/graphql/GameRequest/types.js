@@ -5,4 +5,9 @@ module.exports.types = `
         sentTo: String!
         createdAt: String!
     }
+
+    type GameRoomSubscription {
+        chatRoomId: String!
+        gameRoomId: String!
+    }
 `;
