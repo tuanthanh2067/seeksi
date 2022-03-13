@@ -115,7 +115,7 @@ function App() {
       updateStatus();
       interval = setInterval(
         updateStatus,
-        process.env.REACT_APP_STATUS_EXPIRE_AFTER * 1000
+        process.env.REACT_APP_STATUS_UPDATE_AFTER * 1000
       );
     }
 

@@ -39,7 +39,7 @@ function Chat({ roomsLoading, roomsError, roomsData, refetch }) {
 
         const newStatus = subscriptionData.data.statusUpdated;
         let newStatuses = prev.getUserStatuses.filter(
-          (status) => status.userId === newStatus.userId
+          (status) => status.userId !== newStatus.userId
         );
 
         return Object.assign({}, prev, {
