@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import Input from "../../components/Input/Input";
 import ForgotPassword from "./ForgotPassword";
 import { USER_LOGIN_MUTATION } from "../../graphql/mutations/Mutations";
 import { useMutation } from "@apollo/client";
+
+import { WebSocketContext } from "../../context/websocketContext";
 
 const Signin = (props) => {
   const [email, setEmail] = useState("");
@@ -14,6 +16,8 @@ const Signin = (props) => {
   const [login] = useMutation(USER_LOGIN_MUTATION);
   const clearErr = () => setErr("");
   const navigate = useNavigate();
+
+  const { apolloClient } = useContext(WebSocketContext);
 
   const handleClick = () => {
     if (!email || !password) {
@@ -34,6 +38,9 @@ const Signin = (props) => {
           props.setIsLoggedIn(true);
           props.setUserToken(data.login.token);
           props.handleShow();
+
+          apolloClient.resetStore();
+
           navigate("/match");
         },
       });
