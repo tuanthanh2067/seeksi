@@ -75,7 +75,7 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
       getStatus();
       const interval = setInterval(
         getStatus,
-        process.env.REACT_APP_STATUS_UPDATE_AFTER * 1000
+        process.env.REACT_APP_GET_STATUS_AFTER * 1000
       );
       return () => {
         clearInterval(interval);
