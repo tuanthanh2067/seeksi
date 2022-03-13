@@ -61,7 +61,7 @@ function Chat({ roomsLoading, roomsError, roomsData, refetch }) {
 
           if (data && data.getUserStatuses.length !== 0) {
             const status = data.getUserStatuses.find(
-              (status) => status.userId === room.partner.id
+              (status) => status.userId === room.partner.id && !room.isDisabled
             );
             if (status) partnerLastSeen = new Date(status.lastSeen * 1);
           }
