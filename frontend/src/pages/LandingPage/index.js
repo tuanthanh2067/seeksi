@@ -74,7 +74,11 @@ const LandingPage = ({ setIsLoggedIn, setUserToken }) => {
               }
             }}
           >
-            <Signup handleShow={handleSignUpModal} />
+            <Signup
+              handleShow={handleSignUpModal}
+              setIsLoggedIn={setIsLoggedIn}
+              setUserToken={setUserToken}
+            />
           </div>
         ) : null}
       </div>

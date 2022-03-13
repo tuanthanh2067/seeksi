@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import Input from "../../components/Input/Input";
@@ -13,6 +13,8 @@ import {
   generateDateOptions,
   generateYearOptions,
 } from "../../utils/data";
+
+import { WebSocketContext } from "../../context/websocketContext";
 
 const Signup = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -29,6 +31,7 @@ const Signup = (props) => {
   const [signup] = useMutation(USER_REGISTER_MUTATION);
 
   const clearErr = () => setErr("");
+  const { apolloClient } = useContext(WebSocketContext);
 
   const handleClick = () => {
     if (
@@ -73,8 +76,13 @@ const Signup = (props) => {
         },
         onCompleted: (data) => {
           localStorage.setItem("token", data.signup.token);
+          props.setIsLoggedIn(true);
+          props.setUserToken(data.signup.token);
           props.handleShow();
           const decodedToken = jwt_decode(data.signup.token);
+
+          apolloClient.resetStore();
+
           navigate(`/edit/${decodedToken.userId}`);
         },
       });
