@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const gameQuestionSchema = new Schema({
+const gameAnswerSchema = new Schema({
   answer: {
     type: Boolean,
   },
 });
 
-module.exports.gameQuestionSchema = gameQuestionSchema;
+module.exports.gameAnswerSchema = gameAnswerSchema;
