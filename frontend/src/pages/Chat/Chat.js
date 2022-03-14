@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import Spinner from "../../components/Spinner/Spinner";
 import ChatWindow from "../../components/Chat/ChatWindow";
 import ChatPartner from "../../components/Chat/ChatPartner";
@@ -89,12 +90,16 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
         id: partnerId,
       },
       onError: (err) => {
-        console.log(err);
+        toast.error(err.message);
       },
       onCompleted: (data) => {
-        console.log(data.unmatch.message);
-        setShowConfirmation(false);
-        refetch();
+        if (data.unmatch.success) {
+          setShowConfirmation(false);
+          toast.success(data.unmatch.message);
+          refetch();
+        } else {
+          toast.error(data.unmatch.message);
+        }
       },
     });
   };

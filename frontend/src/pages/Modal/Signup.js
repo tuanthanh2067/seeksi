@@ -72,7 +72,7 @@ const Signup = (props) => {
           sex: gender,
         },
         onError: (error) => {
-          setErr(error);
+          setErr(error.message);
         },
         onCompleted: (data) => {
           localStorage.setItem("token", data.signup.token);

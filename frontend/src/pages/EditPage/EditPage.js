@@ -26,12 +26,10 @@ const ProfilePage = () => {
   const handleDelete = () => {
     deleteAccount({
       onError: (error) => {
-        setErr(error);
-        console.log(error);
+        setErr(error.message);
       },
       onCompleted: (data) => {
         navigate("/");
-        console.log(data);
       },
     });
   };

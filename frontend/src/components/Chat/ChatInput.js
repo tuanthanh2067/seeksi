@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import Emoji from "../../assets/emoji.png";
 import Upload from "../../assets/upload.png";
 import Send from "../../assets/send.svg";
@@ -59,13 +60,10 @@ function ChatInput(props) {
           photos: uploadImgs,
         },
         onError: (err) => {
-          console.log(err);
+          toast.error(err.message);
           if (err.message === "Chat room has been disabled") props.refetch();
-          //toaster here
         },
-        onCompleted: (data) => {
-          console.log(data);
-        },
+        onCompleted: (data) => {},
       });
     }
     setMessage("");
