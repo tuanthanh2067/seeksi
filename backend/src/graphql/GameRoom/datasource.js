@@ -80,16 +80,6 @@ class GameRoomAPI extends DataSource {
     }
   }
 
-  //for testing
-  async getGameRoomById(gameRoomId) {
-    try {
-      const gameRoom = await GameRoom.findById(gameRoomId);
-      return gameRoom;
-    } catch (err) {
-      throw new ApolloError("Internal Server Error");
-    }
-  }
-
   async getQuestion() {
     try {
       let questions = [];

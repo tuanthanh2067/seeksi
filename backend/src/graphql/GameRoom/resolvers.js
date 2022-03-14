@@ -20,7 +20,6 @@ const mutations = {
     { chatRoomId },
     { dataSources, req, userAuthentication }
   ) => {
-    userAuthentication(req.user);
     try {
       userAuthentication(req.user);
       const id = await dataSources.gameRoomAPI.createGameRoom(chatRoomId);
@@ -36,20 +35,7 @@ const mutations = {
   },
 };
 
-const queries = {
-  getGameRoomById: async (
-    _,
-    { gameRoomId },
-    { dataSources, req, userAuthentication }
-  ) => {
-    try {
-          userAuthentication(req.user);
-      return await dataSources.gameRoomAPI.getGameRoomById(gameRoomId);
-    } catch (err) {
-      throw new ApolloError(err);
-    }
-  },
-};
+const queries = {};
 
 const subscriptions = {};
 
