@@ -42,11 +42,11 @@ const ResetPassword = () => {
         },
         onError: (error) => {
           setStyle("text-red-600 font-medium");
-          setErr(`${error.graphQLErrors[0].message}`);
+          setErr(error.graphQLErrors[0].message);
         },
         onCompleted: (data) => {
           setStyle("text-green font-medium");
-          setErr(`${data.resetPassword.message}`);
+          setErr(data.resetPassword.message);
         },
       });
     }

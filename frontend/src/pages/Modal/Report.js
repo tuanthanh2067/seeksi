@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import OvalButton from "../../components/Buttons/OvalButton";
 import Input from "../../components/Input/Input";
 import Label from "../../components/Input/Label";
@@ -28,11 +29,10 @@ const Report = (props) => {
         },
         onError: (error) => {
           setStyle("text-red-600 font-bold");
-          setMessage(`${error.graphQLErrors[0].message}`);
+          setMessage(error.graphQLErrors[0].message);
         },
         onCompleted: (data) => {
-          setStyle("text-green font-bold");
-          setMessage(`${data.submitReport.message}`);
+          toast.success(data.submitReport.message);
           props.handleSend();
         },
       });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import RoundedButton from "../../components/Buttons/RoundedButton";
-import Input from "../../components/Input/Input";
 import { InputSlider, InputRange } from "../../components/Input/InputRange";
 import Dropdown from "../../components/Input/Dropdown";
 import Textarea from "../../components/Input/Textarea";
@@ -145,8 +145,8 @@ const EditInfo = ({ id, user, photos, avt }) => {
         uploadAvatar({
           variables: { file: avt },
           onError: (error) => {
-            console.log(error);
-            setErr(error);
+            setErr(error.message);
+            scrollToTop();
           },
           onCompleted: (data) => {
             navigate(`/user/${id}`);
@@ -161,8 +161,8 @@ const EditInfo = ({ id, user, photos, avt }) => {
             replace: replace,
           },
           onError: (error) => {
-            console.log(error);
-            setErr(error);
+            setErr(error.message);
+            scrollToTop();
           },
           onCompleted: (data) => {
             navigate(`/user/${id}`);
@@ -186,10 +186,11 @@ const EditInfo = ({ id, user, photos, avt }) => {
           shortTerm: shortTerm,
         },
         onError: (error) => {
-          console.log(error);
-          setErr(error);
+          setErr(error.message);
+          scrollToTop();
         },
         onCompleted: (data) => {
+          toast.success(data.editUser.message[0]);
           navigate(`/user/${id}`);
         },
       });
