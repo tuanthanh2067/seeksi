@@ -35,8 +35,7 @@ class GameRoomAPI extends DataSource {
       ];
 
       // add 10 questions
-      const tenQuestions = await this.getQuestion();
-      const questions = tenQuestions.map((ques) => ques._id);
+      const questions = await this.getQuestion();
       const gameRoom = new GameRoom({
         _id,
         answers,

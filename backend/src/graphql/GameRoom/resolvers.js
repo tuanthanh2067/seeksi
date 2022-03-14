@@ -42,9 +42,8 @@ const queries = {
     { gameRoomId },
     { dataSources, req, userAuthentication }
   ) => {
-    userAuthentication(req.user);
     try {
-      userAuthentication(req.user);
+          userAuthentication(req.user);
       return await dataSources.gameRoomAPI.getGameRoomById(gameRoomId);
     } catch (err) {
       throw new ApolloError(err);
