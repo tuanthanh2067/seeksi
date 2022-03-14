@@ -10,6 +10,26 @@ class ReportAPI extends DataSource {
     super();
   }
 
+  async getReport(page = 1, perPage = 10) {
+    try {
+      let reports = [];
+      if (+page && +perPage) {
+        page = +page - 1;
+        reports = await Report.find()
+          .skip(page * +perPage)
+          .limit(+perPage)
+          .exec();
+      } else {
+        throw new ApolloError("something wrong with Page and perPage");
+      }
+
+      return reports;
+    } catch (err) {
+      console.log(err);
+      throw new ApolloError(err);
+    }
+  }
+
   async createReport({
     title,
     problem,
