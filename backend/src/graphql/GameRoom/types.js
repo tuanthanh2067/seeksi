@@ -2,11 +2,12 @@ module.exports.types = `
     type GameRoom {
         id: ID!
         questions: [ID]
-        answers: GameAnswer
+        answers: [GameAnswer]
     }
 
     type GameAnswer{
-        user: ID
+        id: ID!
+        user: ID!
         answers: [String]
     }
 `;

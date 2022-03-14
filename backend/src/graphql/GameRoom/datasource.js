@@ -35,8 +35,8 @@ class GameRoomAPI extends DataSource {
       ];
 
       // add 10 questions
-      const quests = await this.getQuestion();
-      const questions = [...quests._id];
+      const tenQuestions = await this.getQuestion();
+      const questions = tenQuestions.map((ques) => ques._id);
       const gameRoom = new GameRoom({
         _id,
         answers,
@@ -51,7 +51,7 @@ class GameRoomAPI extends DataSource {
       return _id;
     } catch (err) {
       console.error(err);
-      throw new ApolloError("Internal Server Error");
+      throw new ApolloError(err);
     }
   }
 
