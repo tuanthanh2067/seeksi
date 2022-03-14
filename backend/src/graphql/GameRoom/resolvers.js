@@ -1,22 +1,20 @@
 const { AuthenticationError, ApolloError } = require("apollo-server-core");
 
-const queries = {
-  getGameRoomById: async (
-    _,
-    { gameRoomId },
-    { dataSources, req, userAuthentication }
-  ) => {
-    userAuthentication(req.user);
-    try {
-      userAuthentication(req.user);
-      return await dataSources.gameRoomAPI.getGameRoomById(gameRoomId);
-    } catch (err) {
-      throw new ApolloError(err);
-    }
-  },
-};
-
 const mutations = {
+  submitAnswers: async (_, args, { dataSources, req, userAuthentication }) => {
+    userAuthentication(req.user);
+
+    await dataSources.gameRoomAPI.submitAnswer(
+      args.gameRoomId,
+      req.user.userId,
+      args.answers
+    );
+
+    return {
+      success: true,
+      message: "Submit successfully",
+    };
+  },
   createGameRoom: async (
     _,
     { chatRoomId },
@@ -32,6 +30,22 @@ const mutations = {
           message: id,
         };
       }
+    } catch (err) {
+      throw new ApolloError(err);
+    }
+  },
+};
+
+const queries = {
+  getGameRoomById: async (
+    _,
+    { gameRoomId },
+    { dataSources, req, userAuthentication }
+  ) => {
+    userAuthentication(req.user);
+    try {
+      userAuthentication(req.user);
+      return await dataSources.gameRoomAPI.getGameRoomById(gameRoomId);
     } catch (err) {
       throw new ApolloError(err);
     }

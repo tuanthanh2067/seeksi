@@ -3,18 +3,14 @@ const { Schema } = mongoose;
 
 const { gameAnswerSchema } = require("./GameAnswer");
 
-const gameRoomSchema = new Schema({
+const gameRoom = new Schema({
   questions: {
     type: [Schema.Types.ObjectId],
     ref: "Questions",
   },
-  answers: {
-    type: [gameAnswerSchema],
-    default: null,
-  },
+  answers: [gameAnswerSchema],
 });
 
-const GameRooms = mongoose.model("GameRooms", gameRoomSchema);
+const GameRoom = mongoose.model("GameRooms", gameRoom);
 
-module.exports = GameRooms;
-module.exports.gameRoomSchema = gameRoomSchema;
+module.exports = GameRoom;

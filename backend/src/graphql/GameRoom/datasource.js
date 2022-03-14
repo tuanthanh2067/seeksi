@@ -1,10 +1,12 @@
 const { DataSource } = require("apollo-datasource");
-const { ApolloError } = require("apollo-server-core");
+const { ApolloError, UserInputError } = require("apollo-server-core");
 const mongoose = require("mongoose");
 
 const ChatRoom = require("../../schemas/ChatRoom/ChatRoom");
 const Question = require("../../schemas/Question/Question");
 const GameRoom = require("../../schemas/GameRoom/GameRoom");
+
+const GameAnswerEnum = require("../../enum/GameAnswer");
 
 class GameRoomAPI extends DataSource {
   constructor() {
@@ -15,35 +17,64 @@ class GameRoomAPI extends DataSource {
     try {
       const chatRoom = await ChatRoom.findById(chatRoomId);
 
-      //initiates new gameRoom
-      const gameRoomId = new mongoose.Types.ObjectId();
-      const gameRoom = new GameRoom({
-        _id: gameRoomId,
-        questions: [],
-      });
-      //populates gameRoom with questions
-      const questions = await this.getQuestion();
-      questions.forEach((ques) => {
-        gameRoom.questions.push(ques._id);
-      });
-      //persists gameRoom
-      await gameRoom.save();
-      let persistedGameRoom = await GameRoom.findById(gameRoomId);
-      //updates chatRoom.gameRoom data
-      if (!chatRoom.gameRoom) {
-        chatRoom.gameRoom = new GameRoom({
-          _id: persistedGameRoom._id,
-          questions: persistedGameRoom.questions,
-        });
-      } else {
-        chatRoom.gameRoom._id = persistedGameRoom._id;
-        chatRoom.gameRoom.questions = persistedGameRoom.questions;
+      if (chatRoom.gameRoom) {
+        throw new UserInputError("You already played this game");
       }
 
-      //persists chatRoom
+      const _id = mongoose.Types.ObjectId();
+
+      const answers = [
+        {
+          user: chatRoom.pairID[0],
+          answers: new Array(10).fill(GameAnswerEnum.NOT_ANSWERED),
+        },
+        {
+          user: chatRoom.pairID[1],
+          answers: new Array(10).fill(GameAnswerEnum.NOT_ANSWERED),
+        },
+      ];
+
+      // add 10 questions
+      const quests = await this.getQuestion();
+      const questions = [...quests._id];
+      const gameRoom = new GameRoom({
+        _id,
+        answers,
+        questions,
+      });
+
+      chatRoom.gameRoom = _id;
+
+      await gameRoom.save();
       await chatRoom.save();
-      let updatedChatRoom = await ChatRoom.findById(chatRoomId);
-      return updatedChatRoom.gameRoom.id.toString();
+
+      return _id;
+    } catch (err) {
+      console.error(err);
+      throw new ApolloError("Internal Server Error");
+    }
+  }
+
+  async submitAnswer(gameRoomId, userId, answers) {
+    try {
+      const gameRoom = await GameRoom.findById(gameRoomId);
+
+      if (!gameRoom) {
+        throw new ApolloError("Game room does not exist");
+      }
+
+      const firstUser = gameRoom.answers[0].user.toString();
+      const secondUser = gameRoom.answers[1].user.toString();
+      // check to see if this user belongs to this game room
+      if (firstUser !== userId && secondUser !== userId) {
+        throw new ApolloError("Can not submit answers to this game room");
+      }
+
+      const index = firstUser === userId ? 0 : 1;
+
+      gameRoom.answers[index].answers = answers;
+
+      await gameRoom.save();
     } catch (err) {
       console.error(err);
       throw new ApolloError("Internal Server Error");
