@@ -3,6 +3,7 @@ const { ApolloError, UserInputError } = require("apollo-server-core");
 const mongoose = require("mongoose");
 
 const ChatRoom = require("../../schemas/ChatRoom/ChatRoom");
+const Question = require("../../schemas/Question/Question");
 const GameRoom = require("../../schemas/GameRoom/GameRoom");
 
 const GameAnswerEnum = require("../../enum/GameAnswer");
@@ -34,9 +35,12 @@ class GameRoomAPI extends DataSource {
       ];
 
       // add 10 questions
+      const tenQuestions = await this.getQuestion();
+      const questions = tenQuestions.map((ques) => ques._id);
       const gameRoom = new GameRoom({
         _id,
         answers,
+        questions,
       });
 
       chatRoom.gameRoom = _id;
@@ -47,7 +51,7 @@ class GameRoomAPI extends DataSource {
       return _id;
     } catch (err) {
       console.error(err);
-      throw new ApolloError("Internal Server Error");
+      throw new ApolloError(err);
     }
   }
 
@@ -74,6 +78,22 @@ class GameRoomAPI extends DataSource {
     } catch (err) {
       console.error(err);
       throw new ApolloError("Internal Server Error");
+    }
+  }
+
+  async getQuestion() {
+    try {
+      let questions = [];
+      const limit = parseInt(process.env.QUESTION_LIMIT) || 10;
+      questions = await Question.aggregate([
+        {
+          $sample: { size: limit },
+        },
+      ]);
+      return questions;
+    } catch (err) {
+      console.log(err);
+      throw new ApolloError("Internal Server Error - get question");
     }
   }
 }
