@@ -22,32 +22,26 @@ const handle = (props) => {
   );
 };
 
-export const InputSlider = (props) => (
+export const InputSlider = ({ min, max, value, onChange, marks }) => (
   <Slider
-    min={1}
-    max={500}
-    value={props.value}
+    min={min}
+    max={max}
+    value={value}
     handle={handle}
     tipFormatter={(value) => `${value}`}
-    onChange={props.onChange}
-    marks={{
-      1: "1",
-      500: "500",
-    }}
+    onChange={onChange}
+    marks={marks}
   />
 );
 
-export const InputRange = (props) => (
+export const InputRange = ({ min, max, values, onChange, marks }) => (
   <Range
     allowCross={false}
-    marks={{
-      18: "18",
-      82: "82",
-    }}
-    min={18}
-    max={82}
-    value={[props.values[0], props.values[1]]}
+    min={min}
+    max={max}
+    marks={marks}
+    value={[values[0], values[1]]}
     tipFormatter={(value) => `${value}`}
-    onChange={props.onChange}
+    onChange={onChange}
   />
 );
