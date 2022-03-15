@@ -25,8 +25,7 @@ class ReportAPI extends DataSource {
 
       return reports;
     } catch (err) {
-      console.log(err);
-      throw new ApolloError(err);
+      throw new ApolloError("Internal Server Error");
     }
   }
 
