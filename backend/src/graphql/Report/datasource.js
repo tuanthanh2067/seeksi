@@ -16,6 +16,7 @@ class ReportAPI extends DataSource {
       if (+page && +perPage) {
         page = +page - 1;
         reports = await Report.find()
+          .sort({ _id: -1 })
           .skip(page * +perPage)
           .limit(+perPage)
           .exec();
