@@ -4,7 +4,13 @@ import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import ChatMessageList from "./ChatMessageList";
 
-function ChatWindow({ data, setShowConfirmation, refetch, userStatus }) {
+function ChatWindow({
+  data,
+  setShowConfirmation,
+  setShowReport,
+  refetch,
+  userStatus,
+}) {
   const [showEmoji, setShowEmoji] = useState(false);
 
   return data ? (
@@ -15,6 +21,7 @@ function ChatWindow({ data, setShowConfirmation, refetch, userStatus }) {
         isDisabled={data.isDisabled}
         userStatus={userStatus}
         setShowConfirmation={setShowConfirmation}
+        setShowReport={setShowReport}
       />
       <ChatMessageList data={data} />
       {data.isDisabled ? (
