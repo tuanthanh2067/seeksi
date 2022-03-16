@@ -3,63 +3,57 @@ import jwt_decode from "jwt-decode";
 import { Image } from "react-shimmer";
 import FallBack from "../FallBack/FallBack";
 
-function ChatMessageItem(props) {
+function ChatMessageItem({ message, partnerName }) {
   const currentUserId = jwt_decode(localStorage.getItem("token")).userId;
   const adminStyle = "place-self-center text-center bg-white text-xs my-0";
   const userStyle = "place-self-end text-right bg-slate-100 my-1 max-w-[40%]";
   const partnerStyle =
     "place-self-start text-left border-[1px] border-slate-300 my-1 max-w-[40%]";
 
+  const isGameRequest = message.content === "sent a game request";
+  const isGameResponse =
+    message.content === "accepted the game request" ||
+    message.content === "rejected the game request";
+
+  const gameRequestSender =
+    message.sendBy === currentUserId ? "You" : partnerName;
+
   return (
     <div
       className={`rounded-md px-2 py-1 mx-3 whitespace-normal break-all ${
-        props.sendBy === "admin"
+        message.sendBy === "admin"
           ? adminStyle
-          : props.sendBy === currentUserId
+          : message.sendBy === currentUserId
           ? userStyle
           : partnerStyle
       }`}
     >
-      {props.message}
+      {isGameResponse || isGameRequest ? (
+        <div>
+          {gameRequestSender} {message.content}
+        </div>
+      ) : (
+        message.content
+      )}
 
       <div className="grid grid-flow-col auto-cols-max">
-        {props.photos.map((src, key) => (
+        {message.photos.map((src) => (
           <>
-            {src.medium && (
-              <div className="block justify-self-center w-28 h-28 relative">
-                <Image
-                  src={src.medium}
-                  alt={key}
-                  key={key}
-                  fallback={<FallBack />}
-                  NativeImgProps={{
-                    style: {
-                      objectFit: "contain",
-                      width: "100%",
-                      height: "100%",
-                    },
-                  }}
-                />
-              </div>
-            )}
-
-            {!src.medium && src.origin && (
-              <div className="block justify-self-center w-28 h-28 relative">
-                <Image
-                  src={src.origin}
-                  alt={key}
-                  key={key}
-                  fallback={<FallBack />}
-                  NativeImgProps={{
-                    style: {
-                      objectFit: "contain",
-                      width: "100%",
-                      height: "100%",
-                    },
-                  }}
-                />
-              </div>
-            )}
+            <div className="block justify-self-center w-28 h-28 relative">
+              <Image
+                src={src.medium ? src.medium : src.origin}
+                alt="chat photo"
+                key={src.medium ? src.medium : src.origin}
+                fallback={<FallBack />}
+                NativeImgProps={{
+                  style: {
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                  },
+                }}
+              />
+            </div>
           </>
         ))}
       </div>

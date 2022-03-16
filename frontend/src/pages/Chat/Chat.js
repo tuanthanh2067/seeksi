@@ -13,20 +13,23 @@ import { STATUS_UPDATED } from "../../graphql/subscriptions/User";
 import { GET_USER_STATUSES } from "../../graphql/queries/User";
 import { SEND_GAME_REQUEST } from "../../graphql/mutations/Game";
 
-function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
+function Chat({
+  roomsLoading,
+  roomsError,
+  roomsData: { chatRooms },
+  refetch,
+  handleAccept,
+  handleDecline,
+}) {
   const [activeRoomId, setActiveRoomId] = useState({});
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [showGameRequest, setShowGameRequest] = useState(false);
+  const [showGameRule, setShowGameRule] = useState(false);
   const [showGameRequestStatus, setShowGameRequestStatus] = useState(false);
   const [gameRequestStatus, setGameRequestStatus] = useState("");
   const [partnerId, setPartnerId] = useState("");
+  const [gameRequestId, setGameRequestId] = useState("");
   const [userStatuses, setUserStatuses] = useState({});
-<<<<<<< HEAD
   const [showReport, setShowReport] = useState(false);
-  const [isOnline, setIsOnline] = useState(false);
-  const [gamePlayed, setGamePlayed] = useState(false);
-=======
->>>>>>> 00c32d0 (add mutation)
 
   const [unmatch] = useMutation(UNMATCH);
   const [sendGameRequest] = useMutation(SEND_GAME_REQUEST);
@@ -39,7 +42,7 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
         setGameRequestStatus("Partner is offline. Please try again later");
         setShowGameRequestStatus(true);
       } else {
-        setShowGameRequest(true);
+        setShowGameRule(true);
       }
     } else {
       // display game results
@@ -47,13 +50,15 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
   };
 
   const handleSendGameRequest = () => {
+    const room = chatRooms.find((room) => room.partner.id === partnerId);
     sendGameRequest({
       variables: {
         to: partnerId,
+        chatRoomId: room.id,
       },
       onError: (err) => {
         console.log(err);
-        setShowGameRequest(false);
+        setShowGameRule(false);
         if (err.message === "Partner is offline") {
           // show error toaster here
         } else {
@@ -64,7 +69,8 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
         }
       },
       onCompleted: (data) => {
-        setShowGameRequest(false);
+        setGameRequestId(data.gameRequestSent.id);
+        setShowGameRule(false);
         setGameRequestStatus(
           `Game request sent successfully. Waiting for response...`
         );
@@ -163,56 +169,6 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
     setActiveRoomId(roomId);
   };
 
-<<<<<<< HEAD
-  if (roomsLoading) return <Spinner />;
-  if (roomsError)
-    return (
-      <div className="italic place-self-center my-auto">
-        An error occurs, please try again later!
-      </div>
-    );
-
-  if (chatRooms.length > 0) {
-    return (
-      <div className="h-screen">
-        {showConfirmation && (
-          <div
-            onClick={(e) => {
-              if (e.currentTarget.firstChild === e.target) {
-                setShowConfirmation(false);
-              }
-            }}
-          >
-            <Confirmation
-              title="Unmatch"
-              content={`Are you sure to unmatch?`}
-              handleCancel={() => setShowConfirmation(false)}
-              handleConfirm={handleUnmatch}
-            />
-          </div>
-        )}
-        {showReport && (
-          <div
-            onClick={(e) => {
-              if (e.currentTarget.firstChild === e.target) {
-                setShowReport(false);
-              }
-            }}
-          >
-            <Report
-              reportedUserID={partnerId}
-              handleSend={() => setShowReport(false)}
-            />
-          </div>
-        )}
-
-        {showGameRequest && (
-          <div
-            onClick={(e) => {
-              if (e.currentTarget.firstChild === e.target) {
-                setShowGameRequest(false);
-              }
-=======
   return (
     <div className="h-screen">
       {showConfirmation && (
@@ -232,11 +188,25 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
         </div>
       )}
 
-      {showGameRequest && (
+      {showReport && (
         <div
           onClick={(e) => {
             if (e.currentTarget.firstChild === e.target) {
-              setShowGameRequest(false);
+              setShowReport(false);
+            }
+          }}
+        >
+          <Report
+            reportedUserID={partnerId}
+            handleSend={() => setShowReport(false)}
+          />
+        </div>
+      )}
+      {showGameRule && (
+        <div
+          onClick={(e) => {
+            if (e.currentTarget.firstChild === e.target) {
+              setShowGameRule(false);
               setShowGameRequestStatus(false);
             }
           }}
@@ -244,13 +214,12 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
           <Confirmation
             title="Game rules"
             content="You will be asked 10 'Have you ever...' questions. Select your answers truthfully to learn more about each other"
-            confirmState="Send game request to Dustin?"
+            confirmState={`Send game request now?`}
             btn1Name="Cancel"
             btn2Name="Send"
             handleConfirm={handleSendGameRequest}
             handleCancel={() => {
-              setShowGameRequest(false);
->>>>>>> 00c32d0 (add mutation)
+              setShowGameRule(false);
             }}
           />
         </div>
@@ -295,6 +264,9 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
             refetch={refetch}
             userStatus={userStatuses[partnerId]}
             handleGame={handleGame}
+            handleAccept={handleAccept}
+            handleDecline={handleDecline}
+            gameRequestId={gameRequestId}
           />
         </section>
       )}

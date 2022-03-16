@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_MESSAGE = gql`
+export const MESSAGE_SUBSCRIPTION = gql`
   subscription MessageSent($roomId: String!) {
     messageSent(roomId: $roomId) {
       id
@@ -12,6 +12,17 @@ export const GET_MESSAGE = gql`
         origin
       }
       name
+    }
+  }
+`;
+
+export const GAME_REQUEST_SUBSCRIPTION = gql`
+  subscription GameRequestSent($myId: String!) {
+    gameRequestSent(myId: $myId) {
+      id
+      sentBy
+      sentTo
+      createdAt
     }
   }
 `;

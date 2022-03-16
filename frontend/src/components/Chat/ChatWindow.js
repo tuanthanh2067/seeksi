@@ -11,6 +11,9 @@ function ChatWindow({
   refetch,
   userStatus,
   handleGame,
+  handleAccept,
+  handleDecline,
+  gameRequestId,
 }) {
   const [showEmoji, setShowEmoji] = useState(false);
 
@@ -24,7 +27,13 @@ function ChatWindow({
         setShowConfirmation={setShowConfirmation}
         setShowReport={setShowReport}
       />
-      <ChatMessageList data={data} />
+      <ChatMessageList
+        data={data}
+        handleAccept={handleAccept}
+        handleDecline={handleDecline}
+        gameRequestId={gameRequestId}
+        chatRoomId={data.id}
+      />
       {data.isDisabled ? (
         <div className="flex items-center justify-center py-5">
           <div className="font-medium place-self-center my-auto">
