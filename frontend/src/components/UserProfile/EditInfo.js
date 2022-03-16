@@ -393,7 +393,13 @@ const EditInfo = ({ id, user, photos, avt }) => {
               <Label label={`Distance Preference: ${distance} km`} />
               <div className="pt-5 pb-8 ml-2">
                 <InputSlider
-                  defaultValue={distance}
+                  min={0}
+                  max={500}
+                  marks={{
+                    0: "0",
+                    500: "500",
+                  }}
+                  value={distance}
                   onChange={(value) => {
                     setDistance(value);
                     clearErr();
@@ -406,7 +412,13 @@ const EditInfo = ({ id, user, photos, avt }) => {
               />
               <div className="pt-5 ml-2">
                 <InputRange
-                  defaultValues={ageBias}
+                  min={18}
+                  max={82}
+                  marks={{
+                    18: "18",
+                    82: "82",
+                  }}
+                  values={ageBias}
                   onChange={(value) => {
                     setAgeBias(value);
                     clearErr();
