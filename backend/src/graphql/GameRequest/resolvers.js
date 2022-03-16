@@ -2,6 +2,8 @@ const { ApolloError } = require("apollo-server-core");
 const { PubSub, withFilter } = require("graphql-subscriptions");
 const mongoose = require("mongoose");
 
+const { GAME_REQUEST } = require("../../enum/GameRequest");
+
 const pubsub = new PubSub();
 
 const queries = {};
@@ -27,6 +29,20 @@ const mutations = {
 
     pubsub.publish("GAME_REQUESTS", {
       gameRequestSent: gameRequest,
+    });
+
+    // send message
+    const message = await dataSources.chatRoomAPI.sendMessageToChatRoom(
+      args.chatRoomId,
+      req.user.userId,
+      "sent a game request"
+    );
+
+    message.name = GAME_REQUEST;
+
+    // publish to channel
+    pubsub.publish(`CHANNEL_${args.chatRoomId}`, {
+      messageSent: message,
     });
 
     return gameRequest;
@@ -83,6 +99,20 @@ const mutations = {
       },
     });
 
+    // send message
+    const message = await dataSources.chatRoomAPI.sendMessageToChatRoom(
+      args.chatRoomId,
+      req.user.userId,
+      "accepted the game request"
+    );
+
+    message.name = GAME_REQUEST;
+
+    // publish to channel
+    pubsub.publish(`CHANNEL_${args.chatRoomId}`, {
+      messageSent: message,
+    });
+
     return {
       success: true,
       message: "Accept Successfully",
@@ -97,6 +127,20 @@ const mutations = {
     userAuthentication(req.user);
 
     await dataSources.gameRequestAPI.rejectGameRequest(args.gameRequestId);
+
+    // send message
+    const message = await dataSources.chatRoomAPI.sendMessageToChatRoom(
+      args.chatRoomId,
+      req.user.userId,
+      "rejected the game request"
+    );
+
+    message.name = GAME_REQUEST;
+
+    // publish to channel
+    pubsub.publish(`CHANNEL_${args.chatRoomId}`, {
+      messageSent: message,
+    });
 
     return {
       success: true,
@@ -122,6 +166,13 @@ const subscriptions = {
         return variables.chatRoomId === payload.gameRoomCreated.chatRoomId;
       }
     ),
+  },
+
+  messageSent: {
+    subscribe: (_, args, context) => {
+      const roomId = args.roomId;
+      return pubsub.asyncIterator(`CHANNEL_${roomId}`);
+    },
   },
 };
 
