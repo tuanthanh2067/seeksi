@@ -1,10 +1,9 @@
 const { ApolloError } = require("apollo-server-core");
-const { PubSub, withFilter } = require("graphql-subscriptions");
 const mongoose = require("mongoose");
 
 const { GAME_REQUEST } = require("../../enum/GameRequest");
 
-const pubsub = new PubSub();
+const subs = require("../subscriptions/index");
 
 const queries = {};
 
@@ -150,30 +149,7 @@ const mutations = {
 };
 
 const subscriptions = {
-  gameRequestSent: {
-    subscribe: withFilter(
-      () => pubsub.asyncIterator("GAME_REQUESTS"),
-      (payload, variables) => {
-        return variables.myId === payload.gameRequestSent.sentTo;
-      }
-    ),
-  },
-
-  gameRoomCreated: {
-    subscribe: withFilter(
-      () => pubsub.asyncIterator("GAME_ROOMS"),
-      (payload, variables) => {
-        return variables.chatRoomId === payload.gameRoomCreated.chatRoomId;
-      }
-    ),
-  },
-
-  messageSent: {
-    subscribe: (_, args, context) => {
-      const roomId = args.roomId;
-      return pubsub.asyncIterator(`CHANNEL_${roomId}`);
-    },
-  },
+  ...subs,
 };
 
 module.exports.resolvers = {

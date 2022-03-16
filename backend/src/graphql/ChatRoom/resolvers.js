@@ -6,6 +6,8 @@ const { unlink } = require("fs/promises");
 const { writeFileUpload } = require("../../../storage/upload");
 const { uploadImages } = require("../../../storage/cloudinary");
 
+const subs = require("../subscriptions/index");
+
 const pubsub = new PubSub();
 
 const queries = {
@@ -90,12 +92,7 @@ const mutations = {
 };
 
 const subscriptions = {
-  messageSent: {
-    subscribe: (_, args, context) => {
-      const roomId = args.roomId;
-      return pubsub.asyncIterator(`CHANNEL_${roomId}`);
-    },
-  },
+  ...subs,
 };
 
 module.exports.resolvers = {
