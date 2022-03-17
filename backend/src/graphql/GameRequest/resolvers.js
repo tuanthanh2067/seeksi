@@ -39,6 +39,7 @@ const mutations = {
     );
 
     message.name = GAME_REQUEST;
+    message.createdAt = gameRequest.id.getTimestamp();
 
     // publish to channel
     pubsub.publish(`CHANNEL_${args.chatRoomId}`, {

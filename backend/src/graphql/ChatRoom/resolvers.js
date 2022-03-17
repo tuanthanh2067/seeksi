@@ -76,8 +76,6 @@ const mutations = {
 
     message.name = user.firstName + " " + user.lastName;
 
-    console.log(message);
-
     // publish to channel
     pubsub.publish(`CHANNEL_${args.roomId}`, {
       messageSent: message,
