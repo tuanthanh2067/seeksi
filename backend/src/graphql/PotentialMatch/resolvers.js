@@ -1,7 +1,3 @@
-const MatchStatus = require("../../enum/MatchStatus");
-const { MatchAge } = require("../../../lib/age");
-const { MatchDistance } = require("../../../lib/location");
-
 const queries = {
   getPotentialPartners: async (
     _,
@@ -14,33 +10,6 @@ const queries = {
     const { page } = args;
     const docs = await dataSources.potentialMatchAPI.findByUserId(userId, page);
 
-    console.log(docs);
-
-    const findPartnerIndex = (match) => {
-      const userIndex = match.pairID.findIndex(
-        (user) => user._id.toString() === userId
-      );
-
-      return 1 - userIndex;
-    };
-    const getPartnerCardInfo = (match) => {
-      const partnerIndex = findPartnerIndex(match);
-      const user = match.pairID[1 - partnerIndex];
-      let partner = match.pairID[partnerIndex];
-
-      partner.id = partner._id.toString();
-      partner.age = MatchAge.calculateAge(partner.dob.toISOString());
-      partner.distance = MatchDistance.calculateDistance(user, partner);
-
-      delete partner._id;
-      delete partner.dob;
-      delete partner.location;
-
-      return partner;
-    };
-    const isUserPending = (match) => {
-      return first.status;
-    };
     const isLikedByPartner = (first, second) => {
       return first.status.localeCompare(second.status);
     };
@@ -48,13 +17,7 @@ const queries = {
       return second.matchScore - first.matchScore;
     };
 
-    const potentialPartners = docs
-      .filter(isUserPending)
-      .sort(byMatchScore)
-      .sort(isLikedByPartner)
-      .map(getPartnerCardInfo);
-
-    return potentialPartners;
+    return docs.sort(byMatchScore).sort(isLikedByPartner);
   },
 };
 

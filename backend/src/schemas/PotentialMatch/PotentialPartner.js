@@ -5,7 +5,7 @@ const MatchStatus = require("../../enum/MatchStatus");
 
 const potentialPartnerSchema = new Schema(
   {
-    user: {
+    partner: {
       type: Schema.Types.ObjectId,
       ref: "Users",
     },

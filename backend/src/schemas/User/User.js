@@ -65,14 +65,19 @@ const userSchema = new Schema({
 });
 
 userSchema.post("save", async (doc) => {
-  const exists = await PotentialMatch.findOne({ user: doc._id });
+  const potentialMatch = await PotentialMatch.findOne({ user: doc._id });
 
-  if (!exists) {
-    await PotentialMatch.create({
-      user: doc._id,
-      potentialPartners: new Map(),
-    });
+  if (potentialMatch) {
+    potentialMatch.potentialPartners = new Map();
+    await potentialMatch.save();
+
+    return;
   }
+
+  await PotentialMatch.create({
+    user: doc._id,
+    potentialPartners: new Map(),
+  });
 });
 
 const User = mongoose.model("Users", userSchema);

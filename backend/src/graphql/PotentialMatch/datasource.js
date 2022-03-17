@@ -23,6 +23,18 @@ class PotentialMatchAPI extends DataSource {
     return s1 === MatchStatus.LIKED && s2 === MatchStatus.LIKED;
   }
 
+  async createPotentialMatch(userId, potentialPartners) {
+    const _id =
+      userId instanceof mongoose.Types.ObjectId
+        ? userId
+        : mongoose.Types.ObjectId(userId);
+
+    return await PotentialMatch.create({
+      user: _id,
+      potentialPartners: potentialPartners || new Map(),
+    });
+  }
+
   async deleteByUserId(userId) {
     try {
       await PotentialMatch.deleteMany({
@@ -86,24 +98,60 @@ class PotentialMatchAPI extends DataSource {
     }
   }
 
-  async addPotentialPartners(userId, limit) {
+  isCompatible(user, partner) {
+    return (
+      MatchGender.isCompatibleByGenderPreference(user, partner) &&
+      MatchAge.isCompatibleByAge(user, partner) &&
+      MatchDistance.isCompatibleByDistance(user, partner)
+    );
+  }
+
+  buildQuery(options) {
+    const { potentialPartners, userId } = options;
+
+    if (Array.isArray(potentialPartners) && potentialPartners.length > 0) {
+      const lastSearchedUser = potentialPartners[potentialPartners.length - 1];
+
+      return {
+        _id: { $ne: userId, $gt: lastSearchedUser },
+        isDisabled: { $ne: true },
+      };
+    }
+
+    return {
+      _id: { $ne: userId },
+      isDisabled: { $ne: true },
+    };
+  }
+
+  async getPartnerStatus(userId, partnerId) {
+    const potentialMatch = await PotentialMatch.findOne({
+      user: { $eq: partnerId },
+    });
+
+    if (
+      potentialMatch &&
+      potentialMatch.potentialPartners instanceof Map &&
+      potentialMatch.potentialPartners.has(userId)
+    ) {
+      return partnerPotMatch.potentialPartners.get(userId).status;
+    }
+
+    return MatchStatus.PENDING;
+  }
+
+  async nextPotentialPartners(userId, limit) {
     const _id = mongoose.Types.ObjectId(userId);
     const potentialMatch = await PotentialMatch.findOne({
       user: _id,
-    }).populate("user");
+    })
+      .populate("user")
+      .populate("potentialPartners.$*.partner");
 
     const potentialPartners = Array.from(
       potentialMatch.potentialPartners.keys()
     );
-    let query = {
-      _id: { $ne: _id },
-      isDisabled: { $ne: true },
-    };
-
-    if (potentialPartners.length > 0) {
-      const lastSearchedUser = potentialPartners[potentialPartners.length - 1];
-      query._id.$gt = lastSearchedUser;
-    }
+    const query = this.buildQuery({ potentialPartners, userId: _id });
 
     const cursor = User.find(query).sort({ _id: 1 }).cursor();
     for (
@@ -111,29 +159,14 @@ class PotentialMatchAPI extends DataSource {
       count < limit && partner != null;
       partner = await cursor.next()
     ) {
-      const isCompatible =
-        MatchGender.isCompatibleByGenderPreference(
-          potentialMatch.user,
-          partner
-        ) &&
-        MatchAge.isCompatibleByAge(potentialMatch.user, partner) &&
-        MatchDistance.isCompatibleByDistance(potentialMatch.user, partner);
-
-      if (isCompatible) {
-        let partnerStatus;
-
-        const partnerPotMatch = await PotentialMatch.findOne({
-          user: { $eq: partner._id },
-        }).lean();
-
-        if (partnerPotMatch && partnerPotMatch.potentialPartners.has(userId)) {
-          partnerStatus = partnerPotMatch.potentialPartners.get(userId).status;
-        } else {
-          partnerStatus = MatchStatus.PENDING;
-        }
+      if (this.isCompatible(potentialMatch.user, partner)) {
+        const partnerStatus = await this.getPartnerStatus(
+          potentialMatch.user._id,
+          partner._id
+        );
 
         potentialMatch.potentialPartners.set(partner._id.toString(), {
-          userId: partner._id,
+          partner: partner._id,
           status: MatchStatus.PENDING,
           matchScore: MatchScore.calculateMatchScore({
             user: potentialMatch.user,
@@ -142,226 +175,120 @@ class PotentialMatchAPI extends DataSource {
           }),
         });
 
-        console.log(
-          potentialMatch.potentialPartners.get(partner._id.toString())
-        );
-
         count += 1;
       }
     }
 
-    await potentialMatch.save();
+    return potentialMatch.potentialPartners;
   }
 
-  // async createPotentialMatches(size, stats) {
-  //   const user = await User.findById(stats.userId);
-  //   let count = 0;
-  //   let query = {
-  //     _id: { $ne: user._id },
-  //     isDisabled: { $ne: true },
-  //   };
+  async getPotentialMatch(userId) {
+    const _id =
+      userId instanceof mongoose.Types.ObjectId
+        ? userId
+        : mongoose.Types.ObjectId(userId);
+    const potentialMatch = await PotentialMatch.findOne({
+      user: _id,
+    });
 
-  //   if (stats.prevUserSearch) {
-  //     query._id.$gt = stats.prevUserSearch;
-  //   }
+    if (!potentialMatch) {
+      return await this.createPotentialMatch(_id);
+    }
 
-  //   const cursor = User.find(query).sort({ _id: 1 }).cursor();
-  //   for (
-  //     let partner = await cursor.next();
-  //     count < size && partner != null;
-  //     stats.prevUserSearch = partner._id, partner = await cursor.next()
-  //   ) {
-  //     const pairID = [user._id, partner._id];
-  //     const pm = await PotentialMatch.exists({ pairID: { $all: pairID } });
+    return potentialMatch;
+  }
 
-  //     if (pm) {
-  //       const isBeforePage = (id) => pm._id < id;
-  //       const i = stats.startPairSearch.findIndex(isBeforePage);
+  async filterPotentialPartners(potentialMatch, options) {
+    let count = 0;
+    let results = [];
 
-  //       if (i > -1) {
-  //         stats.startPairSearch[i] = pm._id;
-  //       }
-  //       continue;
-  //     }
+    if (
+      !potentialMatch.potentialPartners ||
+      !(potentialMatch.potentialPartners instanceof Map)
+    ) {
+      throw new Error("Potential partners aren't stored correctly!");
+    }
 
-  // const isCompatible =
-  //   MatchGender.isCompatibleByGenderPreference(user, partner) &&
-  //   MatchAge.isCompatibleByAge(user, partner) &&
-  //   MatchDistance.isCompatibleByDistance(user, partner);
+    const all = Array.from(potentialMatch.potentialPartners.values());
 
-  //     if (isCompatible) {
-  //       const potentialMatch = new PotentialMatch({
-  //         pairID,
-  //         matchScore: MatchScore.calculateMatchScore({
-  //           user,
-  //           partner,
-  //           partnerStatus: MatchStatus.PENDING,
-  //         }),
-  //       });
-  //       const { _id } = await potentialMatch.save();
-  //       const firstPairOfPage = count === 1;
-  //       count += 1;
-  //       if (firstPairOfPage) {
-  //         stats.startPairSearch.push(_id);
-  //       }
-  //     }
-  //   }
-  // }
+    for (let i = options.start; count < options.limit && i < all.length; i++) {
+      const status = await this.getPartnerStatus(
+        potentialMatch.user,
+        all[i].partner
+      );
 
-  async filterPotentialPartners(partners, options) {
-    return await Promise.all(
-      partners.map(async (partner) => {
-        const partnerPotMatch = await PotentialMatch.findOne({
-          user: { $eq: partner.user._id },
-        }).lean();
+      if (
+        all[i].status !== MatchStatus.PENDING ||
+        status === MatchStatus.REJECTED
+      ) {
+        continue;
+      }
 
-        if (
-          !partnerPotMatch ||
-          !partnerPotMatch.potentialPartners.has(options.userId)
-        ) {
-          return {
-            ...partner,
-            partnerStatus: MatchStatus.PENDING,
-          };
-        }
+      const user = await User.findById(potentialMatch.user);
+      const partner = await User.findById(all[i].partner, {
+        avatar: 1,
+        firstName: 1,
+        lastName: 1,
+        bio: 1,
+        sex: 1,
+        location: 1,
+        dob: 1,
+        hobbies: 1,
+      }).lean();
 
-        return {
-          ...partner,
-          partnerStatus: partnerPotMatch.potentialPartners.get(options.userId)
-            .status,
-        };
-      })
-    )
-      .filter((partner) => {
-        return (
-          partner.status === MatchStatus.PENDING &&
-          partner.partnerStatus !== MatchStatus.REJECTED
-        );
-      })
-      .slice(options.start, options.start + options.limit);
+      const id = partner._id.toString();
+      const age = MatchAge.calculateAge(partner.dob.toISOString());
+      const distance = MatchDistance.calculateDistance(user, partner);
 
-    // for (
-    //   let i = options.start;
-    //   count < options.limit && i < partners.length;
-    //   i++
-    // ) {
-    //   let filter = true;
+      results.push({
+        id,
+        distance,
+        age,
+        status,
+        matchScore: all[i].matchScore,
+        avatar: partner.avatar,
+        firstName: partner.firstName,
+        lastName: partner.lastName,
+        bio: partner.bio,
+        sex: partner.sex,
+        hobbies: partner.hobbies,
+      });
 
-    //   const partnerPotMatch = await PotentialMatch.findOne({
-    //     user: { $eq: partners[i].userId },
-    //   }).lean();
+      count++;
+    }
 
-    //   if (
-    //     partnerPotMatch &&
-    //     partnerPotMatch.potentialPartners.has(options.userId)
-    //   ) {
-    //     filter &=
-    //       partnerPotMatch.potentialPartners.get(options.userId).status !==
-    //       MatchStatus.REJECTED;
-    //   }
+    return await Promise.all(results);
+  }
 
-    //   filter &= partners[i].status === MatchStatus.PENDING;
+  async getPotentialPartners(userId, options) {
+    const potentialMatch = await this.getPotentialMatch(userId);
 
-    //   if (filter) {
-    //     const user = await User.findById(partners[i].userId, {
-    //       _id: 1,
-    //       firstName: 1,
-    //       lastName: 1,
-    //       bio: 1,
-    //       dob: 1,
-    //       sex: 1,
-    //       location: 1,
-    //       hobbies: 1,
-    //       avatar: 1,
-    //     });
+    if (potentialMatch.potentialPartners.size <= options.start) {
+      potentialMatch.potentialPartners = await this.nextPotentialPartners(
+        userId,
+        options.limit
+      );
+      await potentialMatch.save();
 
-    //     result.push(user);
-    //   }
-    // }
+      return await this.filterPotentialPartners(potentialMatch, options);
+    }
+
+    return await this.filterPotentialPartners(potentialMatch, options);
   }
 
   async findByUserId(id, page) {
     const limit = process.env.POTENTIAL_PARTNER_LIMIT || 10;
     const start = (page - 1) * limit;
-    const populatePartner = async ({ userId, matchScore, status }) => {
-      const user = await User.findById(userId, {
-        _id: 1,
-        firstName: 1,
-        lastName: 1,
-        bio: 1,
-        dob: 1,
-        sex: 1,
-        location: 1,
-        hobbies: 1,
-        avatar: 1,
-      });
-
-      return {
-        user,
-        matchScore,
-        status,
-      };
+    const options = {
+      start,
+      limit,
     };
 
     if (page <= 0) {
       throw new ApolloError("Page must be a positive number");
     }
 
-    const potentialMatch = await PotentialMatch.findOne({
-      user: mongoose.Types.ObjectId(id),
-    })
-      .populate("potentialPartners.$*.userId")
-      .lean();
-    const potentialPartners = Object.values(potentialMatch.potentialPartners);
-
-    if (potentialPartners.length <= start) {
-      await this.addPotentialPartners(id, limit);
-    }
-
-    return await filterPotentialPartners(potentialPartners, {
-      start,
-      limit,
-      userId: id,
-    });
-    //   let stats = await PotentialMatchStats.findOne({ userId: _id });
-
-    //   if (!stats) {
-    //     stats = await PotentialMatchStats.create({
-    //       userId: _id,
-    //     });
-    //   }
-
-    //   if (
-    //     stats.startPairSearch.length < page ||
-    //     stats.startPairSearch[page] == null
-    //   ) {
-    //     await this.createPotentialMatches(limit, stats);
-    //     await stats.save();
-    //   }
-
-    //   // FIXME: Query doesn't return already created pairs
-    //   return await PotentialMatch.find({
-    //     _id: { $gt: stats.startPairSearch[page - 1] },
-    //     pairID: { $in: [_id] },
-    //     status: { $nin: [MatchStatus.REJECTED] },
-    //   })
-    //     .populate(
-    //       "pairID",
-    // `
-    // _id
-    // firstName
-    // lastName
-    // bio
-    // dob
-    // sex
-    // location
-    // hobbies
-    // avatar
-    // `
-    //     )
-    //     .sort({ _id: "asc" })
-    //     .limit(limit)
-    //     .lean();
+    return await this.getPotentialPartners(id, options);
   }
 }
 
