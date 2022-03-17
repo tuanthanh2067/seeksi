@@ -1,7 +1,7 @@
 module.exports.mutations = `
-    sendGameRequest(to: String!, chatRoomId: String!): GameRequest!
+    sendGameRequest(to: String!): GameRequest!
     
     acceptGameRequest(gameRequestId: String!, chatRoomId: String!): GeneralMutationResponse!
 
-    rejectGameRequest(gameRequestId: String!, chatRoomId: String!): GeneralMutationResponse!
+    rejectGameRequest(gameRequestId: String!): GeneralMutationResponse!
 `;
