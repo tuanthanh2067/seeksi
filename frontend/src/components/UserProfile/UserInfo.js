@@ -8,28 +8,48 @@ import RoundedButton from "../Buttons/RoundedButton";
 import EditAvatar from "../Image/EditAvatar";
 import OvalImage from "../Image/OvalImage";
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
 import { Image } from "react-shimmer";
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
 import FallBack from "../FallBack/FallBack";
+import toast from "react-hot-toast";
+import { DELETE_AVATAR } from "../../graphql/mutations/Photos";
 
 const ProfilePage = (props) => {
   const navigate = useNavigate();
   const [avt, setAvt] = useState(
     props.user.avatar ? props.user.avatar.origin : defaultAvt
   );
-
+  const [deleteAvatar] = useMutation(DELETE_AVATAR);
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const decodedToken = jwt_decode(token);
   const currentUserID = decodedToken.userId;
 
   const handleEdit = () => navigate(`/edit/${id}`);
+
   const onAvtChange = (e) => {
     setAvt(URL.createObjectURL(e.target.files[0]));
     props.newAvt(e.target.files[0]);
+    props.isRequired(false);
   };
-  const handleAvtRemove = () => setAvt("");
+
+  const handleAvtRemove = () => {
+    if (props.user.avatar.origin) {
+      deleteAvatar({
+        onError: (error) => {
+          toast.error(error.message);
+        },
+        onCompleted: (data) => {
+          toast.success(data.deleteAvatar.message);
+        },
+      });
+    }
+    setAvt("");
+    props.newAvt("");
+    props.isRequired(true);
+  };
 
   const getAge = (birthday) => {
     const userDOB = new Date(birthday);
