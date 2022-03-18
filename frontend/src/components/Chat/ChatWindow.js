@@ -29,8 +29,8 @@ function ChatWindow({
       />
       <ChatMessageList
         data={data}
-        handleAccept={handleAccept}
-        handleDecline={handleDecline}
+        handleAccept={() => handleAccept(gameRequestId, data.id)}
+        handleDecline={() => handleDecline(gameRequestId, data.id)}
         gameRequestId={gameRequestId}
         chatRoomId={data.id}
       />

@@ -12,6 +12,7 @@ import { UNMATCH } from "../../graphql/mutations/Match";
 import { STATUS_UPDATED } from "../../graphql/subscriptions/User";
 import { GET_USER_STATUSES } from "../../graphql/queries/User";
 import { SEND_GAME_REQUEST } from "../../graphql/mutations/Game";
+import { SEND_MESSAGE } from "../../graphql/mutations/Chat";
 
 function Chat({
   roomsLoading,
@@ -20,19 +21,25 @@ function Chat({
   refetch,
   handleAccept,
   handleDecline,
+  gameRequests,
 }) {
   const [activeRoomId, setActiveRoomId] = useState({});
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showGameRule, setShowGameRule] = useState(false);
+  const [showGameRequest, setShowGameRequest] = useState(false);
   const [showGameRequestStatus, setShowGameRequestStatus] = useState(false);
   const [gameRequestStatus, setGameRequestStatus] = useState("");
   const [partnerId, setPartnerId] = useState("");
   const [gameRequestId, setGameRequestId] = useState("");
+
   const [userStatuses, setUserStatuses] = useState({});
   const [showReport, setShowReport] = useState(false);
 
   const [unmatch] = useMutation(UNMATCH);
   const [sendGameRequest] = useMutation(SEND_GAME_REQUEST);
+  const [sendMessage] = useMutation(SEND_MESSAGE);
+
+  useEffect(() => {}, [gameRequests]);
 
   const handleGame = () => {
     const room = chatRooms.find((room) => room.partner.id === partnerId);
@@ -41,6 +48,13 @@ function Chat({
       if (!userStatuses[partnerId]) {
         setGameRequestStatus("Partner is offline. Please try again later");
         setShowGameRequestStatus(true);
+      } else if (
+        gameRequests[room.id] &&
+        gameRequests[room.id].sentBy === partnerId &&
+        !gameRequests[room.id].expired
+      ) {
+        setGameRequestId(gameRequests[room.id].requestId);
+        setShowGameRequest(true);
       } else {
         setShowGameRule(true);
       }
@@ -51,6 +65,7 @@ function Chat({
 
   const handleSendGameRequest = () => {
     const room = chatRooms.find((room) => room.partner.id === partnerId);
+    console.log(room);
     sendGameRequest({
       variables: {
         to: partnerId,
@@ -69,7 +84,18 @@ function Chat({
         }
       },
       onCompleted: (data) => {
-        setGameRequestId(data.gameRequestSent.id);
+        sendMessage({
+          variables: {
+            roomId: room.id,
+            content: "sent a game request",
+          },
+          onError: (err) => {
+            toast.error(err.message);
+          },
+          onCompleted: (data) => {},
+        });
+
+        setGameRequestId(data.sendGameRequest.id);
         setShowGameRule(false);
         setGameRequestStatus(
           `Game request sent successfully. Waiting for response...`
@@ -237,6 +263,31 @@ function Chat({
             title="Game request"
             content={gameRequestStatus}
             hideBtn="hidden"
+          />
+        </div>
+      )}
+
+      {showGameRequest && (
+        <div
+          onClick={(e) => {
+            if (e.currentTarget.firstChild === e.target) {
+              setShowGameRequest(false);
+            }
+          }}
+        >
+          <Confirmation
+            title="Game request"
+            content="You receive a game request. Wanna play now?"
+            btn1Name="Decline"
+            btn2Name="Accept"
+            handleConfirm={() => {
+              handleAccept(gameRequestId, activeRoomId);
+              setShowGameRequest(false);
+            }}
+            handleCancel={() => {
+              handleDecline(gameRequestId, activeRoomId);
+              setShowGameRequest(false);
+            }}
           />
         </div>
       )}

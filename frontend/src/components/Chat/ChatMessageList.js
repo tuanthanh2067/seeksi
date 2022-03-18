@@ -22,7 +22,7 @@ function ChatMessageList({ data, handleAccept, handleDecline }) {
       >
         {data.history.map((message) => (
           <ChatMessageItem
-            key={message._id}
+            key={message.id}
             message={message}
             handleAccept={handleAccept}
             handleDecline={handleDecline}

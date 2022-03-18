@@ -17,21 +17,23 @@ import {
   GAME_REQUEST_SUBSCRIPTION,
   MESSAGE_SUBSCRIPTION,
 } from "./graphql/subscriptions/Chat";
-import { UPDATE_STATUS } from "../src/graphql/mutations/Mutations";
+import { UPDATE_STATUS } from "./graphql/mutations/Mutations";
 import {
   ACCEPT_GAME_REQUEST,
   REJECT_GAME_REQUEST,
 } from "./graphql/mutations/Game";
+import { SEND_MESSAGE } from "./graphql/mutations/Chat";
 import { useQuery, useMutation, useSubscription } from "@apollo/client";
 
 function App() {
   const [userToken, setUserToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-
+  const [requests, setRequests] = useState({});
   const [updateMyStatus] = useMutation(UPDATE_STATUS);
   const [acceptGameRequest] = useMutation(ACCEPT_GAME_REQUEST);
   const [rejectGameRequest] = useMutation(REJECT_GAME_REQUEST);
+  const [sendMessage] = useMutation(SEND_MESSAGE);
 
   const { loading, error, data, subscribeToMore, refetch } =
     useQuery(GET_CHAT_ROOMS);
@@ -53,7 +55,19 @@ function App() {
         if (!data.acceptGameRequest.success)
           toast.error(data.acceptGameRequest.message);
         else {
-          // display game ui
+          const gameRequest = requests;
+          gameRequest[chatRoomId].expired = true;
+          setRequests(gameRequest);
+          sendMessage({
+            variables: {
+              roomId: chatRoomId,
+              content: "accepted the game request",
+            },
+            onError: (err) => {
+              toast.error(err.message);
+            },
+            onCompleted: (data) => {},
+          });
         }
       },
     });
@@ -69,7 +83,20 @@ function App() {
         toast.error(error.message);
       },
       onCompleted: (data) => {
-        console.log(data);
+        const gameRequest = requests;
+        gameRequest[chatRoomId].expired = true;
+        setRequests(gameRequest);
+
+        sendMessage({
+          variables: {
+            roomId: chatRoomId,
+            content: "rejected the game request",
+          },
+          onError: (err) => {
+            toast.error(err.message);
+          },
+          onCompleted: (data) => {},
+        });
       },
     });
   };
@@ -121,6 +148,14 @@ function App() {
         const chatRoomId = room.id;
         const name = `${room.partner.firstName} ${room.partner.lastName}`;
         const content = `${name} sent you a game request`;
+
+        const gameRequest = requests;
+        gameRequest[chatRoomId] = {
+          requestId: gameRequestId,
+          expired: false,
+          sentBy: gameRequests.data.gameRequestSent.sentBy,
+        };
+        setRequests(gameRequest);
 
         showGameToast(
           content,
@@ -240,6 +275,7 @@ function App() {
                 handleAccept={handleAccept}
                 handleDecline={handleDecline}
                 currentUserId={currentUser.userId}
+                gameRequests={requests}
               />
             }
           />
