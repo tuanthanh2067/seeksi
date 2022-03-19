@@ -5,20 +5,18 @@ const queries = {
   getReport: async (
     _,
     { page, perPage },
-    { dataSources, req, userAuthentication, isAdmin }
+    { dataSources, req, userAuthentication, adminAuthentication }
   ) => {
-    userAuthentication(req.user);
-    isAdmin(req.user);
+    adminAuthentication(req.user);
     return await dataSources.reportAPI.getReport(page, perPage);
   },
 
   getReportById: async (
     _,
     { reportId },
-    { dataSources, req, userAuthentication, isAdmin }
+    { dataSources, req, userAuthentication, adminAuthentication }
   ) => {
-    userAuthentication(req.user);
-    isAdmin(req.user);
+    adminAuthentication(req.user);
     return await dataSources.reportAPI.getReportById(reportId);
   },
 };
