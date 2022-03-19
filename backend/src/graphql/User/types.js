@@ -13,7 +13,7 @@ module.exports.types = `
     preference: Preference
     avatar: Image
     photo: [Image]
-    role: String!
+    role: [String!]!
     isDisabled: Boolean
     createdAt: String
   }

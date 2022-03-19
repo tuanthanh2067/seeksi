@@ -16,6 +16,7 @@ const ProfilePage = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [avt, setAvt] = useState("");
   const [err, setErr] = useState("");
+  const [required, setRequired] = useState(false);
   const [deleteAccount] = useMutation(DELETE_ACCOUNT_MUTATION);
   const { id } = useParams();
   const { loading, error, data } = useQuery(GET_USER, {
@@ -85,12 +86,14 @@ const ProfilePage = () => {
               isEdit={true}
               user={data.userById}
               newAvt={setAvt}
+              isRequired={setRequired}
               showDeleteConfirm={setShowConfirmation}
             />
             <EditInfo
               id={id}
               user={data.userById}
               avt={avt}
+              requiredAvt={required}
               photos={getImgArr()}
             />
           </>

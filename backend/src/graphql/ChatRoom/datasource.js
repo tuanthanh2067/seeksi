@@ -107,6 +107,7 @@ class ChatRoomAPI extends DataSource {
     };
 
     message.id = id;
+    message.createdAt = id.getTimestamp();
 
     const chatRoom = await this.getChatRoomById(roomId);
 

@@ -21,3 +21,21 @@ export const UPLOAD_PHOTOS = gql`
     }
   }
 `;
+
+export const DELETE_AVATAR = gql`
+  mutation deleteAvatar {
+    deleteAvatar {
+      success
+      message
+    }
+  }
+`;
+
+export const DELETE_PHOTOS = gql`
+  mutation deletePhoto($path: String!) {
+    deletePhoto(path: $path) {
+      success
+      message
+    }
+  }
+`;

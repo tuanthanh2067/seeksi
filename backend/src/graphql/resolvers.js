@@ -12,6 +12,7 @@ const { UserStatus } = require("./UserStatus");
 const { OpeningLine } = require("./OpeningLine");
 const { Upload } = require("./Upload");
 const { Image } = require("./Image");
+const { Question } = require("./Question");
 
 const resolvers = {
   Upload: GraphQLUpload,
@@ -29,6 +30,7 @@ const resolvers = {
     ...OpeningLine.resolvers.queries,
     ...Upload.resolvers.queries,
     ...Image.resolvers.queries,
+    ...Question.resolvers.queries,
   },
   Mutation: {
     ...User.resolvers.mutations,
@@ -43,6 +45,7 @@ const resolvers = {
     ...OpeningLine.resolvers.mutations,
     ...Upload.resolvers.mutations,
     ...Image.resolvers.mutations,
+    ...Question.resolvers.mutations,
   },
   Subscription: {
     ...ChatRoom.resolvers.subscriptions,

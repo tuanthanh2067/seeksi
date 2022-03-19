@@ -3,8 +3,6 @@ import OvalButton from "../Buttons/OvalButton";
 import defaultAvt from "../../assets/mock_avatar.png";
 
 function ChatHeader(props) {
-  const handleReport = () => {};
-
   return (
     <div>
       <div className="flex-none container mx-auto py-1 border-b-[1px] border-primary">
@@ -45,7 +43,9 @@ function ChatHeader(props) {
               bgColor="bg-secondary"
               hover="hover:bg-white hover:text-secondary hover:border-secondary"
               btnName="Report"
-              handleClick={handleReport}
+              handleClick={() => {
+                props.setShowReport(true);
+              }}
             />
           </div>
         </div>

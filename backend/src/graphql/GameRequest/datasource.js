@@ -39,7 +39,7 @@ class GameRequestAPI extends DataSource {
       await gameRequest.save();
 
       return {
-        id: gameRequest.id,
+        id: gameRequest._id,
         sentBy: userId,
         sentTo: partnerId,
         createdAt: gameRequest.createdAt,

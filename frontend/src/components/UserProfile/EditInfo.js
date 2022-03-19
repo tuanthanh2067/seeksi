@@ -13,16 +13,18 @@ import EditImage from "../../components/Image/EditImage";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_HOBBY } from "../../graphql/queries/Hobby";
 import { EDIT_PROFILE_MUTATION } from "../../graphql/mutations/Mutations";
-import { UPLOAD_AVATAR } from "../../graphql/mutations/Photos";
-import { UPLOAD_PHOTOS } from "../../graphql/mutations/Photos";
-
+import {
+  UPLOAD_AVATAR,
+  UPLOAD_PHOTOS,
+  DELETE_PHOTOS,
+} from "../../graphql/mutations/Photos";
 import {
   countryOptions,
   filterStateBySelectedCountry,
   filterCity,
 } from "../../utils/data";
 
-const EditInfo = ({ id, user, photos, avt }) => {
+const EditInfo = ({ id, user, photos, avt, requiredAvt }) => {
   const navigate = useNavigate();
   const [replace, setReplace] = useState(false);
   // const [email, setEmail] = useState("");
@@ -46,11 +48,11 @@ const EditInfo = ({ id, user, photos, avt }) => {
   const [render, setRender] = useState(0);
   const [uploadImgs, setUploadImgs] = useState([]);
   const imgArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-
   const { loading, data } = useQuery(GET_HOBBY);
   const [editUser] = useMutation(EDIT_PROFILE_MUTATION);
   const [uploadAvatar] = useMutation(UPLOAD_AVATAR);
   const [uploadPhotos] = useMutation(UPLOAD_PHOTOS);
+  const [deletePhoto] = useMutation(DELETE_PHOTOS);
 
   const hobbyOptions = () => {
     let hobbies = [];
@@ -91,11 +93,23 @@ const EditInfo = ({ id, user, photos, avt }) => {
     newImgs = uploadImgs;
     newImgs.push(e.target.files[0]);
     setUploadImgs(newImgs);
-    console.log(uploadImgs);
+    clearErr();
   };
 
   const handleRemove = (e) => {
     let newImgs = images;
+    if (length > 0) {
+      deletePhoto({
+        variables: { path: newImgs[e.target.id] },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+        onCompleted: (data) => {
+          toast.success(data.deletePhoto.message);
+        },
+      });
+      setLength(length - 1);
+    }
     newImgs.splice(e.target.id, 1);
     let idx = newImgs.length;
     setRender(idx); // No use but make img render immediately
@@ -140,15 +154,23 @@ const EditInfo = ({ id, user, photos, avt }) => {
     } else if (hobbies.length > 5) {
       setErr("Please select only up to 5 hobbies");
       scrollToTop();
+    } else if (
+      (length === 0 && images.length === 0) ||
+      (!avt && !user.avatar.origin) ||
+      requiredAvt
+    ) {
+      setErr("Uploading your images helps attract your potential partners 😉");
+      scrollToTop();
     } else {
       if (avt !== "") {
         uploadAvatar({
           variables: { file: avt },
           onError: (error) => {
-            setErr(error.message);
+            toast.error(error.message);
             scrollToTop();
           },
           onCompleted: (data) => {
+            toast.success("Uploaded avatar successfully!");
             navigate(`/user/${id}`);
           },
         });
@@ -161,10 +183,11 @@ const EditInfo = ({ id, user, photos, avt }) => {
             replace: replace,
           },
           onError: (error) => {
-            setErr(error.message);
+            toast.error(error.message);
             scrollToTop();
           },
           onCompleted: (data) => {
+            toast.success("Uploaded photos successfully!");
             navigate(`/user/${id}`);
           },
         });
@@ -186,7 +209,8 @@ const EditInfo = ({ id, user, photos, avt }) => {
           shortTerm: shortTerm,
         },
         onError: (error) => {
-          setErr(error.message);
+          // setErr(error.message);
+          toast.error(error.message);
           scrollToTop();
         },
         onCompleted: (data) => {
@@ -393,7 +417,13 @@ const EditInfo = ({ id, user, photos, avt }) => {
               <Label label={`Distance Preference: ${distance} km`} />
               <div className="pt-5 pb-8 ml-2">
                 <InputSlider
-                  defaultValue={distance}
+                  min={0}
+                  max={500}
+                  marks={{
+                    0: "0",
+                    500: "500",
+                  }}
+                  value={distance}
                   onChange={(value) => {
                     setDistance(value);
                     clearErr();
@@ -406,7 +436,13 @@ const EditInfo = ({ id, user, photos, avt }) => {
               />
               <div className="pt-5 ml-2">
                 <InputRange
-                  defaultValues={ageBias}
+                  min={18}
+                  max={82}
+                  marks={{
+                    18: "18",
+                    82: "82",
+                  }}
+                  values={ageBias}
                   onChange={(value) => {
                     setAgeBias(value);
                     clearErr();

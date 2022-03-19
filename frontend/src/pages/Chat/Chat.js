@@ -5,6 +5,8 @@ import ChatWindow from "../../components/Chat/ChatWindow";
 import ChatPartner from "../../components/Chat/ChatPartner";
 import Navbar from "../../components/Navbar";
 import Confirmation from "../Modal/Confirmation";
+import Report from "../Modal/Report";
+
 import { useMutation, useQuery } from "@apollo/client";
 import { UNMATCH } from "../../graphql/mutations/Match";
 import { STATUS_UPDATED } from "../../graphql/subscriptions/User";
@@ -15,6 +17,7 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [partnerId, setPartnerId] = useState("");
   const [userStatuses, setUserStatuses] = useState({});
+  const [showReport, setShowReport] = useState(false);
 
   const [unmatch] = useMutation(UNMATCH);
 
@@ -135,6 +138,20 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
             />
           </div>
         )}
+        {showReport && (
+          <div
+            onClick={(e) => {
+              if (e.currentTarget.firstChild === e.target) {
+                setShowReport(false);
+              }
+            }}
+          >
+            <Report
+              reportedUserID={partnerId}
+              handleSend={() => setShowReport(false)}
+            />
+          </div>
+        )}
         <Navbar />
         <section className="container mx-auto py-5 md:p-5 min-h-[85%] max-h-[85%] flex">
           <ChatPartner
@@ -146,6 +163,7 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
           <ChatWindow
             data={chatRooms.find((room) => room.id === activeRoomId)}
             setShowConfirmation={setShowConfirmation}
+            setShowReport={setShowReport}
             refetch={refetch}
             userStatus={userStatuses[partnerId]}
           />

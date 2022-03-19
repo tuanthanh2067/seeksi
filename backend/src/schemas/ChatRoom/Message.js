@@ -4,10 +4,6 @@ const { imageSchema } = require("../share/Image");
 const { Schema } = mongoose;
 
 const messageSchema = new Schema({
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
   sendBy: {
     type: String,
   },
