@@ -5,26 +5,20 @@ const queries = {
   getReport: async (
     _,
     { page, perPage },
-    { dataSources, req, userAuthentication }
+    { dataSources, req, userAuthentication, isAdmin }
   ) => {
     userAuthentication(req.user);
-    let isAdmin = req.user.role.some((r) => r.includes(UserType.ADMIN));
-    if (!isAdmin) {
-      throw new ApolloError("User is not an admin");
-    }
+    isAdmin(req.user);
     return await dataSources.reportAPI.getReport(page, perPage);
   },
 
   getReportById: async (
     _,
     { reportId },
-    { dataSources, req, userAuthentication }
+    { dataSources, req, userAuthentication, isAdmin }
   ) => {
     userAuthentication(req.user);
-    let isAdmin = req.user.role.some((r) => r.includes(UserType.ADMIN));
-    if (!isAdmin) {
-      throw new ApolloError("User is not an admin");
-    }
+    isAdmin(req.user);
     return await dataSources.reportAPI.getReportById(reportId);
   },
 };

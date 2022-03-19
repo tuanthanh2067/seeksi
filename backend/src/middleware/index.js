@@ -1,4 +1,4 @@
-const { auth, userAuthentication } = require("./auth");
+const { auth, userAuthentication, isAdmin } = require("./auth");
 
 module.exports = (req) => {
   req.user = auth(req);
@@ -6,5 +6,6 @@ module.exports = (req) => {
   return {
     req,
     userAuthentication,
+    isAdmin,
   };
 };

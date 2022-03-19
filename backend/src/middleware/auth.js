@@ -1,6 +1,8 @@
 const { AuthenticationError } = require("apollo-server-core");
 const jwt = require("jsonwebtoken");
 
+const UserType = require("../enum/UserType");
+
 /**
  * Find a user in the database by their email
  * @param {String} bearerToken
@@ -40,5 +42,12 @@ module.exports.auth = (req) => {
 module.exports.userAuthentication = (user) => {
   if (!user.isAuth) {
     throw new AuthenticationError("User is not authenticated");
+  }
+};
+
+module.exports.isAdmin = (user) => {
+  let isAdm = user.role.some((r) => r.includes(UserType.ADMIN));
+  if (!isAdm) {
+    throw new AuthenticationError("User is not an Admin");
   }
 };
