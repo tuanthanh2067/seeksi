@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const SEND_GAME_REQUEST = gql`
-  mutation sendGameRequest($to: String!, $chatRoomId: String!) {
-    sendGameRequest(to: $to, chatRoomId: $chatRoomId) {
+  mutation sendGameRequest($to: String!) {
+    sendGameRequest(to: $to) {
       id
       sentBy
       sentTo
@@ -21,8 +21,8 @@ export const ACCEPT_GAME_REQUEST = gql`
 `;
 
 export const REJECT_GAME_REQUEST = gql`
-  mutation rejectGameRequest($gameRequestId: String!, $chatRoomId: String!) {
-    rejectGameRequest(gameRequestId: $gameRequestId, chatRoomId: $chatRoomId) {
+  mutation rejectGameRequest($gameRequestId: String!) {
+    rejectGameRequest(gameRequestId: $gameRequestId) {
       success
       message
     }

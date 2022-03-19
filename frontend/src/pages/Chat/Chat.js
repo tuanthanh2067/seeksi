@@ -69,7 +69,6 @@ function Chat({
     sendGameRequest({
       variables: {
         to: partnerId,
-        chatRoomId: room.id,
       },
       onError: (err) => {
         console.log(err);

@@ -77,7 +77,6 @@ function App() {
     rejectGameRequest({
       variables: {
         gameRequestId: gameRequestId,
-        chatRoomId: chatRoomId,
       },
       onError: (error) => {
         toast.error(error.message);
