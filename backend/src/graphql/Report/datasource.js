@@ -1,5 +1,5 @@
 const { DataSource } = require("apollo-datasource");
-const { UserInputError } = require("apollo-server-core");
+const { UserInputError, ApolloError } = require("apollo-server-core");
 
 const Report = require("../../schemas/Report/Report");
 const User = require("../../schemas/User/User");
@@ -25,6 +25,14 @@ class ReportAPI extends DataSource {
       }
 
       return reports;
+    } catch (err) {
+      throw new ApolloError("Internal Server Error");
+    }
+  }
+
+  async getReportById(reportId) {
+    try {
+      return await Report.findById(reportId);
     } catch (err) {
       throw new ApolloError("Internal Server Error");
     }

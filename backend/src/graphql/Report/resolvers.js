@@ -14,6 +14,19 @@ const queries = {
     }
     return await dataSources.reportAPI.getReport(page, perPage);
   },
+
+  getReportById: async (
+    _,
+    { reportId },
+    { dataSources, req, userAuthentication }
+  ) => {
+    userAuthentication(req.user);
+    let isAdmin = req.user.role.some((r) => r.includes(UserType.ADMIN));
+    if (!isAdmin) {
+      throw new ApolloError("User is not an admin");
+    }
+    return await dataSources.reportAPI.getReportById(reportId);
+  },
 };
 
 const mutations = {
