@@ -104,6 +104,42 @@ const mutations = {
       throw err;
     }
   },
+
+  banUser: async (
+    _,
+    { userId },
+    { dataSources, req, userAuthentication, isAdmin }
+  ) => {
+    try {
+      userAuthentication(req.user);
+      isAdmin(req.user);
+      await dataSources.userAPI.banUser(userId);
+      return {
+        success: true,
+        message: "Account Banned",
+      };
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  unbanUser: async (
+    _,
+    { userId },
+    { dataSources, req, userAuthentication, isAdmin }
+  ) => {
+    try {
+      userAuthentication(req.user);
+      isAdmin(req.user);
+      await dataSources.userAPI.unbanUser(userId);
+      return {
+        success: true,
+        message: "Account Unbanned",
+      };
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 
 module.exports.resolvers = {
