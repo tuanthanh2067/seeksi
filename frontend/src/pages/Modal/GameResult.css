@@ -1,0 +1,10 @@
+.carousel .control-dots {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.carousel.carousel-slider {
+  padding-bottom: 15px;
+}

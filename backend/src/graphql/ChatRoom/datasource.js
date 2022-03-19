@@ -157,6 +157,7 @@ class ChatRoomAPI extends DataSource {
         partner: chatRoom.pairID[partnerIndex],
         history,
         isDisabled: chatRoom.isDisabled,
+        gameRoom: chatRoom.gameRoom,
       };
     });
 
