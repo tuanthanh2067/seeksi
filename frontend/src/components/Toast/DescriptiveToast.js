@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 
 import MessagesIcon from "../../assets/messages.png";
 
-const DescriptiveToast = (content, length, name, type) => {
+const DescriptiveToast = (content, length, name) => {
   return toast.custom(
     (t) => (
       <div
@@ -15,7 +15,8 @@ const DescriptiveToast = (content, length, name, type) => {
             <div className="flex-shrink-0 pt-0.5">
               <img
                 className="h-10 w-10 rounded-full"
-                src={type === "message" ? MessagesIcon : null}
+                // src={type === "message" ? MessagesIcon : null}
+                src={MessagesIcon}
                 alt="message icon"
               />
             </div>
@@ -30,7 +31,7 @@ const DescriptiveToast = (content, length, name, type) => {
         <div className="flex border-l border-gray-200">
           <button
             onClick={() => toast.remove(t.id)}
-            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none"
+            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-primary hover:bg-gray-100 focus:outline-none"
           >
             Close
           </button>
@@ -38,7 +39,7 @@ const DescriptiveToast = (content, length, name, type) => {
       </div>
     ),
     {
-      duration: 1500,
+      duration: 2000,
     }
   );
 };

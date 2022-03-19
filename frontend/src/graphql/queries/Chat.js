@@ -22,6 +22,7 @@ export const GET_CHAT_ROOMS = gql`
       partner {
         id
         firstName
+        lastName
         avatar {
           small
         }
@@ -37,6 +38,7 @@ export const GET_CHAT_ROOMS = gql`
         }
       }
       isDisabled
+      gameRoom
     }
   }
 `;

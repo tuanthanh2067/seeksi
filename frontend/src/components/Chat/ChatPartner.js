@@ -59,43 +59,51 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId, userStatuses }) => {
         placeholder="Search"
         onChange={searchInputHandler}
       />
-      {roomsDataFiltered.map((room, key) => (
-        <button
-          key={room.roomId}
-          className="w-full text-left hover:bg-[#c4c4c44d] focus:bg-[#f06c9b1f]"
-          onClick={() => {
-            onRoomSelect(room.roomId);
-            setPartnerId(room.partnerId);
-          }}
-        >
-          <div className="grid grid-cols-5 gap-x-4 p-3">
-            <div className="">
-              <img
-                src={
-                  room.partnerAvatar && !room.isDisabled
-                    ? room.partnerAvatar
-                    : defaultAvt
-                }
-                alt="user's avatar"
-                className="object-contain w-full rounded-full"
-              />
+      {data.length === 0 && (
+        <div className="italic text-sm text-center my-auto">
+          <p> No matches found.</p>
+          <p> Find your match to start chatting!</p>
+        </div>
+      )}
+
+      {data.length > 0 &&
+        roomsDataFiltered.map((room, key) => (
+          <button
+            key={room.roomId}
+            className="w-full text-left hover:bg-[#c4c4c44d] focus:bg-[#f06c9b1f]"
+            onClick={() => {
+              onRoomSelect(room.roomId);
+              setPartnerId(room.partnerId);
+            }}
+          >
+            <div className="grid grid-cols-5 gap-x-4 p-3">
+              <div className="">
+                <img
+                  src={
+                    room.partnerAvatar && !room.isDisabled
+                      ? room.partnerAvatar
+                      : defaultAvt
+                  }
+                  alt="user's avatar"
+                  className="object-contain w-full rounded-full"
+                />
+              </div>
+              <div className="col-start-2 col-span-5 flex flex-col justify-center">
+                <p>
+                  {userStatuses[room.partnerId] && (
+                    <span className="h-3 w-3 bg-green inline-block rounded-full mr-2"></span>
+                  )}
+                  <span className="text-lg font-bold inline-block">
+                    {room.partnerName}
+                  </span>
+                </p>
+                <p className="text-ellipsis overflow-hidden whitespace-nowrap">
+                  {room.isDisabled ? "User unmatched" : room.latestMsgContent}
+                </p>
+              </div>
             </div>
-            <div className="col-start-2 col-span-5 flex flex-col justify-center">
-              <p>
-                {userStatuses[room.partnerId] && (
-                  <span className="h-3 w-3 bg-green inline-block rounded-full mr-2"></span>
-                )}
-                <span className="text-lg font-bold inline-block">
-                  {room.partnerName}
-                </span>
-              </p>
-              <p className="text-ellipsis overflow-hidden whitespace-nowrap">
-                {room.isDisabled ? "User unmatched" : room.latestMsgContent}
-              </p>
-            </div>
-          </div>
-        </button>
-      ))}
+          </button>
+        ))}
     </section>
   );
 };

@@ -11,15 +11,98 @@ import { useMutation, useQuery } from "@apollo/client";
 import { UNMATCH } from "../../graphql/mutations/Match";
 import { STATUS_UPDATED } from "../../graphql/subscriptions/User";
 import { GET_USER_STATUSES } from "../../graphql/queries/User";
+import { SEND_GAME_REQUEST } from "../../graphql/mutations/Game";
+import { SEND_MESSAGE } from "../../graphql/mutations/Chat";
 
-function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
+function Chat({
+  roomsLoading,
+  roomsError,
+  roomsData: { chatRooms },
+  refetch,
+  handleAccept,
+  handleDecline,
+  gameRequests,
+}) {
   const [activeRoomId, setActiveRoomId] = useState({});
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showGameRule, setShowGameRule] = useState(false);
+  const [showGameRequest, setShowGameRequest] = useState(false);
+  const [showGameRequestStatus, setShowGameRequestStatus] = useState(false);
+  const [gameRequestStatus, setGameRequestStatus] = useState("");
   const [partnerId, setPartnerId] = useState("");
+  const [gameRequestId, setGameRequestId] = useState("");
+
   const [userStatuses, setUserStatuses] = useState({});
   const [showReport, setShowReport] = useState(false);
 
   const [unmatch] = useMutation(UNMATCH);
+  const [sendGameRequest] = useMutation(SEND_GAME_REQUEST);
+  const [sendMessage] = useMutation(SEND_MESSAGE);
+
+  useEffect(() => {}, [gameRequests]);
+
+  const handleGame = () => {
+    const room = chatRooms.find((room) => room.partner.id === partnerId);
+
+    if (!room.gameRoom) {
+      if (!userStatuses[partnerId]) {
+        setGameRequestStatus("Partner is offline. Please try again later");
+        setShowGameRequestStatus(true);
+      } else if (
+        gameRequests[room.id] &&
+        gameRequests[room.id].sentBy === partnerId &&
+        !gameRequests[room.id].expired
+      ) {
+        setGameRequestId(gameRequests[room.id].requestId);
+        setShowGameRequest(true);
+      } else {
+        setShowGameRule(true);
+      }
+    } else {
+      // display game results
+    }
+  };
+
+  const handleSendGameRequest = () => {
+    const room = chatRooms.find((room) => room.partner.id === partnerId);
+    console.log(room);
+    sendGameRequest({
+      variables: {
+        to: partnerId,
+      },
+      onError: (err) => {
+        console.log(err);
+        setShowGameRule(false);
+        if (err.message === "Partner is offline") {
+          // show error toaster here
+        } else {
+          setGameRequestStatus(
+            "Game request already sent. Waiting for response..."
+          );
+          setShowGameRequestStatus(true);
+        }
+      },
+      onCompleted: (data) => {
+        sendMessage({
+          variables: {
+            roomId: room.id,
+            content: "sent a game request",
+          },
+          onError: (err) => {
+            toast.error(err.message);
+          },
+          onCompleted: (data) => {},
+        });
+
+        setGameRequestId(data.sendGameRequest.id);
+        setShowGameRule(false);
+        setGameRequestStatus(
+          `Game request sent successfully. Waiting for response...`
+        );
+        setShowGameRequestStatus(true);
+      },
+    });
+  };
 
   const { data, subscribeToMore } = useQuery(GET_USER_STATUSES, {
     variables: { partnerIds: chatRooms.map((room) => room.partner.id) },
@@ -36,12 +119,12 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
         }
 
         const newStatus = subscriptionData.data.statusUpdated;
-        let newStatuses = prev.getUserStatuses.filter(
+        let oldStatuses = prev.getUserStatuses.filter(
           (status) => status.userId !== newStatus.userId
         );
 
         return Object.assign({}, prev, {
-          getUserStatuses: [newStatuses, newStatus],
+          getUserStatuses: [...oldStatuses, newStatus],
         });
       },
     });
@@ -111,48 +194,112 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
     setActiveRoomId(roomId);
   };
 
-  if (roomsLoading) return <Spinner />;
-  if (roomsError)
-    return (
-      <div className="italic place-self-center my-auto">
-        An error occurs, please try again later!
-      </div>
-    );
+  return (
+    <div className="h-screen">
+      {showConfirmation && (
+        <div
+          onClick={(e) => {
+            if (e.currentTarget.firstChild === e.target) {
+              setShowConfirmation(false);
+            }
+          }}
+        >
+          <Confirmation
+            title="Unmatch"
+            content={`Are you sure to unmatch?`}
+            handleCancel={() => setShowConfirmation(false)}
+            handleConfirm={handleUnmatch}
+          />
+        </div>
+      )}
 
-  if (chatRooms.length > 0) {
-    return (
-      <div className="h-screen">
-        {showConfirmation && (
-          <div
-            onClick={(e) => {
-              if (e.currentTarget.firstChild === e.target) {
-                setShowConfirmation(false);
-              }
+      {showReport && (
+        <div
+          onClick={(e) => {
+            if (e.currentTarget.firstChild === e.target) {
+              setShowReport(false);
+            }
+          }}
+        >
+          <Report
+            reportedUserID={partnerId}
+            handleSend={() => setShowReport(false)}
+          />
+        </div>
+      )}
+      {showGameRule && (
+        <div
+          onClick={(e) => {
+            if (e.currentTarget.firstChild === e.target) {
+              setShowGameRule(false);
+              setShowGameRequestStatus(false);
+            }
+          }}
+        >
+          <Confirmation
+            title="Game rules"
+            content="You will be asked 10 'Have you ever...' questions. Select your answers truthfully to learn more about each other"
+            confirmState={`Send game request now?`}
+            btn1Name="Cancel"
+            btn2Name="Send"
+            handleConfirm={handleSendGameRequest}
+            handleCancel={() => {
+              setShowGameRule(false);
             }}
-          >
-            <Confirmation
-              title="Unmatch"
-              content={`Are you sure to unmatch?`}
-              handleCancel={() => setShowConfirmation(false)}
-              handleConfirm={handleUnmatch}
-            />
-          </div>
-        )}
-        {showReport && (
-          <div
-            onClick={(e) => {
-              if (e.currentTarget.firstChild === e.target) {
-                setShowReport(false);
-              }
+          />
+        </div>
+      )}
+
+      {showGameRequestStatus && (
+        <div
+          onClick={(e) => {
+            if (e.currentTarget.firstChild === e.target) {
+              setShowGameRequestStatus(false);
+            }
+          }}
+        >
+          <Confirmation
+            title="Game request"
+            content={gameRequestStatus}
+            hideBtn="hidden"
+          />
+        </div>
+      )}
+
+      {showGameRequest && (
+        <div
+          onClick={(e) => {
+            if (e.currentTarget.firstChild === e.target) {
+              setShowGameRequest(false);
+            }
+          }}
+        >
+          <Confirmation
+            title="Game request"
+            content="You receive a game request. Wanna play now?"
+            btn1Name="Decline"
+            btn2Name="Accept"
+            handleConfirm={() => {
+              handleAccept(gameRequestId, activeRoomId);
+              setShowGameRequest(false);
             }}
-          >
-            <Report
-              reportedUserID={partnerId}
-              handleSend={() => setShowReport(false)}
-            />
-          </div>
-        )}
-        <Navbar />
+            handleCancel={() => {
+              handleDecline(gameRequestId, activeRoomId);
+              setShowGameRequest(false);
+            }}
+          />
+        </div>
+      )}
+
+      <Navbar />
+      {roomsLoading && <Spinner />}
+      {roomsError && (
+        <div className="italic place-self-center my-auto">
+          An error occurs, please try again later!
+        </div>
+      )}
+
+      {!roomsLoading && chatRooms && (
         <section className="container mx-auto py-5 md:p-5 min-h-[85%] max-h-[85%] flex">
           <ChatPartner
             data={chatRooms}
@@ -166,11 +313,15 @@ function Chat({ roomsLoading, roomsError, roomsData: { chatRooms }, refetch }) {
             setShowReport={setShowReport}
             refetch={refetch}
             userStatus={userStatuses[partnerId]}
+            handleGame={handleGame}
+            handleAccept={handleAccept}
+            handleDecline={handleDecline}
+            gameRequestId={gameRequestId}
           />
         </section>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
 
 export default Chat;
