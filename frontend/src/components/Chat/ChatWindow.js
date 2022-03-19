@@ -21,6 +21,7 @@ function ChatWindow({
     <div className="flex flex-col items-stretch gap-y-2 container col-start-2 w-2/3 h-full">
       <ChatHeader
         avatar={data.partner.avatar.small}
+        partnerId={data.partner.id}
         firstName={data.partner.firstName}
         isDisabled={data.isDisabled}
         userStatus={userStatus}
