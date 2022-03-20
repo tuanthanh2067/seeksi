@@ -14,5 +14,6 @@ module.exports.types = `
         partner: User
         history: [Message]
         isDisabled: Boolean
+        gameRoom: ID
     }
 `;

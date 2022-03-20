@@ -20,8 +20,6 @@ function ChatInput(props) {
   const [err, setErr] = useState("");
   const [render, setRender] = useState(0);
 
-  const handleGame = () => {};
-
   const handleChange = (e) => {
     let newImgs = images;
     if (images.length < 3) {
@@ -105,7 +103,7 @@ function ChatInput(props) {
       <div className="flex flex-none gap-x-3 pt-2.5 mb-5 bottom-0">
         <button
           className="border-primary border-2 focus:outline-2 bg-primary text-white text-md font-semibold rounded w-12 "
-          onClick={handleGame}
+          onClick={props.handleGame}
         >
           Game
         </button>

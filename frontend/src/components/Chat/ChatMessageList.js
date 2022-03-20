@@ -4,7 +4,7 @@ import ChatSuggestLines from "./ChatSuggestLines";
 
 const ADMIN_MESSAGE_COUNT = 3;
 
-function ChatMessageList({ data }) {
+function ChatMessageList({ data, handleAccept, handleDecline }) {
   const setScroll = () => {
     let scrollWindow = document.getElementById("scrollWindow");
     scrollWindow.scrollTop = scrollWindow.scrollHeight;
@@ -12,7 +12,7 @@ function ChatMessageList({ data }) {
 
   useEffect(() => {
     setScroll();
-  });
+  }, [data.history]);
 
   return (
     <div className="flex flex-col h-[28rem]">
@@ -22,9 +22,11 @@ function ChatMessageList({ data }) {
       >
         {data.history.map((message) => (
           <ChatMessageItem
-            message={message.content}
-            photos={message.photos}
-            sendBy={message.sendBy}
+            key={message.id}
+            message={message}
+            handleAccept={handleAccept}
+            handleDecline={handleDecline}
+            partnerName={data.partner.firstName}
           />
         ))}
       </div>

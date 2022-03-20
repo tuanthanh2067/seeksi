@@ -10,6 +10,10 @@ function ChatWindow({
   setShowReport,
   refetch,
   userStatus,
+  handleGame,
+  handleAccept,
+  handleDecline,
+  gameRequestId,
 }) {
   const [showEmoji, setShowEmoji] = useState(false);
 
@@ -17,13 +21,20 @@ function ChatWindow({
     <div className="flex flex-col items-stretch gap-y-2 container col-start-2 w-2/3 h-full">
       <ChatHeader
         avatar={data.partner.avatar.small}
+        partnerId={data.partner.id}
         firstName={data.partner.firstName}
         isDisabled={data.isDisabled}
         userStatus={userStatus}
         setShowConfirmation={setShowConfirmation}
         setShowReport={setShowReport}
       />
-      <ChatMessageList data={data} />
+      <ChatMessageList
+        data={data}
+        handleAccept={() => handleAccept(gameRequestId, data.id)}
+        handleDecline={() => handleDecline(gameRequestId, data.id)}
+        gameRequestId={gameRequestId}
+        chatRoomId={data.id}
+      />
       {data.isDisabled ? (
         <div className="flex items-center justify-center py-5">
           <div className="font-medium place-self-center my-auto">
@@ -37,6 +48,7 @@ function ChatWindow({
           showEmoji={showEmoji}
           setShowEmoji={setShowEmoji}
           refetch={refetch}
+          handleGame={handleGame}
         />
       )}
     </div>
