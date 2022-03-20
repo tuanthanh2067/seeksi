@@ -1,5 +1,5 @@
 const { DataSource } = require("apollo-datasource");
-const { UserInputError } = require("apollo-server-core");
+const { UserInputError, ApolloError } = require("apollo-server-core");
 
 const Report = require("../../schemas/Report/Report");
 const User = require("../../schemas/User/User");
@@ -8,6 +8,34 @@ const { validateReportProblem } = require("../../utils/validatiion");
 class ReportAPI extends DataSource {
   constructor() {
     super();
+  }
+
+  async getReports(page = 1, perPage = 10) {
+    try {
+      let reports = [];
+      if (+page && +perPage) {
+        page = +page - 1;
+        reports = await Report.find()
+          .sort({ _id: -1 })
+          .skip(page * +perPage)
+          .limit(+perPage)
+          .exec();
+      } else {
+        throw new ApolloError("something wrong with Page and perPage");
+      }
+
+      return reports;
+    } catch (err) {
+      throw new ApolloError("Internal Server Error");
+    }
+  }
+
+  async getReportById(reportId) {
+    try {
+      return await Report.findById(reportId);
+    } catch (err) {
+      throw new ApolloError("Internal Server Error");
+    }
   }
 
   async createReport({

@@ -1,4 +1,25 @@
-const queries = {};
+const { AuthenticationError, ApolloError } = require("apollo-server-core");
+const UserType = require("../../enum/UserType");
+
+const queries = {
+  getReports: async (
+    _,
+    { page, perPage },
+    { dataSources, req, adminAuthentication }
+  ) => {
+    adminAuthentication(req.user);
+    return await dataSources.reportAPI.getReports(page, perPage);
+  },
+
+  getReportById: async (
+    _,
+    { reportId },
+    { dataSources, req, adminAuthentication }
+  ) => {
+    adminAuthentication(req.user);
+    return await dataSources.reportAPI.getReportById(reportId);
+  },
+};
 
 const mutations = {
   submitReport: async (
