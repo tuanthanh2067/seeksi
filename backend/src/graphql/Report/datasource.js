@@ -10,7 +10,7 @@ class ReportAPI extends DataSource {
     super();
   }
 
-  async getReport(page = 1, perPage = 10) {
+  async getReports(page = 1, perPage = 10) {
     try {
       let reports = [];
       if (+page && +perPage) {

@@ -8,7 +8,7 @@ const queries = {
     { dataSources, req, adminAuthentication }
   ) => {
     adminAuthentication(req.user);
-    return await dataSources.reportAPI.getReport(page, perPage);
+    return await dataSources.reportAPI.getReports(page, perPage);
   },
 
   getReportById: async (
