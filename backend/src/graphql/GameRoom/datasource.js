@@ -51,7 +51,7 @@ class GameRoomAPI extends DataSource {
       return _id;
     } catch (err) {
       console.error(err);
-      throw new ApolloError(err);
+      throw new ApolloError("Internal server error");
     }
   }
 
@@ -64,11 +64,6 @@ class GameRoomAPI extends DataSource {
       }
 
       const firstUser = gameRoom.answers[0].user.toString();
-      const secondUser = gameRoom.answers[1].user.toString();
-      // check to see if this user belongs to this game room
-      if (firstUser !== userId && secondUser !== userId) {
-        throw new ApolloError("Can not submit answers to this game room");
-      }
 
       const index = firstUser === userId ? 0 : 1;
 
@@ -77,7 +72,46 @@ class GameRoomAPI extends DataSource {
       await gameRoom.save();
     } catch (err) {
       console.error(err);
-      throw new ApolloError("Internal Server Error");
+      throw err;
+    }
+  }
+
+  async getGameRoom(gameRoomId) {
+    try {
+      const gameRoom = await GameRoom.findById(gameRoomId).populate(
+        "questions"
+      );
+
+      if (!gameRoom) {
+        throw new ApolloError("Game room does not exist");
+      }
+
+      return gameRoom;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
+  async checkUserOfGameRoom(gameRoomId, userId) {
+    try {
+      const gameRoom = await GameRoom.findById(gameRoomId);
+
+      if (!gameRoom) {
+        throw new ApolloError("Game room does not exist");
+      }
+
+      const firstUser = gameRoom.answers[0].user.toString();
+      const secondUser = gameRoom.answers[1].user.toString();
+
+      // check to see if this user belongs to this game room
+      if (firstUser !== userId && secondUser !== userId) {
+        throw new ApolloError("User does not belong to this game room");
+      }
+
+      return true;
+    } catch (err) {
+      throw err;
     }
   }
 
