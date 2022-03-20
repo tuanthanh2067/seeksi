@@ -105,36 +105,13 @@ const mutations = {
     }
   },
 
-  banUser: async (
-    _,
-    { userId },
-    { dataSources, req, userAuthentication, isAdmin }
-  ) => {
+  banUser: async (_, { userId }, { dataSources, req, adminAuthentication }) => {
     try {
-      userAuthentication(req.user);
-      isAdmin(req.user);
+      adminAuthentication(req.user);
       await dataSources.userAPI.banUser(userId);
       return {
         success: true,
         message: "Account Banned",
-      };
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  unbanUser: async (
-    _,
-    { userId },
-    { dataSources, req, userAuthentication, isAdmin }
-  ) => {
-    try {
-      userAuthentication(req.user);
-      isAdmin(req.user);
-      await dataSources.userAPI.unbanUser(userId);
-      return {
-        success: true,
-        message: "Account Unbanned",
       };
     } catch (err) {
       throw err;
