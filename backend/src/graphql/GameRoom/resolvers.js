@@ -3,12 +3,12 @@ const queries = {
     userAuthentication(req.user);
 
     // check to see if the user belongs to the game room
-    dataSources.gameRoomAPI.checkUserOfGameRoom(
+    await dataSources.gameRoomAPI.checkUserOfGameRoom(
       args.gameRoomId,
       req.user.userId
     );
 
-    return dataSources.gameRoomAPI.getGameRoom(args.gameRoomId);
+    return await dataSources.gameRoomAPI.getGameRoom(args.gameRoomId);
   },
 };
 
@@ -16,7 +16,7 @@ const mutations = {
   submitAnswers: async (_, args, { dataSources, req, userAuthentication }) => {
     userAuthentication(req.user);
 
-    dataSources.gameRoomAPI.checkUserOfGameRoom(
+    await dataSources.gameRoomAPI.checkUserOfGameRoom(
       args.gameRoomId,
       req.user.userId
     );
