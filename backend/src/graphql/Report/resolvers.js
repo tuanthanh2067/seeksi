@@ -2,29 +2,21 @@ const { AuthenticationError, ApolloError } = require("apollo-server-core");
 const UserType = require("../../enum/UserType");
 
 const queries = {
-  getReport: async (
+  getReports: async (
     _,
     { page, perPage },
-    { dataSources, req, userAuthentication }
+    { dataSources, req, adminAuthentication }
   ) => {
-    userAuthentication(req.user);
-    let isAdmin = req.user.role.some((r) => r.includes(UserType.ADMIN));
-    if (!isAdmin) {
-      throw new ApolloError("User is not an admin");
-    }
+    adminAuthentication(req.user);
     return await dataSources.reportAPI.getReport(page, perPage);
   },
 
   getReportById: async (
     _,
     { reportId },
-    { dataSources, req, userAuthentication }
+    { dataSources, req, adminAuthentication }
   ) => {
-    userAuthentication(req.user);
-    let isAdmin = req.user.role.some((r) => r.includes(UserType.ADMIN));
-    if (!isAdmin) {
-      throw new ApolloError("User is not an admin");
-    }
+    adminAuthentication(req.user);
     return await dataSources.reportAPI.getReportById(reportId);
   },
 };
