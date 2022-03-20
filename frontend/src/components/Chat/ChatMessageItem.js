@@ -3,6 +3,11 @@ import jwt_decode from "jwt-decode";
 import { Image } from "react-shimmer";
 import FallBack from "../FallBack/FallBack";
 
+import LightGallery from "lightgallery/react";
+import lgZoom from "lightgallery/plugins/zoom";
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+
 function ChatMessageItem({ message, partnerName }) {
   const currentUserId = jwt_decode(localStorage.getItem("token")).userId;
   const adminStyle = "place-self-center text-center bg-white text-xs my-0";
@@ -20,7 +25,7 @@ function ChatMessageItem({ message, partnerName }) {
 
   return (
     <div
-      className={`rounded-md px-2 py-1 mx-3 whitespace-normal break-all ${
+      className={`rounded-md px-2 py-1 mx-3 whitespace-normal break-word ${
         message.sendBy === "admin"
           ? adminStyle
           : message.sendBy === currentUserId
@@ -40,10 +45,20 @@ function ChatMessageItem({ message, partnerName }) {
         <div>Open Game to see request</div>
       )}
 
-      <div className="grid grid-flow-col auto-cols-max">
+      <div
+        className={`flex items-center ${
+          message.sendBy === currentUserId ? "justify-end" : ""
+        }`}
+      >
         {message.photos.map((src) => (
-          <>
-            <div className="block justify-self-center w-28 h-28 relative">
+          <LightGallery
+            key={src.medium ? src.medium : src.origin}
+            speed={500}
+            plugins={[lgZoom]}
+            download={false}
+            elementClassNames="block w-28 h-28"
+          >
+            <a href={src.medium ? src.medium : src.origin}>
               <Image
                 src={src.medium ? src.medium : src.origin}
                 alt="chat photo"
@@ -57,8 +72,8 @@ function ChatMessageItem({ message, partnerName }) {
                   },
                 }}
               />
-            </div>
-          </>
+            </a>
+          </LightGallery>
         ))}
       </div>
     </div>

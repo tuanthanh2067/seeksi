@@ -9,8 +9,12 @@ import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
 import "./ChatInput.css";
 
+import ChatSuggestLines from "./ChatSuggestLines";
+
 import { SEND_MESSAGE } from "../../graphql/mutations/Chat";
 import { useMutation } from "@apollo/client";
+
+const ADMIN_MESSAGE_COUNT = 3;
 
 function ChatInput(props) {
   const [message, setMessage] = useState("");
@@ -78,30 +82,35 @@ function ChatInput(props) {
   };
 
   return (
-    <>
-      <div className="w-3/4 m-auto">
-        {err && (
-          <div className="flex flex-row justify-center text-red-600 font-medium pb-2.5">
-            {err}
+    <div className="mb-4">
+      {images.length > 0 && (
+        <div className="m-auto mb-4">
+          {err && (
+            <div className="flex flex-row justify-center text-red-600 font-medium pb-2.5">
+              {err}
+            </div>
+          )}
+          <div className="flex flex-row justify-center">
+            {images.map((src, key) => {
+              return (
+                <div className="block justify-self-center w-20 h-20 mx-5 my-0 bg-medium-gray rounded">
+                  <RoundedImage
+                    src={src}
+                    handleRemove={handleRemove}
+                    idx={key}
+                    key={key}
+                    small={true}
+                  />
+                </div>
+              );
+            })}
           </div>
-        )}
-        <div className="flex flex-row justify-center">
-          {images.map((src, key) => {
-            return (
-              <div className="block justify-self-center w-20 h-20 mx-5 my-0 bg-medium-gray rounded">
-                <RoundedImage
-                  src={src}
-                  handleRemove={handleRemove}
-                  idx={key}
-                  key={key}
-                  small={true}
-                />
-              </div>
-            );
-          })}
         </div>
-      </div>
-      <div className="flex flex-none gap-x-3 pt-2.5 mb-5 bottom-0">
+      )}
+      {props.historyLength <= ADMIN_MESSAGE_COUNT && (
+        <ChatSuggestLines roomId={props.roomId} />
+      )}
+      <div className="flex gap-x-3">
         <button
           className="border-primary border-2 focus:outline-2 bg-primary text-white text-md font-semibold rounded w-12 "
           onClick={props.handleGame}
@@ -163,7 +172,7 @@ function ChatInput(props) {
           <img src={`${Send}`} alt="emoji" className="w-6" />
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

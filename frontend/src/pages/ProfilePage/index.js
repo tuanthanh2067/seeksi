@@ -41,11 +41,13 @@ const ProfilePage = ({ handleLogOut }) => {
             <LightGallery
               speed={500}
               plugins={[lgZoom]}
+              download={false}
               elementClassNames="grid grid-cols-2 sm:grid-cols-3 gap-12"
             >
               {data.userById.photo.map((pic, key) =>
                 pic.large ? (
                   <a
+                    key={key}
                     href={`${pic.large}`}
                     className="block justify-self-center"
                   >
