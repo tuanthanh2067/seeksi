@@ -47,7 +47,7 @@ module.exports.userAuthentication = (user) => {
 
 module.exports.adminAuthentication = (user) => {
   this.userAuthentication(user);
-  let isAdm = user.role.some((r) => r.includes(UserType.ADMIN));
+  let isAdm = user.role.includes(UserType.ADMIN);
   if (!isAdm) {
     throw new AuthenticationError("User is not an Admin");
   }
