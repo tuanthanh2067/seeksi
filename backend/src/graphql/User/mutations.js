@@ -16,6 +16,7 @@ module.exports.mutations = `
 
   deleteAccount: GeneralMutationResponse
 
+  banUser(userId: ID!): GeneralMutationResponse
 
   "edit user profile, avatar and photos will be processed differently"
   editUser(

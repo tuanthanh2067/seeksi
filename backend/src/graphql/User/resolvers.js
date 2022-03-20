@@ -104,6 +104,19 @@ const mutations = {
       throw err;
     }
   },
+
+  banUser: async (_, { userId }, { dataSources, req, adminAuthentication }) => {
+    try {
+      adminAuthentication(req.user);
+      await dataSources.userAPI.banUser(userId);
+      return {
+        success: true,
+        message: "Account Banned",
+      };
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 
 module.exports.resolvers = {
