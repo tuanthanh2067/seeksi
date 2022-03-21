@@ -3,6 +3,7 @@ module.exports.types = `
         id: ID!
         questions: [Question!]!
         answers: [Answer!]!
+        expiryTime: String!
     }
 
     type Answer {

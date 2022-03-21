@@ -11,6 +11,7 @@ const gameRoom = new Schema({
     },
   ],
   answers: [gameAnswerSchema],
+  expiryTime: Date,
 });
 
 const GameRoom = mongoose.model("GameRooms", gameRoom);
