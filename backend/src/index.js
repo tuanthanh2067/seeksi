@@ -1,13 +1,13 @@
 const { ApolloServer } = require("apollo-server-express");
 const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
 const express = require("express");
-const http = require("http");
+const { createServer } = require("http");
 const { graphqlUploadExpress } = require("graphql-upload");
 const Mongoose = require("mongoose");
 const cloudinary = require("cloudinary");
-const { execute, subscribe } = require("graphql");
-const { SubscriptionServer } = require("subscriptions-transport-ws");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
+const { WebSocketServer } = require("ws");
+const { useServer } = require("graphql-ws/lib/use/ws");
 
 require("dotenv").config();
 const { typeDefs, resolvers, datasources } = require("./graphql");
@@ -59,21 +59,16 @@ async function startApolloSever() {
     graphqlUploadExpress({ maxFiles: process.env.MAX_IMAGE_UPLOAD || 9 })
   );
 
-  const httpServer = http.createServer(app);
+  const httpServer = createServer(app);
 
   const schema = makeExecutableSchema({ typeDefs, resolvers });
 
-  const subscriptionServer = SubscriptionServer.create(
-    {
-      schema,
-      execute,
-      subscribe,
-    },
-    {
-      server: httpServer,
-      path: "/",
-    }
-  );
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: "/",
+  });
+
+  const serverCleanup = useServer({ schema }, wsServer);
 
   const server = new ApolloServer({
     schema,
@@ -82,11 +77,12 @@ async function startApolloSever() {
       return { ...middleware(req) };
     },
     plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
       {
         async serverWillStart() {
           return {
             async drainServer() {
-              subscriptionServer.close();
+              await serverCleanup.dispose();
             },
           };
         },
