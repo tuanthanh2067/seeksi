@@ -15,7 +15,7 @@ import {
 import { GET_POTENTIAL_PARTNERS } from "../../graphql/queries/Match";
 import "./Match.css";
 
-const Match = () => {
+const Match = ({ setHasNewMatch }) => {
   const [page, setPage] = useState(1);
   const [topCardIndex, setTopCardIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);
@@ -48,6 +48,7 @@ const Match = () => {
       onCompleted: (data) => {
         if (data.sendMatchRequest.success) {
           if (data.sendMatchRequest.message === "Matched") {
+            setHasNewMatch(true);
             setIsMatched(true);
             setMessage("it's a match!");
             setTimeout(() => {
