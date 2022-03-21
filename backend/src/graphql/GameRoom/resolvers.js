@@ -32,6 +32,21 @@ const mutations = {
       message: "Submit successfully",
     };
   },
+
+  finishPlayingGame: async (
+    _,
+    args,
+    { dataSources, req, userAuthentication }
+  ) => {
+    userAuthentication(req.user);
+
+    dataSources.playingStatusAPI.updatePlayingStatus(req.user.userId, false);
+
+    return {
+      success: true,
+      message: "Set to not playing successfully",
+    };
+  },
 };
 
 const subscriptions = {};
