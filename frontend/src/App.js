@@ -30,6 +30,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [requests, setRequests] = useState({});
+  const [hasNewMatch, setHasNewMatch] = useState(false);
   const [updateMyStatus] = useMutation(UPDATE_STATUS);
   const [acceptGameRequest] = useMutation(ACCEPT_GAME_REQUEST);
   const [rejectGameRequest] = useMutation(REJECT_GAME_REQUEST);
@@ -125,6 +126,10 @@ function App() {
     }
     return;
   };
+
+  useEffect(() => {
+    if (hasNewMatch) refetch();
+  }, [hasNewMatch, refetch]);
 
   // set up userId on log in
   useEffect(() => {
@@ -260,7 +265,10 @@ function App() {
             }
           />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/match" element={<Match />} />
+          <Route
+            path="/match"
+            element={<Match setHasNewMatch={setHasNewMatch} />}
+          />
           <Route path="/user/:id" element={<ProfilePage />} />
           <Route path="/edit/:id" element={<EditPage />} />
           <Route
