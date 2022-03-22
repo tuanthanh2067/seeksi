@@ -3,7 +3,6 @@ const { ApolloError } = require("apollo-server-core");
 const mongoose = require("mongoose");
 
 const PotentialMatch = require("../../schemas/PotentialMatch/PotentialMatch");
-const PotentialMatchStats = require("../../schemas/PotentialMatch/PotentialMatchStats");
 const User = require("../../schemas/User/User");
 
 const { MatchGender } = require("../../../lib/gender");
@@ -19,8 +18,34 @@ class PotentialMatchAPI extends DataSource {
     super();
   }
 
-  isMatched(s1, s2) {
-    return s1 === MatchStatus.LIKED && s2 === MatchStatus.LIKED;
+  async isMatched(userId, partnerId) {
+    const userPotentialMatch = await PotentialMatch.findOne({
+      user: mongoose.Types.ObjectId(userId),
+    });
+    const partnerPotentialMatch = await PotentialMatch.findOne({
+      user: mongoose.Types.ObjectId(partnerId),
+    });
+
+    if (
+      !userPotentialMatch.potentialPartners ||
+      !userPotentialMatch.potentialPartners.has(partnerId)
+    ) {
+      throw new ApolloError("Potential partner can't be found");
+    }
+
+    if (
+      !partnerPotentialMatch ||
+      !partnerPotentialMatch.potentialPartners.has(userId)
+    ) {
+      return false;
+    }
+
+    return (
+      userPotentialMatch.potentialPartners.get(partnerId).status ===
+        MatchStatus.LIKED &&
+      partnerPotentialMatch.potentialPartners.get(userId).status ===
+        MatchStatus.LIKED
+    );
   }
 
   /**
@@ -58,23 +83,26 @@ class PotentialMatchAPI extends DataSource {
 
   async sendMatchRequestTo(fromId, toId) {
     try {
-      const pairID = [
-        mongoose.Types.ObjectId(fromId),
-        mongoose.Types.ObjectId(toId),
-      ];
       const potentialMatch = await PotentialMatch.findOne({
-        pairID: { $all: pairID },
+        user: mongoose.Types.ObjectId(fromId),
       });
 
-      const index = potentialMatch.pairID.indexOf(
-        `${mongoose.Types.ObjectId(fromId)}`
-      );
+      if (
+        !potentialMatch.potentialPartners ||
+        !potentialMatch.potentialPartners.has(toId)
+      ) {
+        throw new ApolloError("Potential partner doesn't exist");
+      }
 
-      potentialMatch.status[index] = MatchStatus.LIKED;
+      const potentialPartner = potentialMatch.potentialPartners.get(toId);
 
-      await potentialMatch.save();
+      potentialMatch.potentialPartners.set(toId, {
+        partner: potentialPartner.partner,
+        matchScore: potentialPartner.matchScore,
+        status: MatchStatus.LIKED,
+      });
 
-      return potentialMatch;
+      return await potentialMatch.save();
     } catch (err) {
       console.error(err);
       throw new ApolloError("Internal Server Error");
@@ -83,25 +111,26 @@ class PotentialMatchAPI extends DataSource {
 
   async sendRejectRequestTo(fromId, toId) {
     try {
-      const pairID = [
-        mongoose.Types.ObjectId(fromId),
-        mongoose.Types.ObjectId(toId),
-      ];
       const potentialMatch = await PotentialMatch.findOne({
-        pairID: { $all: pairID },
+        user: mongoose.Types.ObjectId(fromId),
       });
 
-      const index = potentialMatch.pairID.indexOf(
-        `${mongoose.Types.ObjectId(fromId)}`
-      );
+      if (
+        !potentialMatch.potentialPartners ||
+        !potentialMatch.potentialPartners.has(toId)
+      ) {
+        throw new ApolloError("Potential partner doesn't exist");
+      }
 
-      potentialMatch.status[index] = MatchStatus.REJECTED;
+      const potentialPartner = potentialMatch.potentialPartners.get(toId);
 
-      await potentialMatch.save();
-      return {
-        success: true,
-        message: "Passed",
-      };
+      potentialMatch.potentialPartners.set(toId, {
+        partner: potentialPartner.partner,
+        matchScore: potentialPartner.matchScore,
+        status: MatchStatus.REJECTED,
+      });
+
+      return await potentialMatch.save();
     } catch (err) {
       console.error(err);
       throw new ApolloError("Internal Server Error");

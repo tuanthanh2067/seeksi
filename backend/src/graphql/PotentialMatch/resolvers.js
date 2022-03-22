@@ -33,26 +33,22 @@ const mutations = {
       const fromId = req.user.userId;
       const toId = args.id;
 
-      const potentialMatch =
-        await dataSources.potentialMatchAPI.sendMatchRequestTo(fromId, toId);
+      await dataSources.potentialMatchAPI.sendMatchRequestTo(fromId, toId);
 
-      if (
-        dataSources.potentialMatchAPI.isMatched(
-          potentialMatch.status[0],
-          potentialMatch.status[1]
-        )
-      ) {
-        const userId = potentialMatch.pairID[0].toString();
-        const partnerId = potentialMatch.pairID[1].toString();
+      const isMatched = await dataSources.potentialMatchAPI.isMatched(
+        fromId,
+        toId
+      );
 
+      if (isMatched) {
         // create a chat room
         const { id } = await dataSources.chatRoomAPI.createChatRoom(
-          userId,
-          partnerId
+          fromId,
+          toId
         );
 
         // create a match
-        await dataSources.matchAPI.createMatch(userId, partnerId, id);
+        await dataSources.matchAPI.createMatch(fromId, toId, id);
 
         return {
           success: true,
@@ -81,12 +77,12 @@ const mutations = {
       const fromId = req.user.userId;
       const toId = args.id;
 
-      const result = await dataSources.potentialMatchAPI.sendRejectRequestTo(
-        fromId,
-        toId
-      );
+      await dataSources.potentialMatchAPI.sendRejectRequestTo(fromId, toId);
 
-      return result;
+      return {
+        success: true,
+        message: "Passed",
+      };
     } catch (err) {
       console.error(err);
       throw err;
