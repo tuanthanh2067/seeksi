@@ -9,6 +9,8 @@ const GameRoom = require("../../schemas/GameRoom/GameRoom");
 
 const GameAnswerEnum = require("../../enum/GameAnswer");
 
+const GAME_EXPIRE = parseInt(process.env.GAME_EXPIRY) || 6;
+
 class GameRoomAPI extends DataSource {
   constructor() {
     super();
@@ -40,9 +42,7 @@ class GameRoomAPI extends DataSource {
       const questions = tenQuestions.map((ques) => ques._id);
 
       const expiryTime = new Date();
-      expiryTime.setMinutes(
-        expiryTime.getMinutes() + process.env.GAME_EXPIRY || 6
-      );
+      expiryTime.setMinutes(expiryTime.getMinutes() + GAME_EXPIRE);
 
       const gameRoom = new GameRoom({
         _id,
