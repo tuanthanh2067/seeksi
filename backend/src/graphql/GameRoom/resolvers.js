@@ -44,7 +44,7 @@ const mutations = {
 
     return {
       success: true,
-      message: "Set to not playing successfully",
+      message: "You can play again with another partner now",
     };
   },
 };
