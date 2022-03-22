@@ -1,4 +1,5 @@
-const { createWriteStream } = require("fs");
+// const { createWriteStream } = require("fs");
+const temp = require("temp").track();
 const { finished } = require("stream/promises");
 
 const { SUPPORTED_MIMETYPE } = require("./cloudinary");
@@ -11,25 +12,19 @@ const { SUPPORTED_MIMETYPE } = require("./cloudinary");
  */
 module.exports.writeFileUpload = async (upload) => {
   const { createReadStream, mimetype } = await upload;
-  const baseDir = "storage";
-  const seed = Math.floor(Math.random() * 100000);
-  const createAt = new Date().getTime();
-  const extension = SUPPORTED_MIMETYPE.find(
-    (type) => type.mimetype === mimetype
-  ).extension;
+  const isMimetypeSupported =
+    SUPPORTED_MIMETYPE.findIndex((type) => type.mimetype === mimetype) > -1;
 
-  if (!extension) {
+  if (!isMimetypeSupported) {
     throw new Error("File format not supported!");
   }
 
-  const filePath = `${baseDir}/${seed}_${createAt}.${extension}`;
-
   const stream = createReadStream();
-  const out = createWriteStream(filePath);
+  const out = temp.createWriteStream();
 
   stream.pipe(out);
 
   await finished(out);
 
-  return filePath;
+  return out.path;
 };

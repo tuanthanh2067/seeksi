@@ -1,4 +1,4 @@
-const { unlink } = require("fs/promises");
+const temp = require("temp").track();
 const { UserInputError } = require("apollo-server-core");
 
 const { writeFileUpload } = require("../../../storage/upload");
@@ -23,7 +23,7 @@ const mutations = {
       avatar,
     });
 
-    await unlink(filePath);
+    temp.cleanup();
 
     return avatar;
   },
@@ -64,9 +64,7 @@ const mutations = {
       });
     }
 
-    for (const filePath of filePaths) {
-      await unlink(filePath);
-    }
+    temp.cleanup();
 
     return photos;
   },
