@@ -25,6 +25,8 @@ import {
 import { SEND_MESSAGE } from "./graphql/mutations/Chat";
 import { useQuery, useMutation, useSubscription } from "@apollo/client";
 
+import ProtectedRoute from "./helper/ProtectedRoute/ProtectedRoute";
+
 function App() {
   const [userToken, setUserToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,6 +37,16 @@ function App() {
   const [acceptGameRequest] = useMutation(ACCEPT_GAME_REQUEST);
   const [rejectGameRequest] = useMutation(REJECT_GAME_REQUEST);
   const [sendMessage] = useMutation(SEND_MESSAGE);
+
+  // set up userId on log in
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (token) {
+      setUserToken(token);
+      setCurrentUser(jwt_decode(token));
+      setIsLoggedIn(true);
+    }
+  }, [token]);
 
   const { loading, error, data, subscribeToMore, refetch } =
     useQuery(GET_CHAT_ROOMS);
@@ -130,15 +142,6 @@ function App() {
   useEffect(() => {
     if (hasNewMatch) refetch();
   }, [hasNewMatch, refetch]);
-
-  // set up userId on log in
-  useEffect(() => {
-    setUserToken(localStorage.getItem("token"));
-    if (userToken) {
-      setCurrentUser(jwt_decode(userToken));
-    }
-    if (currentUser) setIsLoggedIn(true);
-  }, [userToken]);
 
   // subscribe for new game requests
   useEffect(() => {
@@ -267,23 +270,43 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route
             path="/match"
-            element={<Match setHasNewMatch={setHasNewMatch} />}
+            element={
+              <ProtectedRoute>
+                <Match setHasNewMatch={setHasNewMatch} />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/user/:id" element={<ProfilePage />} />
-          <Route path="/edit/:id" element={<EditPage />} />
+          <Route
+            path="/user/:id"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditPage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/chat"
             element={
-              <Chat
-                roomsLoading={loading}
-                roomsData={data || { chatRooms: [] }}
-                roomsError={error}
-                refetch={refetch}
-                handleAccept={handleAccept}
-                handleDecline={handleDecline}
-                currentUserId={currentUser.userId}
-                gameRequests={requests}
-              />
+              <ProtectedRoute>
+                <Chat
+                  roomsLoading={loading}
+                  roomsData={data || { chatRooms: [] }}
+                  roomsError={error}
+                  refetch={refetch}
+                  handleAccept={handleAccept}
+                  handleDecline={handleDecline}
+                  currentUserId={currentUser.userId}
+                  gameRequests={requests}
+                />
+              </ProtectedRoute>
             }
           />
         </Routes>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import Logo from "../../assets/logo.png";
@@ -12,6 +13,11 @@ const LandingPage = ({ setIsLoggedIn, setUserToken }) => {
 
   const handleSignUpModal = () => setShowSignUpModal(false);
   const handleSignInModal = () => setShowSignInModal(false);
+
+  const token = localStorage.getItem("token");
+  if (token) {
+    return <Navigate to="/match" replace />;
+  }
 
   return (
     <>
