@@ -1,4 +1,4 @@
 module.exports.mutations = `
-    submitAnswers(gameRoomId: String!, answers: [String!]!) : GeneralMutationResponse!
+    submitAnswers(gameRoomId: String!, answers: [String!]!, isFinal: Boolean!) : GeneralMutationResponse!
     finishPlayingGame: GeneralMutationResponse!
 `;
