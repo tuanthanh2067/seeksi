@@ -68,6 +68,7 @@ function ChatInput(props) {
     setImages([]);
     setErr("");
     setUploadImgs([]);
+    setRender(0);
   };
 
   const handleKeyPress = (event) => {
