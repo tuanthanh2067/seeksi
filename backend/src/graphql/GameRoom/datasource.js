@@ -1,12 +1,15 @@
 const { DataSource } = require("apollo-datasource");
 const { ApolloError, UserInputError } = require("apollo-server-core");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const ChatRoom = require("../../schemas/ChatRoom/ChatRoom");
 const Question = require("../../schemas/Question/Question");
 const GameRoom = require("../../schemas/GameRoom/GameRoom");
 
 const GameAnswerEnum = require("../../enum/GameAnswer");
+
+const GAME_EXPIRE = parseInt(process.env.GAME_EXPIRY) || 6;
 
 class GameRoomAPI extends DataSource {
   constructor() {
@@ -37,10 +40,15 @@ class GameRoomAPI extends DataSource {
       // add 10 questions
       const tenQuestions = await this.getQuestion();
       const questions = tenQuestions.map((ques) => ques._id);
+
+      const expiryTime = new Date();
+      expiryTime.setMinutes(expiryTime.getMinutes() + GAME_EXPIRE);
+
       const gameRoom = new GameRoom({
         _id,
         answers,
         questions,
+        expiryTime,
       });
 
       chatRoom.gameRoom = _id;
