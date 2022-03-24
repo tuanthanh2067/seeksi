@@ -68,6 +68,7 @@ function ChatInput(props) {
     setImages([]);
     setErr("");
     setUploadImgs([]);
+    setRender(0);
   };
 
   const handleKeyPress = (event) => {
@@ -143,6 +144,7 @@ function ChatInput(props) {
             id="img"
             accept="image/*"
             onChange={handleChange}
+            onClick={(e) => (e.target.value = "")}
             hidden
           />
           <label htmlFor="img">
