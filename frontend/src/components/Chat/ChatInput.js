@@ -144,6 +144,7 @@ function ChatInput(props) {
             id="img"
             accept="image/*"
             onChange={handleChange}
+            onClick={(e) => (e.target.value = "")}
             hidden
           />
           <label htmlFor="img">
