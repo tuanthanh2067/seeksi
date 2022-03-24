@@ -14,6 +14,7 @@ import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
 import FallBack from "../FallBack/FallBack";
 import toast from "react-hot-toast";
+import { capitalizeFirstLetter } from "../../utils/helper";
 import { DELETE_AVATAR } from "../../graphql/mutations/Photos";
 
 const ProfilePage = (props) => {
@@ -62,10 +63,6 @@ const ProfilePage = (props) => {
       age--;
     }
     return age;
-  };
-
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   return (

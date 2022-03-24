@@ -1,5 +1,5 @@
 import React from "react";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import makeAnimated from "react-select/animated";
 
 const Dropdown = ({
@@ -10,9 +10,14 @@ const Dropdown = ({
   width = "50vw",
   placeholder,
   isMulti = false,
+  isClearable = false,
   onChange,
 }) => {
   const animatedComponents = makeAnimated();
+
+  const Placeholder = (props) => {
+    return <components.Placeholder {...props} />;
+  };
 
   const customStyles = {
     control: (provided) => ({
@@ -58,9 +63,10 @@ const Dropdown = ({
       id={id}
       name={name}
       closeMenuOnSelect={!isMulti}
-      components={animatedComponents}
+      components={{ Placeholder, animatedComponents }}
       placeholder={placeholder}
       isMulti={isMulti}
+      isClearable={isClearable}
       options={options}
       value={values}
       styles={customStyles}

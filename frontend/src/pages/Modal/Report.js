@@ -75,14 +75,12 @@ const Report = (props) => {
         <div className="mb-2">
           <label
             onClick={() => {
-              setProblem("sharing inappropriate content");
+              setProblem("inappropriate content");
               setMessage("");
             }}
           >
             <input className="scale-150" type="radio" name="problem" />
-            <span className="text-base pl-3">
-              Sharing inappropriate content
-            </span>
+            <span className="text-base pl-3">Inappropriate content</span>
           </label>
         </div>
         <div className="mb-2">

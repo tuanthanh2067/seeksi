@@ -18,3 +18,24 @@ export const SUBMIT_REPORT_MUTATION = gql`
     }
   }
 `;
+
+export const BAN_USER = gql`
+  mutation BanUser($userId: ID!) {
+    banUser(userId: $userId) {
+      success
+      message
+    }
+  }
+`;
+
+export const UPDATE_REPORT_STATUS = gql`
+  mutation UpdateReportStatus(
+    $updateReportStatusId: String!
+    $status: String!
+  ) {
+    updateReportStatus(id: $updateReportStatusId, status: $status) {
+      success
+      message
+    }
+  }
+`;

@@ -41,7 +41,7 @@ const Signin = (props) => {
 
           apolloClient.resetStore();
 
-          navigate("/match");
+          navigate("/");
         },
       });
     }
