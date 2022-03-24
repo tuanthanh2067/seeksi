@@ -14,7 +14,11 @@ const Slide = ({ questions, userAnswers, partnerAnswers, isSame }) => {
       {questions.map((question, index) => (
         <div className="grid grid-cols-7 gap-4 my-5" key={question.id}>
           <div className="col-start-1 py-auto m-auto w-[35px]">
-            {userAnswers[index] !== "not_answered" && (
+            {userAnswers[index] === "not_answered" ? (
+              <span className="text-white font-semibold text-[0.8rem] m-auto">
+                N/A
+              </span>
+            ) : (
               <img
                 className="m-auto"
                 src={userAnswers[index] === "yes" ? YesIcon : NoIcon}
@@ -30,7 +34,11 @@ const Slide = ({ questions, userAnswers, partnerAnswers, isSame }) => {
             {question.question}
           </div>
           <div className="col-start-7 m-auto w-[35px]">
-            {partnerAnswers[index] !== "not_answered" && (
+            {partnerAnswers[index] === "not_answered" ? (
+              <span className="text-white font-semibold text-[0.8rem] m-auto">
+                N/A
+              </span>
+            ) : (
               <img
                 className="m-auto"
                 src={partnerAnswers[index] === "yes" ? YesIcon : NoIcon}
@@ -93,7 +101,7 @@ const GameResult = ({
                 </span>
               </div>
             </div>
-            <div className="gameResults flex flex-col mx-5 font-medium">
+            <div className="gameResults flex flex-col mx-4 font-medium">
               <div className="gameHeader grid grid-cols-7 gap-4 mb-1 text-white">
                 <div className="col-start-1 text-center">You</div>
                 <div className="col-start-2 col-span-5 text-center">
