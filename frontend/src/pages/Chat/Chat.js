@@ -6,6 +6,7 @@ import ChatPartner from "../../components/Chat/ChatPartner";
 import Navbar from "../../components/Navbar";
 import Confirmation from "../Modal/Confirmation";
 import Report from "../Modal/Report";
+import GameResult from "../Modal/GameResult";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { UNMATCH } from "../../graphql/mutations/Match";
@@ -13,6 +14,7 @@ import { STATUS_UPDATED } from "../../graphql/subscriptions/User";
 import { GET_USER_STATUSES } from "../../graphql/queries/User";
 import { SEND_GAME_REQUEST } from "../../graphql/mutations/Game";
 import { SEND_MESSAGE } from "../../graphql/mutations/Chat";
+import { GET_GAME_ROOM } from "../../graphql/queries/Game";
 
 function Chat({
   roomsLoading,
@@ -23,28 +25,46 @@ function Chat({
   handleDecline,
   gameRequests,
 }) {
-  const [activeRoomId, setActiveRoomId] = useState({});
+  const [activeRoomId, setActiveRoomId] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showGameRule, setShowGameRule] = useState(false);
   const [showGameRequest, setShowGameRequest] = useState(false);
   const [showGameRequestStatus, setShowGameRequestStatus] = useState(false);
   const [gameRequestStatus, setGameRequestStatus] = useState("");
+  const [showGameResults, setShowGameResults] = useState(false);
+  const [showReport, setShowReport] = useState(false);
+
   const [partnerId, setPartnerId] = useState("");
+  const [partnerName, setPartnerName] = useState("");
+
   const [gameRequestId, setGameRequestId] = useState("");
+  const [gameRoomId, setGameRoomId] = useState("");
 
   const [userStatuses, setUserStatuses] = useState({});
-  const [showReport, setShowReport] = useState(false);
 
   const [unmatch] = useMutation(UNMATCH);
   const [sendGameRequest] = useMutation(SEND_GAME_REQUEST);
   const [sendMessage] = useMutation(SEND_MESSAGE);
 
+  const { data, subscribeToMore } = useQuery(GET_USER_STATUSES, {
+    variables: { partnerIds: chatRooms.map((room) => room.partner.id) },
+  });
+
+  const gameRoom = useQuery(GET_GAME_ROOM, {
+    variables: {
+      gameRoomId: gameRoomId,
+    },
+  });
+
   useEffect(() => {}, [gameRequests]);
 
   const handleGame = () => {
     const room = chatRooms.find((room) => room.partner.id === partnerId);
-
-    if (!room.gameRoom) {
+    setPartnerName(room.partner.firstName);
+    if (room.gameRoom) {
+      setGameRoomId(room.gameRoom);
+      setShowGameResults(true);
+    } else {
       if (!userStatuses[partnerId]) {
         setGameRequestStatus("Partner is offline. Please try again later");
         setShowGameRequestStatus(true);
@@ -58,8 +78,6 @@ function Chat({
       } else {
         setShowGameRule(true);
       }
-    } else {
-      // display game results
     }
   };
 
@@ -103,10 +121,6 @@ function Chat({
       },
     });
   };
-
-  const { data, subscribeToMore } = useQuery(GET_USER_STATUSES, {
-    variables: { partnerIds: chatRooms.map((room) => room.partner.id) },
-  });
 
   // subscribe to partners' statuses
   useEffect(() => {
@@ -287,6 +301,25 @@ function Chat({
               handleDecline(gameRequestId, activeRoomId);
               setShowGameRequest(false);
             }}
+          />
+        </div>
+      )}
+
+      {showGameResults && (
+        <div
+          onClick={(e) => {
+            if (e.currentTarget.firstChild === e.target) {
+              setShowGameResults(false);
+            }
+          }}
+        >
+          <GameResult
+            setShowGameResults={setShowGameResults}
+            data={gameRoom.data}
+            error={gameRoom.error}
+            loading={gameRoom.loading}
+            partnerId={partnerId}
+            partnerName={partnerName}
           />
         </div>
       )}

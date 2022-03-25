@@ -36,7 +36,9 @@ function ChatMessageItem({ message, partnerName }) {
         message.content
       )}
 
-      {isGameRequest && <div>Open Game to see request</div>}
+      {isGameRequest && message.sendBy !== currentUserId && (
+        <div>Open Game to see request</div>
+      )}
 
       <div className="grid grid-flow-col auto-cols-max">
         {message.photos.map((src) => (
