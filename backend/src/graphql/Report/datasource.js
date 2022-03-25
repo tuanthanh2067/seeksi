@@ -20,6 +20,15 @@ class ReportAPI extends DataSource {
           .skip(page * +perPage)
           .limit(+perPage)
           .exec();
+
+        reports = reports.map((r) => {
+          console.log(r);
+          return {
+            ...r.toObject(),
+            id: r._id.toString(),
+            createdAt: r._id.getTimestamp(),
+          };
+        });
       } else {
         throw new ApolloError("something wrong with Page and perPage");
       }
@@ -32,7 +41,10 @@ class ReportAPI extends DataSource {
 
   async getReportById(reportId) {
     try {
-      return await Report.findById(reportId);
+      const report = await Report.findById(reportId);
+      report.createdAt = report._id.getTimestamp();
+
+      return report;
     } catch (err) {
       throw new ApolloError("Internal Server Error");
     }

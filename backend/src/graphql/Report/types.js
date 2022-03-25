@@ -5,6 +5,7 @@ module.exports.types = `
     problem: String!,
     description: String!,
     reportedUserID: ID!,
-    reporterID: ID!
+    reporterID: ID!,
+    createdAt: String!
   }
 `;
