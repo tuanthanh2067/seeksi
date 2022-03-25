@@ -60,6 +60,7 @@ const GameResult = ({
   partnerId,
   partnerName,
 }) => {
+  if (error) console.log(error);
   let commonAnswersCount = 0;
   let partnerIndex;
   let isSame = [];
@@ -83,24 +84,26 @@ const GameResult = ({
       className={`bg-black bg-opacity-50 inset-0 fixed z-50 flex justify-center items-center h-screen`}
     >
       <div className="flex flex-col bg-purple w-11/12 lg:w-1/3 md:max-w-3xl rounded-md ">
+        <div className="gameTitle flex mx-auto mt-5 mb-3  items-center ">
+          <div className="flex justify-self-center">
+            <span>
+              <img src={ResultIcon} alt="game icon" />
+            </span>
+            <span className="text-orange font-bold text-2xl text-center pl-2">
+              Never Have I Ever...
+            </span>
+          </div>
+        </div>
         {loading && <Spinner />}
         {error && (
-          <div className="italic place-self-center my-auto">
-            An error occurs, please try again later!
+          <div className="flex mb-5 mx-auto h-24">
+            <div className="italic place-self-center my-auto text-white">
+              An error occurs, please try again later!
+            </div>
           </div>
         )}
         {data && (
           <>
-            <div className="gameTitle flex mx-auto mt-5 mb-3  items-center ">
-              <div className="flex justify-self-center">
-                <span>
-                  <img src={ResultIcon} alt="game icon" />
-                </span>
-                <span className="text-orange font-bold text-2xl text-center pl-2">
-                  Never Have I Ever...
-                </span>
-              </div>
-            </div>
             <div className="gameResults flex flex-col mx-4 font-medium">
               <div className="gameHeader grid grid-cols-7 gap-4 mb-1 text-white">
                 <div className="col-start-1 text-center">You</div>
