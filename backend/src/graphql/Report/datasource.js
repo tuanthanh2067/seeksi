@@ -22,7 +22,6 @@ class ReportAPI extends DataSource {
           .exec();
 
         reports = reports.map((r) => {
-          console.log(r);
           return {
             ...r.toObject(),
             id: r._id.toString(),
