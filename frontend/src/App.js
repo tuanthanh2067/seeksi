@@ -113,6 +113,14 @@ function App() {
     });
   };
 
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+
+    setUserToken("");
+    setIsLoggedIn(false);
+    setCurrentUser({});
+  };
+
   const showToast = (content, photos, name, sendBy) => {
     if (currentUser) {
       if (currentUser.userId === sendBy || window.location.pathname === "/chat")
@@ -272,7 +280,10 @@ function App() {
             path="/match"
             element={
               <ProtectedRoute>
-                <Match setHasNewMatch={setHasNewMatch} />
+                <Match
+                  setHasNewMatch={setHasNewMatch}
+                  handleLogOut={handleLogOut}
+                />
               </ProtectedRoute>
             }
           />
@@ -280,7 +291,7 @@ function App() {
             path="/user/:id"
             element={
               <ProtectedRoute>
-                <ProfilePage />
+                <ProfilePage handleLogOut={handleLogOut} />
               </ProtectedRoute>
             }
           />
@@ -288,7 +299,7 @@ function App() {
             path="/edit/:id"
             element={
               <ProtectedRoute>
-                <EditPage />
+                <EditPage handleLogOut={handleLogOut} />
               </ProtectedRoute>
             }
           />
@@ -305,6 +316,7 @@ function App() {
                   handleDecline={handleDecline}
                   currentUserId={currentUser.userId}
                   gameRequests={requests}
+                  handleLogOut={handleLogOut}
                 />
               </ProtectedRoute>
             }

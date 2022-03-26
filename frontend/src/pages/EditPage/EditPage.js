@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
 
-const ProfilePage = () => {
+const ProfilePage = ({ handleLogOut }) => {
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [avt, setAvt] = useState("");
@@ -48,7 +48,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar handleLogOut={handleLogOut} />
       {loading && <Spinner />}
       {error && (
         <div className="flex h-screen w-full justify-center items-center">

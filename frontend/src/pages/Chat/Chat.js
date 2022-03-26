@@ -26,6 +26,7 @@ function Chat({
   handleAccept,
   handleDecline,
   gameRequests,
+  handleLogOut,
 }) {
   const [activeRoomId, setActiveRoomId] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -350,7 +351,7 @@ function Chat({
         </div>
       )}
 
-      <Navbar />
+      <Navbar handleLogOut={handleLogOut} />
       {roomsLoading && <Spinner />}
       {roomsError && (
         <div className="italic place-self-center my-auto">
