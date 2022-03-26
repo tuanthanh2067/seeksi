@@ -5,17 +5,27 @@ const Report = require("../../schemas/Report/Report");
 const User = require("../../schemas/User/User");
 const { validateReportProblem } = require("../../utils/validatiion");
 
+const { objectIdWithTimestamp } = require("../../utils/mongoose");
+
 class ReportAPI extends DataSource {
   constructor() {
     super();
   }
 
-  async getReports(page = 1, perPage = 10) {
+  async getReports(
+    page = 1,
+    perPage = 10,
+    fromDate = "1980/01/01",
+    toDate = new Date()
+  ) {
     try {
       let reports = [];
       if (+page && +perPage) {
         page = +page - 1;
-        reports = await Report.find()
+        reports = await Report.find({
+          _id: { $gte: objectIdWithTimestamp(fromDate) },
+          $lte: objectIdWithTimestamp(toDate),
+        })
           .sort({ _id: -1 })
           .skip(page * +perPage)
           .limit(+perPage)
