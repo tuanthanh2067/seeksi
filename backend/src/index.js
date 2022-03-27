@@ -68,7 +68,27 @@ async function startApolloSever() {
     path: "/",
   });
 
-  const serverCleanup = useServer({ schema }, wsServer);
+  const getDynamicContext = (ctx, msg, args) => {
+    if (ctx.connectionParams.authorization) {
+      const req = {
+        headers: {
+          authorization: ctx.connectionParams.authorization,
+        },
+      };
+
+      return { ...middleware(req) };
+    }
+  };
+
+  const serverCleanup = useServer(
+    {
+      schema,
+      context: (ctx, msg, args) => {
+        return getDynamicContext(ctx, msg, args);
+      },
+    },
+    wsServer
+  );
 
   const server = new ApolloServer({
     schema,
