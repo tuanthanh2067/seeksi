@@ -5,21 +5,39 @@ const Report = require("../../schemas/Report/Report");
 const User = require("../../schemas/User/User");
 const { validateReportProblem } = require("../../utils/validatiion");
 
+const { objectIdWithTimestamp } = require("../../utils/mongoose");
+
 class ReportAPI extends DataSource {
   constructor() {
     super();
   }
 
-  async getReports(page = 1, perPage = 10) {
+  async getReports(
+    page = 1,
+    perPage = 10,
+    fromDate = "1980/01/01",
+    toDate = new Date()
+  ) {
     try {
       let reports = [];
       if (+page && +perPage) {
         page = +page - 1;
-        reports = await Report.find()
+        reports = await Report.find({
+          _id: { $gte: objectIdWithTimestamp(fromDate) },
+          $lte: objectIdWithTimestamp(toDate),
+        })
           .sort({ _id: -1 })
           .skip(page * +perPage)
           .limit(+perPage)
           .exec();
+
+        reports = reports.map((r) => {
+          return {
+            ...r.toObject(),
+            id: r._id.toString(),
+            createdAt: r._id.getTimestamp(),
+          };
+        });
       } else {
         throw new ApolloError("something wrong with Page and perPage");
       }
@@ -32,7 +50,10 @@ class ReportAPI extends DataSource {
 
   async getReportById(reportId) {
     try {
-      return await Report.findById(reportId);
+      const report = await Report.findById(reportId);
+      report.createdAt = report._id.getTimestamp();
+
+      return report;
     } catch (err) {
       throw new ApolloError("Internal Server Error");
     }
