@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import Logo from "../../assets/logo.png";
 import Background from "../../assets/banner.png";
 import Signup from "../Modal/Signup";
 import Signin from "../Modal/Signin";
-import Chat from "../Chat/Chat";
+
 const LandingPage = ({ setIsLoggedIn, setUserToken }) => {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -13,7 +14,11 @@ const LandingPage = ({ setIsLoggedIn, setUserToken }) => {
   const handleSignUpModal = () => setShowSignUpModal(false);
   const handleSignInModal = () => setShowSignInModal(false);
 
-  // return <Chat />;
+  const token = localStorage.getItem("token");
+  if (token) {
+    return <Navigate to="/match" replace />;
+  }
+
   return (
     <>
       <div

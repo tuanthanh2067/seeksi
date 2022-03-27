@@ -8,7 +8,6 @@ import { SUBMIT_REPORT_MUTATION } from "../../graphql/mutations/Report";
 import { useMutation } from "@apollo/client";
 
 const Report = (props) => {
-  const [err, setErr] = useState("");
   const [title, setTitle] = useState("");
   const [problem, setProblem] = useState("");
   const [desc, setDesc] = useState("");
@@ -18,7 +17,8 @@ const Report = (props) => {
 
   const handleClick = () => {
     if (!title || !problem || !desc) {
-      setErr("*Please provide all information");
+      setStyle("text-red-600 font-bold");
+      setMessage("*Please provide all information");
     } else {
       submitReport({
         variables: {
@@ -47,17 +47,14 @@ const Report = (props) => {
         <h3 className="text-primary font-bold pt-8 pb-4 text-2xl text-center">
           Report
         </h3>
-        <div className={`pb-2 text-center ${style}`}>{message}</div>
-        {err && (
-          <div className="text-red-600 text-center font-medium">{err}</div>
-        )}
+        <div className={`pb-2 text-center ${style} font-medium`}>{message}</div>
         <Label label="Title: " addStyle={"!text-primary text-lg"} />
         <Input
           type="text"
           width="w-full"
           onChange={(e) => {
             setTitle(e.target.value);
-            setErr("");
+            setMessage("");
           }}
         />
         <Label
@@ -68,7 +65,7 @@ const Report = (props) => {
           <label
             onClick={() => {
               setProblem("fake account");
-              setErr("");
+              setMessage("");
             }}
           >
             <input className="scale-150" type="radio" name="problem" />
@@ -79,7 +76,7 @@ const Report = (props) => {
           <label
             onClick={() => {
               setProblem("sharing inappropriate content");
-              setErr("");
+              setMessage("");
             }}
           >
             <input className="scale-150" type="radio" name="problem" />
@@ -91,8 +88,8 @@ const Report = (props) => {
         <div className="mb-2">
           <label
             onClick={() => {
-              setProblem("harrassment");
-              setErr("");
+              setProblem("harassment");
+              setMessage("");
             }}
           >
             <input className="scale-150" type="radio" name="problem" />
@@ -104,7 +101,7 @@ const Report = (props) => {
           <label
             onClick={() => {
               setProblem("something else");
-              setErr("");
+              setMessage("");
             }}
           >
             <input className="scale-150" type="radio" name="problem" />
@@ -119,7 +116,7 @@ const Report = (props) => {
             height="h-36"
             onChange={(e) => {
               setDesc(e.target.value);
-              setErr("");
+              setMessage("");
             }}
           />
         </div>

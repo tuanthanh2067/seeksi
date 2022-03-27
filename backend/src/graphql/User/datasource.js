@@ -291,6 +291,20 @@ class UserAPI extends DataSource {
 
     await user.save();
   }
+
+  async banUser(userId) {
+    try {
+      const user = await User.findById(userId);
+      if (user) {
+        user.isDisabled = true;
+        await user.save();
+      } else {
+        throw new ApolloError("User does not exist");
+      }
+    } catch (err) {
+      throw new ApolloError("Internal Server Error");
+    }
+  }
 }
 
 module.exports.UserAPI = UserAPI;

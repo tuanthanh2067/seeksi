@@ -6,6 +6,7 @@ module.exports.types = `
         content: String
         photos: [Image]
         name: String
+        createdAt: String
     }
 
     type ChatRoom {
@@ -13,5 +14,6 @@ module.exports.types = `
         partner: User
         history: [Message]
         isDisabled: Boolean
+        gameRoom: ID
     }
 `;

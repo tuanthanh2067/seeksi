@@ -1,7 +1,7 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 import LandingPage from "./pages/LandingPage/index";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -10,40 +10,170 @@ import ProfilePage from "./pages/ProfilePage/index";
 import EditPage from "./pages/EditPage/EditPage";
 import Chat from "./pages/Chat/Chat";
 import DescriptiveToast from "./components/Toast/DescriptiveToast";
+import GameRequestToast from "./components/Toast/GameRequestToast";
 
 import { GET_CHAT_ROOMS } from "./graphql/queries/Chat";
-import { GET_MESSAGE } from "./graphql/subscriptions/Chat";
-import { UPDATE_STATUS } from "../src/graphql/mutations/Mutations";
-import { useQuery, useMutation } from "@apollo/client";
+import {
+  GAME_REQUEST_SUBSCRIPTION,
+  MESSAGE_SUBSCRIPTION,
+} from "./graphql/subscriptions/Chat";
+import { UPDATE_STATUS } from "./graphql/mutations/Mutations";
+import {
+  ACCEPT_GAME_REQUEST,
+  REJECT_GAME_REQUEST,
+} from "./graphql/mutations/Game";
+import { SEND_MESSAGE } from "./graphql/mutations/Chat";
+import { useQuery, useMutation, useSubscription } from "@apollo/client";
+
+import ProtectedRoute from "./helper/ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [userToken, setUserToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [requests, setRequests] = useState({});
+  const [hasNewMatch, setHasNewMatch] = useState(false);
   const [updateMyStatus] = useMutation(UPDATE_STATUS);
+  const [acceptGameRequest] = useMutation(ACCEPT_GAME_REQUEST);
+  const [rejectGameRequest] = useMutation(REJECT_GAME_REQUEST);
+  const [sendMessage] = useMutation(SEND_MESSAGE);
+
+  // set up userId on log in
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (token) {
+      setUserToken(token);
+      setCurrentUser(jwt_decode(token));
+      setIsLoggedIn(true);
+    }
+  }, [token]);
+
   const { loading, error, data, subscribeToMore, refetch } =
     useQuery(GET_CHAT_ROOMS);
+
+  const gameRequests = useSubscription(GAME_REQUEST_SUBSCRIPTION, {
+    variables: { myId: currentUser.userId },
+  });
+
+  const handleAccept = (gameRequestId, chatRoomId) => {
+    acceptGameRequest({
+      variables: {
+        gameRequestId: gameRequestId,
+        chatRoomId: chatRoomId,
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+      onCompleted: (data) => {
+        if (!data.acceptGameRequest.success)
+          toast.error(data.acceptGameRequest.message);
+        else {
+          const gameRequest = requests;
+          gameRequest[chatRoomId].expired = true;
+          setRequests(gameRequest);
+          sendMessage({
+            variables: {
+              roomId: chatRoomId,
+              content: "accepted the game request",
+            },
+            onError: (err) => {
+              toast.error(err.message);
+            },
+            onCompleted: (data) => {},
+          });
+        }
+      },
+    });
+  };
+
+  const handleDecline = (gameRequestId, chatRoomId) => {
+    rejectGameRequest({
+      variables: {
+        gameRequestId: gameRequestId,
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+      onCompleted: (data) => {
+        const gameRequest = requests;
+        gameRequest[chatRoomId].expired = true;
+        setRequests(gameRequest);
+
+        sendMessage({
+          variables: {
+            roomId: chatRoomId,
+            content: "rejected the game request",
+          },
+          onError: (err) => {
+            toast.error(err.message);
+          },
+          onCompleted: (data) => {},
+        });
+      },
+    });
+  };
 
   const showToast = (content, photos, name, sendBy) => {
     if (currentUser) {
       if (currentUser.userId === sendBy || window.location.pathname === "/chat")
         return;
 
-      const type = "message";
-
-      return DescriptiveToast(content, photos.length, name, type);
+      return DescriptiveToast(content, photos.length, name);
     }
     return;
   };
 
-  // set up userId on log in
-  useEffect(() => {
-    setUserToken(localStorage.getItem("token"));
-    if (userToken) {
-      setCurrentUser(jwt_decode(userToken));
+  const showGameToast = (content, name, sendBy, gameRequestId, chatRoomId) => {
+    if (currentUser) {
+      if (currentUser.userId === sendBy) return;
+
+      return GameRequestToast(
+        content,
+        name,
+        gameRequestId,
+        chatRoomId,
+        handleAccept,
+        handleDecline
+      );
     }
-    if (currentUser) setIsLoggedIn(true);
-  }, [userToken]);
+    return;
+  };
+
+  useEffect(() => {
+    if (hasNewMatch) refetch();
+  }, [hasNewMatch, refetch]);
+
+  // subscribe for new game requests
+  useEffect(() => {
+    if (gameRequests.data) {
+      if (data) {
+        const room = data.chatRooms.find(
+          (room) => room.partner.id === gameRequests.data.gameRequestSent.sentBy
+        );
+
+        const gameRequestId = gameRequests.data.gameRequestSent.id;
+        const chatRoomId = room.id;
+        const name = `${room.partner.firstName} ${room.partner.lastName}`;
+        const content = `${name} sent you a game request`;
+
+        const gameRequest = requests;
+        gameRequest[chatRoomId] = {
+          requestId: gameRequestId,
+          expired: false,
+          sentBy: gameRequests.data.gameRequestSent.sentBy,
+        };
+        setRequests(gameRequest);
+
+        showGameToast(
+          content,
+          name,
+          gameRequests.data.gameRequestSent.sentBy,
+          gameRequestId,
+          chatRoomId
+        );
+      }
+    }
+  }, [gameRequests.data]);
 
   // subscribe for new messages
   useEffect(() => {
@@ -54,7 +184,7 @@ function App() {
         data.chatRooms.forEach((chatRoom) => {
           unsubscribe.push(
             subscribeToMore({
-              document: GET_MESSAGE,
+              document: MESSAGE_SUBSCRIPTION,
               variables: { roomId: chatRoom.id },
               updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) {
@@ -62,13 +192,13 @@ function App() {
                 }
 
                 const newChat = subscriptionData.data.messageSent;
-
-                showToast(
-                  newChat.content,
-                  newChat.photos,
-                  newChat.name,
-                  newChat.sendBy
-                );
+                if (newChat.name !== "game request")
+                  showToast(
+                    newChat.content,
+                    newChat.photos,
+                    newChat.name,
+                    newChat.sendBy
+                  );
 
                 const room = prev.chatRooms.find(
                   (room) => room.id === chatRoom.id
@@ -138,18 +268,45 @@ function App() {
             }
           />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/match" element={<Match />} />
-          <Route path="/user/:id" element={<ProfilePage />} />
-          <Route path="/edit/:id" element={<EditPage />} />
+          <Route
+            path="/match"
+            element={
+              <ProtectedRoute>
+                <Match setHasNewMatch={setHasNewMatch} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user/:id"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditPage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/chat"
             element={
-              <Chat
-                roomsLoading={loading}
-                roomsData={data || { chatRooms: [] }}
-                roomsError={error}
-                refetch={refetch}
-              />
+              <ProtectedRoute>
+                <Chat
+                  roomsLoading={loading}
+                  roomsData={data || { chatRooms: [] }}
+                  roomsError={error}
+                  refetch={refetch}
+                  handleAccept={handleAccept}
+                  handleDecline={handleDecline}
+                  currentUserId={currentUser.userId}
+                  gameRequests={requests}
+                />
+              </ProtectedRoute>
             }
           />
         </Routes>

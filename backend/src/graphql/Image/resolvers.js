@@ -46,7 +46,12 @@ const mutations = {
 
       // find the index of the photo
       const index = user.photo.findIndex((p) => {
-        return p.origin === args.path;
+        return (
+          p.origin === args.path ||
+          p.small === args.path ||
+          p.medium === args.path ||
+          p.large === args.path
+        );
       });
 
       if (index !== -1) {

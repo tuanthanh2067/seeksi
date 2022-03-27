@@ -1,10 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import OvalButton from "../Buttons/OvalButton";
 import defaultAvt from "../../assets/mock_avatar.png";
 
 function ChatHeader(props) {
-  const handleReport = () => {};
-
+  const navigate = useNavigate();
   return (
     <div>
       <div className="flex-none container mx-auto py-1 border-b-[1px] border-primary">
@@ -16,11 +16,15 @@ function ChatHeader(props) {
                   props.avatar && !props.isDisabled ? props.avatar : defaultAvt
                 }
                 alt="user avatar"
-                className=" object-contain"
+                className=" object-contain hover:cursor-pointer"
+                onClick={() => navigate(`/user/${props.partnerId}`)}
               />
             </div>
             <div className="mx-3 text-lg text-black self-center">
-              <span className="text-lg font-bold inline-block">
+              <span
+                className="text-lg font-bold inline-block hover:cursor-pointer"
+                onClick={() => navigate(`/user/${props.partnerId}`)}
+              >
                 {props.firstName}
               </span>
               {props.userStatus && (
@@ -45,7 +49,9 @@ function ChatHeader(props) {
               bgColor="bg-secondary"
               hover="hover:bg-white hover:text-secondary hover:border-secondary"
               btnName="Report"
-              handleClick={handleReport}
+              handleClick={() => {
+                props.setShowReport(true);
+              }}
             />
           </div>
         </div>

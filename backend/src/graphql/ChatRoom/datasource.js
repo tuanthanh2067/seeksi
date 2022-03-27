@@ -107,6 +107,7 @@ class ChatRoomAPI extends DataSource {
     };
 
     message.id = id;
+    message.createdAt = id.getTimestamp();
 
     const chatRoom = await this.getChatRoomById(roomId);
 
@@ -156,6 +157,7 @@ class ChatRoomAPI extends DataSource {
         partner: chatRoom.pairID[partnerIndex],
         history,
         isDisabled: chatRoom.isDisabled,
+        gameRoom: chatRoom.gameRoom,
       };
     });
 
