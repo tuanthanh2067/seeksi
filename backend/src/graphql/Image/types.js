@@ -5,4 +5,7 @@ module.exports.types = `
         medium: String
         large: String
     }
+
+    scalar Upload
+
 `;
