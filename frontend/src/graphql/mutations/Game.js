@@ -28,3 +28,29 @@ export const REJECT_GAME_REQUEST = gql`
     }
   }
 `;
+
+export const SUBMIT_GAME_ANSWER = gql`
+  mutation submitAnswers(
+    $gameRoomId: String!
+    $answers: [String!]!
+    $isFinal: Boolean!
+  ) {
+    submitAnswers(
+      gameRoomId: $gameRoomId
+      answers: $answers
+      isFinal: $isFinal
+    ) {
+      success
+      message
+    }
+  }
+`;
+
+export const FINISH_GAME = gql`
+  mutation finishPlayingGames {
+    finishPlayingGame {
+      success
+      message
+    }
+  }
+`;

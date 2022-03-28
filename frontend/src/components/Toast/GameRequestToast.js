@@ -32,7 +32,7 @@ const GameRequestToast = (
             </div>
           </div>
         </div>
-        <div className="flex border-l border-gray-200 divide-x divide-gray-200">
+        {/* <div className="flex border-l border-gray-200 divide-x divide-gray-200">
           <button
             onClick={() => {
               handleDecline(gameRequestId, chatRoomId);
@@ -50,6 +50,14 @@ const GameRequestToast = (
             className="w-full border border-transparent rounded-none rounded-r-lg p-2 flex items-center justify-center text-sm font-medium text-primary hover:bg-gray-100 focus:outline-none"
           >
             Accept
+          </button>
+        </div> */}
+        <div className="flex border-l border-gray-200">
+          <button
+            onClick={() => toast.remove(t.id)}
+            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-primary hover:bg-gray-100 focus:outline-none"
+          >
+            Close
           </button>
         </div>
       </div>

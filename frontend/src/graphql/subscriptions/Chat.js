@@ -26,3 +26,12 @@ export const GAME_REQUEST_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export const GAME_ROOM_CREATED_SUBSCRIPTION = gql`
+  subscription gameRoomCreated($chatRoomId: String!) {
+    gameRoomCreated(chatRoomId: $chatRoomId) {
+      chatRoomId
+      gameRoomId
+    }
+  }
+`;
