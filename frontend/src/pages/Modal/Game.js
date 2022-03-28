@@ -59,6 +59,7 @@ const Game = (props) => {
       },
       onError: (error) => {
         console.log(error);
+        setShowConfirmation(false);
       },
       onCompleted: (data) => {
         toast.success(data.submitAnswers.message);
@@ -72,24 +73,6 @@ const Game = (props) => {
         });
       },
     });
-  };
-
-  const confirmExit = () => {
-    setShowConfirmation(false);
-    if (answers.length < 10) {
-      toast.error("Please answer all questions!");
-    } else if (answers.length === 10) {
-      let complete = true;
-      for (let i = 0; i < 10; i++) {
-        if (answers[i] === undefined) {
-          toast.error("Please answer all questions!");
-          complete = false;
-        }
-      }
-      if (complete) {
-        submitData();
-      }
-    }
   };
 
   useEffect(() => {
@@ -207,7 +190,7 @@ const Game = (props) => {
                   title="Exit Game Room"
                   content={`All answers will be saved and submitted. Are you sure to exit?`}
                   handleCancel={() => setShowConfirmation(false)}
-                  handleConfirm={confirmExit}
+                  handleConfirm={submitData}
                 />
               )}
             </div>
