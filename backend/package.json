@@ -38,7 +38,6 @@
     "graphql-ws": "^5.6.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.7",
-    "mongoose-paginate-v2": "^1.6.1",
     "node-geocoder": "^3.28.0",
     "temp": "^0.9.4",
     "ws": "^8.5.0"

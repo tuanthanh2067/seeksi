@@ -1,7 +1,3 @@
-const MatchStatus = require("../../enum/MatchStatus");
-const { MatchAge } = require("../../../lib/age");
-const { MatchDistance } = require("../../../lib/location");
-
 const queries = {
   getPotentialPartners: async (
     _,
@@ -12,50 +8,16 @@ const queries = {
 
     const { userId } = req.user;
     const { page } = args;
-    const { docs } = await dataSources.potentialMatchAPI.findByUserId(
-      userId,
-      page
-    );
+    const docs = await dataSources.potentialMatchAPI.findByUserId(userId, page);
 
-    const findPartnerIndex = (match) => {
-      const userIndex = match.pairID.findIndex(
-        (user) => user._id.toString() === userId
-      );
-
-      return 1 - userIndex;
+    const isLikedByPartner = (first, second) => {
+      return first.status.localeCompare(second.status);
     };
-    const getPartnerCardInfo = (match) => {
-      const partnerIndex = findPartnerIndex(match);
-      const user = match.pairID[1 - partnerIndex];
-      let partner = match.pairID[partnerIndex];
-
-      partner.id = partner._id.toString();
-      partner.age = MatchAge.calculateAge(partner.dob.toISOString());
-      partner.distance = MatchDistance.calculateDistance(user, partner);
-
-      delete partner._id;
-      delete partner.dob;
-      delete partner.location;
-
-      return partner;
-    };
-    const isUserPending = (match) => {
-      const userIndex = 1 - findPartnerIndex(match);
-
-      return match.status[userIndex] === MatchStatus.PENDING;
-    };
-    const isLikedByPartner = (match) => {
-      const partnerIndex = findPartnerIndex(match);
-
-      return match.status[partnerIndex] === MatchStatus.LIKED ? 1 : -1;
+    const byMatchScore = (first, second) => {
+      return second.matchScore - first.matchScore;
     };
 
-    const potentialPartners = docs
-      .filter(isUserPending)
-      .sort(isLikedByPartner)
-      .map(getPartnerCardInfo);
-
-    return potentialPartners;
+    return docs.sort(byMatchScore).sort(isLikedByPartner);
   },
 };
 
@@ -71,26 +33,22 @@ const mutations = {
       const fromId = req.user.userId;
       const toId = args.id;
 
-      const potentialMatch =
-        await dataSources.potentialMatchAPI.sendMatchRequestTo(fromId, toId);
+      await dataSources.potentialMatchAPI.sendMatchRequestTo(fromId, toId);
 
-      if (
-        dataSources.potentialMatchAPI.isMatched(
-          potentialMatch.status[0],
-          potentialMatch.status[1]
-        )
-      ) {
-        const userId = potentialMatch.pairID[0].toString();
-        const partnerId = potentialMatch.pairID[1].toString();
+      const isMatched = await dataSources.potentialMatchAPI.isMatched(
+        fromId,
+        toId
+      );
 
+      if (isMatched) {
         // create a chat room
         const { id } = await dataSources.chatRoomAPI.createChatRoom(
-          userId,
-          partnerId
+          fromId,
+          toId
         );
 
         // create a match
-        await dataSources.matchAPI.createMatch(userId, partnerId, id);
+        await dataSources.matchAPI.createMatch(fromId, toId, id);
 
         return {
           success: true,
@@ -119,12 +77,12 @@ const mutations = {
       const fromId = req.user.userId;
       const toId = args.id;
 
-      const result = await dataSources.potentialMatchAPI.sendRejectRequestTo(
-        fromId,
-        toId
-      );
+      await dataSources.potentialMatchAPI.sendRejectRequestTo(fromId, toId);
 
-      return result;
+      return {
+        success: true,
+        message: "Passed",
+      };
     } catch (err) {
       console.error(err);
       throw err;
