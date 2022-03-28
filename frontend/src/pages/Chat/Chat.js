@@ -7,14 +7,16 @@ import Navbar from "../../components/Navbar";
 import Confirmation from "../Modal/Confirmation";
 import Report from "../Modal/Report";
 import GameResult from "../Modal/GameResult";
+import Game from "../Modal/Game";
 
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { UNMATCH } from "../../graphql/mutations/Match";
 import { STATUS_UPDATED } from "../../graphql/subscriptions/User";
 import { GET_USER_STATUSES } from "../../graphql/queries/User";
 import { SEND_GAME_REQUEST } from "../../graphql/mutations/Game";
 import { SEND_MESSAGE } from "../../graphql/mutations/Chat";
 import { GET_GAME_ROOM } from "../../graphql/queries/Game";
+import { GAME_ROOM_CREATED_SUBSCRIPTION } from "../../graphql/subscriptions/Chat";
 
 function Chat({
   roomsLoading,
@@ -33,7 +35,9 @@ function Chat({
   const [gameRequestStatus, setGameRequestStatus] = useState("");
   const [showGameResults, setShowGameResults] = useState(false);
   const [showReport, setShowReport] = useState(false);
+  const [showGameUI, setShowGameUI] = useState(false);
 
+  const [subscribedRoom, setSubscribedRoom] = useState("");
   const [partnerId, setPartnerId] = useState("");
   const [partnerName, setPartnerName] = useState("");
 
@@ -50,11 +54,24 @@ function Chat({
     variables: { partnerIds: chatRooms.map((room) => room.partner.id) },
   });
 
+  const gameRoomCreated = useSubscription(GAME_ROOM_CREATED_SUBSCRIPTION, {
+    variables: { chatRoomId: subscribedRoom },
+  });
+
   const gameRoom = useQuery(GET_GAME_ROOM, {
     variables: {
       gameRoomId: gameRoomId,
     },
   });
+
+  useEffect(() => {
+    if (gameRoomCreated.data) {
+      setShowGameRequestStatus(false);
+      setShowGameUI(true);
+    } else {
+      setShowGameUI(false);
+    }
+  }, [gameRoomCreated]);
 
   useEffect(() => {}, [gameRequests]);
 
@@ -118,6 +135,7 @@ function Chat({
           `Game request sent successfully. Waiting for response...`
         );
         setShowGameRequestStatus(true);
+        setSubscribedRoom(room.id);
       },
     });
   };
@@ -206,6 +224,7 @@ function Chat({
 
   const handleRoomSelect = (roomId) => {
     setActiveRoomId(roomId);
+    setSubscribedRoom(roomId);
   };
 
   return (
@@ -303,6 +322,13 @@ function Chat({
             }}
           />
         </div>
+      )}
+
+      {showGameUI && (
+        <Game
+          gameRoomId={gameRoomCreated.data.gameRoomCreated.gameRoomId}
+          handleClose={setShowGameUI}
+        />
       )}
 
       {showGameResults && (
