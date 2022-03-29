@@ -15,7 +15,7 @@ import {
 import { GET_POTENTIAL_PARTNERS } from "../../graphql/queries/Match";
 import "./Match.css";
 
-const Match = ({ setHasNewMatch }) => {
+const Match = ({ setHasNewMatch, handleLogOut }) => {
   const [page, setPage] = useState(1);
   const [topCardIndex, setTopCardIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);
@@ -107,7 +107,7 @@ const Match = ({ setHasNewMatch }) => {
 
   return (
     <div className="matchPage">
-      <Navbar />
+      <Navbar handleLogOut={handleLogOut} />
 
       <div className="deckContainer h-1/2 flex items-center justify-center">
         {loading && <Spinner />}

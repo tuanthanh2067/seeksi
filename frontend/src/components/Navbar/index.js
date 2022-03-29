@@ -1,15 +1,21 @@
 import { useState } from "react";
 import jwt_decode from "jwt-decode";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import RoundedButton from "../Buttons/RoundedButton";
 import LogoDark from "../../assets/logo_dark.png";
 
-const Navbar = () => {
+const Navbar = ({ handleLogOut }) => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleNavbarOpen = () => {
     setNavbarOpen(!isNavbarOpen);
+  };
+  const handleLogOutClick = () => {
+    handleLogOut();
+    navigate("/");
   };
 
   const token = localStorage.getItem("token");
@@ -69,12 +75,6 @@ const Navbar = () => {
             >
               Chat
             </Link>
-            {/* <Link
-            to="/"
-            className="block px-10 py-1 mt-3 sm:mt-0 sm:ml-10 font-bold text-center text-lg lg:text-xl border-2 rounded w-full md:w-fit border-primary bg-primary text-white hover:bg-white hover:text-primary hover:border-primary"
-          >
-            Log Out
-          </Link> */}
             <RoundedButton
               btnName={"Log out"}
               fontSize={"text-lg lg:text-xl"}
@@ -83,6 +83,7 @@ const Navbar = () => {
               hover={
                 "hover:text-primary focus:text-primary hover:bg-white focus:bg-white hover:border-primary focus:border-primary"
               }
+              handleClick={handleLogOutClick}
             />
           </nav>
         </div>
