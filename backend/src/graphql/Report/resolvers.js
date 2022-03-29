@@ -4,17 +4,19 @@ const UserType = require("../../enum/UserType");
 const queries = {
   getReports: async (
     _,
-    { page, perPage, fromDate, toDate, status, problem },
+    { page, perPage, fromDate, toDate, status, problem, name },
     { dataSources, req, adminAuthentication }
   ) => {
     adminAuthentication(req.user);
+
     return await dataSources.reportAPI.getReports(
       page,
       perPage,
       fromDate,
       toDate,
       status,
-      problem
+      problem,
+      name
     );
   },
 

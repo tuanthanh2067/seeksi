@@ -21,7 +21,8 @@ class ReportAPI extends DataSource {
     fromDate = "1980/01/01",
     toDate = new Date(),
     status,
-    problem
+    problem,
+    name = ""
   ) {
     try {
       if (status) status = [status];
@@ -39,6 +40,7 @@ class ReportAPI extends DataSource {
           ReportProblemEnum.INAPPROPRIATE_CONTENT,
           ReportProblemEnum.OTHERS,
         ];
+
       const condition = {
         _id: {
           $gte: objectIdWithTimestamp(fromDate),
@@ -51,6 +53,26 @@ class ReportAPI extends DataSource {
           $in: problem,
         },
       };
+
+      if (name) {
+        // search user with name to get id's
+        const regex = new RegExp(name, "i");
+        const users = await User.find({
+          $or: [
+            { firstName: { $regex: regex } },
+            { lastName: { $regex: regex } },
+          ],
+        }).select({ _id: 1 });
+
+        // convert object id to id
+        const ids = users.map((u) => u._id.toString());
+
+        // set conditions
+        condition.$or = [
+          { reportedUserID: { $in: ids } },
+          { reporterID: { $in: ids } },
+        ];
+      }
 
       let reports = [];
       if (+page && +perPage) {
