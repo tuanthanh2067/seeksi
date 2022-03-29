@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const ReportStatusEnum = require("../../enum/ReportStatus");
+
 const reportSchema = new Schema({
   title: {
     type: String,
@@ -16,6 +18,15 @@ const reportSchema = new Schema({
   },
   reporterID: {
     type: String,
+  },
+  status: {
+    type: String,
+    enum: [
+      ReportStatusEnum.PENDING,
+      ReportStatusEnum.RESOLVED,
+      ReportStatusEnum.SKIPPED,
+    ],
+    default: ReportStatusEnum.PENDING,
   },
 });
 

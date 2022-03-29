@@ -7,6 +7,8 @@ const { validateReportProblem } = require("../../utils/validatiion");
 
 const { objectIdWithTimestamp } = require("../../utils/mongoose");
 
+const ReportStatusEnum = require("../../enum/ReportStatus");
+
 class ReportAPI extends DataSource {
   constructor() {
     super();
@@ -16,16 +18,27 @@ class ReportAPI extends DataSource {
     page = 1,
     perPage = 10,
     fromDate = "1980/01/01",
-    toDate = new Date()
+    toDate = new Date(),
+    status = [
+      ReportStatusEnum.PENDING,
+      ReportStatusEnum.RESOLVED,
+      ReportStatusEnum.SKIPPED,
+    ]
   ) {
     try {
+      const condition = {
+        _id: {
+          $gte: objectIdWithTimestamp(fromDate),
+          $lte: objectIdWithTimestamp(toDate),
+        },
+        status: {
+          $in: [...status],
+        },
+      };
       let reports = [];
       if (+page && +perPage) {
         page = +page - 1;
-        reports = await Report.find({
-          _id: { $gte: objectIdWithTimestamp(fromDate) },
-          $lte: objectIdWithTimestamp(toDate),
-        })
+        reports = await Report.find(condition)
           .sort({ _id: -1 })
           .skip(page * +perPage)
           .limit(+perPage)
