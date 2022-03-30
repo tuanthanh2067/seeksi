@@ -146,6 +146,20 @@ class ReportAPI extends DataSource {
       reporterID,
     });
   }
+
+  async updateReportStatus({ id, status }) {
+    if (
+      status !== ReportStatusEnum.PENDING &&
+      status !== ReportStatusEnum.RESOLVED &&
+      status !== ReportStatusEnum.SKIPPED
+    ) {
+      throw new UserInputError(`${status} is an invalid status type`);
+    }
+    const report = await Report.findById(id);
+    report.status = status;
+
+    await report.save();
+  }
 }
 
 module.exports.ReportAPI = ReportAPI;

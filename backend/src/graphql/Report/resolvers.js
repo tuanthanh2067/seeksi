@@ -51,6 +51,21 @@ const mutations = {
       message: "Report submitted successfully!",
     };
   },
+
+  updateReportStatus: async (
+    _,
+    { id, status },
+    { dataSources, req, adminAuthentication }
+  ) => {
+    adminAuthentication(req.user);
+
+    await dataSources.reportAPI.updateReportStatus({ id, status });
+
+    return {
+      success: true,
+      message: "Update report status successfully",
+    };
+  },
 };
 
 module.exports.resolvers = {
