@@ -11,6 +11,7 @@ db.reports.insertMany([
       "Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.",
     reportedUserID: ObjectId("6207f6f7f0323933be000009"),
     reporterID: ObjectId("6207f6f7f0323933be000008"),
+    status: "pending",
   },
   {
     _id: ObjectId("61e761fcfc13ae75bd0000e7"),
@@ -20,6 +21,7 @@ db.reports.insertMany([
       "Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat.",
     reportedUserID: ObjectId("6207f6f7f0323933be000009"),
     reporterID: ObjectId("6207f6f7f0323933be00000a"),
+    status: "pending",
   },
   {
     _id: ObjectId("61e761fcfc13ae75bd0000e8"),
@@ -29,6 +31,7 @@ db.reports.insertMany([
       "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
     reportedUserID: ObjectId("6207f6f6f03239323600000e"),
     reporterID: ObjectId("6207f6f6f0323930a700000f"),
+    status: "resolved",
   },
   {
     _id: ObjectId("61e761fcfc13ae75bd0000e9"),
@@ -37,6 +40,7 @@ db.reports.insertMany([
     description: "Aliquam erat volutpat. In congue.",
     reportedUserID: ObjectId("6207f6f6f032392d1c00000f"),
     reporterID: ObjectId("6207f6f7f0323933be000009"),
+    status: "skipped",
   },
   {
     _id: ObjectId("61e761fcfc13ae75bd0000ea"),
@@ -46,5 +50,6 @@ db.reports.insertMany([
       "Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.",
     reportedUserID: ObjectId("6207f6f6f032392eaf00000e"),
     reporterID: ObjectId("6207f6f6f032392d1c00000f"),
+    status: "pending",
   },
 ]);
