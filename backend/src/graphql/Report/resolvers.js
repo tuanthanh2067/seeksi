@@ -28,6 +28,16 @@ const queries = {
     adminAuthentication(req.user);
     return await dataSources.reportAPI.getReportById(reportId);
   },
+
+  getNumberOfReports: async (
+    _,
+    { args },
+    { dataSources, req, adminAuthentication }
+  ) => {
+    adminAuthentication(req.user);
+
+    return await dataSources.reportAPI.getNumberOfReports();
+  },
 };
 
 const mutations = {

@@ -160,6 +160,10 @@ class ReportAPI extends DataSource {
 
     await report.save();
   }
+
+  async getNumberOfReports() {
+    return await Report.countDocuments();
+  }
 }
 
 module.exports.ReportAPI = ReportAPI;
