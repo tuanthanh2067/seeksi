@@ -75,12 +75,17 @@ class ReportAPI extends DataSource {
       }
 
       let reports = [];
+
       if (+page && +perPage) {
         page = +page - 1;
         reports = await Report.find(condition)
           .sort({ _id: -1 })
           .skip(page * +perPage)
           .limit(+perPage)
+          .populate({
+            path: "reportedUserID reporterID",
+            select: "_id firstName lastName",
+          })
           .exec();
 
         reports = reports.map((r) => {
@@ -88,13 +93,27 @@ class ReportAPI extends DataSource {
             ...r.toObject(),
             id: r._id.toString(),
             createdAt: r._id.getTimestamp(),
+            reportedUserID: {
+              ...r.reportedUserID.toObject(),
+              id: r.reportedUserID._id.toString(),
+            },
+            reporterID: {
+              ...r.reporterID.toObject(),
+              id: r.reporterID._id.toString(),
+            },
           };
         });
       } else {
         throw new ApolloError("something wrong with Page and perPage");
       }
 
-      return reports;
+      return {
+        reports,
+        page: page + 1,
+        limit: perPage,
+        totalReports: reports.length,
+        totalPages: Math.floor(reports.length / perPage) + 1,
+      };
     } catch (err) {
       throw new ApolloError("Internal Server Error");
     }

@@ -14,10 +14,12 @@ const reportSchema = new Schema({
     type: String,
   },
   reportedUserID: {
-    type: String,
+    type: mongoose.Types.ObjectId,
+    ref: "Users",
   },
   reporterID: {
-    type: String,
+    type: mongoose.Types.ObjectId,
+    ref: "Users",
   },
   status: {
     type: String,
