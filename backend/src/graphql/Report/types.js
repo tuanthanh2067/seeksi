@@ -7,5 +7,6 @@ module.exports.types = `
     reportedUserID: ID!,
     reporterID: ID!,
     createdAt: String!
+    status: String!
   }
 `;

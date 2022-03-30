@@ -4,15 +4,19 @@ const UserType = require("../../enum/UserType");
 const queries = {
   getReports: async (
     _,
-    { page, perPage, fromDate, toDate },
+    { page, perPage, fromDate, toDate, status, problem, name },
     { dataSources, req, adminAuthentication }
   ) => {
     adminAuthentication(req.user);
+
     return await dataSources.reportAPI.getReports(
       page,
       perPage,
       fromDate,
-      toDate
+      toDate,
+      status,
+      problem,
+      name
     );
   },
 
@@ -23,6 +27,16 @@ const queries = {
   ) => {
     adminAuthentication(req.user);
     return await dataSources.reportAPI.getReportById(reportId);
+  },
+
+  getNumberOfReports: async (
+    _,
+    { args },
+    { dataSources, req, adminAuthentication }
+  ) => {
+    adminAuthentication(req.user);
+
+    return await dataSources.reportAPI.getNumberOfReports();
   },
 };
 
@@ -45,6 +59,21 @@ const mutations = {
     return {
       success: true,
       message: "Report submitted successfully!",
+    };
+  },
+
+  updateReportStatus: async (
+    _,
+    { id, status },
+    { dataSources, req, adminAuthentication }
+  ) => {
+    adminAuthentication(req.user);
+
+    await dataSources.reportAPI.updateReportStatus({ id, status });
+
+    return {
+      success: true,
+      message: "Update report status successfully",
     };
   },
 };
