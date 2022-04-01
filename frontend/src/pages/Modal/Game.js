@@ -29,14 +29,14 @@ const Game = (props) => {
 
   const handleYes = () => {
     let idx = curQuestion;
-    let newAnswers = answers;
+    let newAnswers = [...answers];
     newAnswers[idx] = "yes";
     setAnswers(newAnswers);
   };
 
   const handleNo = () => {
     let idx = curQuestion;
-    let newAnswers = answers;
+    let newAnswers = [...answers];
     newAnswers[idx] = "no";
     setAnswers(newAnswers);
   };
@@ -157,14 +157,20 @@ const Game = (props) => {
 
             <h3 className="text-center text-white mt-5 mb-2">Your answer: </h3>
             <div className="grid">
-              {answers[curQuestion] && (
-                <div className=" justify-self-center w-11 h-11">
-                  <img
-                    src={answers[curQuestion] === "yes" ? Yes : No}
-                    alt={answers[curQuestion]}
-                  />
-                </div>
-              )}
+              <div className=" justify-self-center w-11 h-11">
+                <img
+                  src={Yes}
+                  alt="Yes"
+                  className={`${
+                    answers[curQuestion] === "yes" ? "" : "hidden"
+                  }`}
+                />
+                <img
+                  src={No}
+                  alt="No"
+                  className={`${answers[curQuestion] === "no" ? "" : "hidden"}`}
+                />
+              </div>
             </div>
             <div className="grid grid-cols-2 pb-10 absolute bottom-0 left-0 w-full ">
               <div className="justify-self-start">
