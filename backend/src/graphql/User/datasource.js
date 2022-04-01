@@ -297,7 +297,7 @@ class UserAPI extends DataSource {
       const user = await User.findById(userId);
       if (user) {
         user.isDisabled = true;
-        await user.save();
+        return await user.save();
       } else {
         throw new ApolloError("User does not exist");
       }

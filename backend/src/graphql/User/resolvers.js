@@ -1,4 +1,5 @@
-const { AuthenticationError, ApolloError } = require("apollo-server-core");
+const { sendDeactivateAccountMail } = require("../../utils/mail_service");
+const { ApolloError } = require("apollo-server-core");
 
 const queries = {
   userByEmail: async (_, args, { dataSources }) => {
@@ -108,10 +109,14 @@ const mutations = {
   banUser: async (_, { userId }, { dataSources, req, adminAuthentication }) => {
     try {
       adminAuthentication(req.user);
-      await dataSources.userAPI.banUser(userId);
+
+      const user = await dataSources.userAPI.banUser(userId);
+
+      await sendDeactivateAccountMail(user);
+
       return {
         success: true,
-        message: "Account Banned",
+        message: "Account has been deactivated",
       };
     } catch (err) {
       throw err;

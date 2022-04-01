@@ -41,4 +41,20 @@ module.exports = {
       throw err;
     }
   },
+  sendDeactivateAccountMail: async (recipient) => {
+    try {
+      const data = {
+        to: recipient.email,
+        from: process.env.SENDGRID_EMAIL,
+        templateId: process.env.ACCOUNT_DEACTIVATION_TEMPLATE_ID,
+        dynamicTemplateData: {
+          recipient_name: `${recipient.firstName} ${recipient.lastName}`,
+        },
+      };
+
+      await sgMail.send(data);
+    } catch (err) {
+      throw err;
+    }
+  },
 };
