@@ -17,7 +17,6 @@ const { OpeningLine } = require("./OpeningLine");
 const { SharedType } = require("./SharedType");
 const { GameRoom } = require("./GameRoom");
 const { GameRequest } = require("./GameRequest");
-const { Upload } = require("./Upload");
 
 const typeDefs = gql`
   ${interfaces.types}
@@ -36,7 +35,6 @@ const typeDefs = gql`
   ${GameRequest.types}
   ${UserStatus.types}
   ${OpeningLine.types}
-  ${Upload.types}
   
   type Query {
     ${User.queries}
@@ -50,7 +48,6 @@ const typeDefs = gql`
     ${GameRequest.queries}
     ${UserStatus.queries}
     ${OpeningLine.queries}
-    ${Upload.queries}
     ${Image.queries}
   }
   
@@ -65,7 +62,6 @@ const typeDefs = gql`
     ${GameRequest.mutations}
     ${UserStatus.mutations}
     ${OpeningLine.mutations}
-    ${Upload.mutations}
     ${Image.mutations}
   }
 
