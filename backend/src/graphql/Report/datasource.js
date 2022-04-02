@@ -121,7 +121,10 @@ class ReportAPI extends DataSource {
 
   async getReportById(reportId) {
     try {
-      const report = await Report.findById(reportId);
+      const report = await Report.findById(reportId).populate({
+        path: "reportedUserID reporterID",
+        select: "_id firstName lastName",
+      });
       report.createdAt = report._id.getTimestamp();
 
       return report;
