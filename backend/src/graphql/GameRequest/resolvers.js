@@ -66,15 +66,14 @@ const mutations = {
     }
 
     // update me and the partner to playing games if all checks pass
-    dataSources.playingStatusAPI.updatePlayingStatus(req.user.userId, true);
-
-    dataSources.playingStatusAPI.updatePlayingStatus(partnerId, true);
-
     await dataSources.gameRequestAPI.acceptGameRequest(args.gameRequestId);
 
     const gameRoomId = await dataSources.gameRoomAPI.createGameRoom(
       args.chatRoomId
     );
+
+    dataSources.playingStatusAPI.updatePlayingStatus(req.user.userId, true);
+    dataSources.playingStatusAPI.updatePlayingStatus(partnerId, true);
 
     pubsub.publish("GAME_ROOMS", {
       gameRoomCreated: {

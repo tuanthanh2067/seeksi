@@ -5,4 +5,6 @@ module.exports.mutations = `
     description: String!
     reportedUserID: String!
   ): GeneralMutationResponse
+
+  updateReportStatus(id: String!, status: String!): GeneralMutationResponse
 `;

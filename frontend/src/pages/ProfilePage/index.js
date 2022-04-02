@@ -12,7 +12,7 @@ import "lightgallery/css/lg-zoom.css";
 import { Image } from "react-shimmer";
 import FallBack from "../../components/FallBack/FallBack";
 
-const ProfilePage = () => {
+const ProfilePage = ({ handleLogOut }) => {
   const { id } = useParams();
 
   const { loading, error, data, refetch } = useQuery(GET_USER, {
@@ -23,7 +23,7 @@ const ProfilePage = () => {
   });
   return (
     <>
-      <Navbar />
+      <Navbar handleLogOut={handleLogOut} />
       {loading && <Spinner />}
       {error && (
         <div className="flex h-screen w-full justify-center items-center">

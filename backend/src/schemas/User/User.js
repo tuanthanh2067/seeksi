@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
 const { Schema } = mongoose;
 
 const UserType = require("../../enum/UserType");
+const PotentialMatch = require("../PotentialMatch/PotentialMatch");
 
 const { imageSchema } = require("../share/Image");
 const { locationSchema } = require("../share/Location");
 const { preferenceSchema } = require("./Preference");
-const { hobbySchema } = require("../Hobby/Hobby");
 
 const userSchema = new Schema({
   firstName: {
@@ -65,7 +64,21 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.plugin(mongoosePaginate);
+userSchema.post("save", async (doc) => {
+  const potentialMatch = await PotentialMatch.findOne({ user: doc._id });
+
+  if (potentialMatch) {
+    potentialMatch.potentialPartners = new Map();
+    await potentialMatch.save();
+
+    return;
+  }
+
+  await PotentialMatch.create({
+    user: doc._id,
+    potentialPartners: new Map(),
+  });
+});
 
 const User = mongoose.model("Users", userSchema);
 

@@ -1,1 +1,3 @@
-module.exports.subscriptions = ``;
+module.exports.subscriptions = `
+    finalAnswersSubmitted(gameRoomId: String!): GameRoom!
+`;
