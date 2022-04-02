@@ -183,7 +183,8 @@ class UserAPI extends DataSource {
       } else {
         throw new Error("User doesn't exist");
       }
-      await user.save();
+
+      return await user.save();
     } catch (err) {
       console.error(err);
       throw new ApolloError("Internal server error");

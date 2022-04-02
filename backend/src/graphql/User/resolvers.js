@@ -56,13 +56,15 @@ const mutations = {
     try {
       userAuthentication(req.user);
 
-      await dataSources.userAPI.deleteAccountById(req.user.userId);
+      const user = await dataSources.userAPI.deleteAccountById(req.user.userId);
 
       await dataSources.potentialMatchAPI.deleteByUserId(req.user.userId);
 
+      await sendDeactivateAccountMail(user);
+
       return {
         success: true,
-        message: "Account Deleted",
+        message: "Account has been deleted",
       };
     } catch (err) {
       throw err;
