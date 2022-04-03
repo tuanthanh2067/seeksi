@@ -75,6 +75,7 @@ class ReportAPI extends DataSource {
       }
 
       let reports = [];
+      const totalReports = await Report.countDocuments(condition);
 
       if (+page && +perPage) {
         page = +page - 1;
@@ -109,10 +110,12 @@ class ReportAPI extends DataSource {
 
       return {
         reports,
+        totalReports,
         page: page + 1,
         limit: perPage,
-        totalReports: reports.length,
-        totalPages: Math.floor(reports.length / perPage) + 1,
+        totalPages:
+          Math.floor(totalReports / perPage) +
+          (totalReports % perPage > 0 ? 1 : 0),
       };
     } catch (err) {
       throw new ApolloError("Internal Server Error");
