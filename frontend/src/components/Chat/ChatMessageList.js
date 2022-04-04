@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import ChatMessageItem from "./ChatMessageItem";
-import ChatSuggestLines from "./ChatSuggestLines";
 
 const ADMIN_MESSAGE_COUNT = 3;
 
@@ -15,10 +14,16 @@ function ChatMessageList({ data, handleAccept, handleDecline }) {
   }, [data.history]);
 
   return (
-    <div className="flex flex-col h-[28rem]">
+    <div
+      className={`mb-3 ${
+        data.history.length <= ADMIN_MESSAGE_COUNT
+          ? "h-[35%] lg:h-[45%] xl:h-[55%]"
+          : "h-[80%]"
+      }`}
+    >
       <div
         id="scrollWindow"
-        className="relative min-h-[80%] grow flex flex-col overflow-x-hidden overflow-y-scroll scroll-smooth"
+        className="flex flex-col w-full h-full overflow-x-hidden overflow-y-scroll scroll-smooth"
       >
         {data.history.map((message) => (
           <ChatMessageItem
@@ -30,9 +35,6 @@ function ChatMessageList({ data, handleAccept, handleDecline }) {
           />
         ))}
       </div>
-      {data.history.length <= ADMIN_MESSAGE_COUNT && (
-        <ChatSuggestLines roomId={data.id} />
-      )}
     </div>
   );
 }

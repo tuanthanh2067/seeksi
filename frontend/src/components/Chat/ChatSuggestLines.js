@@ -60,7 +60,7 @@ const ChatSuggestLines = (props) => {
   };
 
   return (
-    <div className="w-full border-t-primary border-t-[1px] p-1 ">
+    <div className="w-full h-auto border-t-primary border-t-[1px] px-1 md:py-3 mt-12 ">
       <div className="text-center text-xs font-semibold mx-auto my-1">
         ✨ Suggested Lines ✨
       </div>

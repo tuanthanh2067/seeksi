@@ -8,7 +8,7 @@ const RoundedImage = (props) => {
       <div className="w-full h-full relative">
         <button
           id={props.idx}
-          className=" px-1.5 font-bold text-lg py-0.2 opacity-0 inset-0 absolute hover:opacity-60 hover:bg-white hover:text-black "
+          className="w-full px-1.5 font-bold text-lg py-0.2 opacity-0 inset-0 absolute hover:opacity-60 hover:bg-white hover:text-black "
           onClick={props.handleRemove}
         >
           Remove
