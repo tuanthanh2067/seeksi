@@ -9,6 +9,7 @@ import Match from "./pages/Match/Match";
 import ProfilePage from "./pages/ProfilePage/index";
 import EditPage from "./pages/EditPage/EditPage";
 import Chat from "./pages/Chat/Chat";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import DescriptiveToast from "./components/Toast/DescriptiveToast";
 import GameRequestToast from "./components/Toast/GameRequestToast";
 
@@ -318,6 +319,14 @@ function App() {
                   gameRequests={requests}
                   handleLogOut={handleLogOut}
                 />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <AdminDashboard handleLogOut={handleLogOut} />
               </ProtectedRoute>
             }
           />

@@ -36,7 +36,7 @@ db.reports.insertMany([
   {
     _id: ObjectId("61e761fcfc13ae75bd0000e9"),
     title: "leo odio porttitor id consequat in",
-    problem: "sharing inappropriate content",
+    problem: "inappropriate content",
     description: "Aliquam erat volutpat. In congue.",
     reportedUserID: ObjectId("6207f6f6f032392d1c00000f"),
     reporterID: ObjectId("6207f6f7f0323933be000009"),

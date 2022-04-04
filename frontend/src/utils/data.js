@@ -131,3 +131,43 @@ export const generateYearOptions = () => {
   }
   return year;
 };
+
+export const getYearsToDate = () => {
+  let years = [];
+
+  for (let i = new Date().getFullYear(); i >= 2022; i--) {
+    years.push({
+      value: i,
+      label: i,
+    });
+  }
+  return years;
+};
+
+export const getMonthOfYear = (selectedYear) => {
+  let months = [];
+  if (selectedYear === new Date().getFullYear()) {
+    for (let i = 0; i <= new Date().getMonth(); i++) {
+      months.push(monthOptions[i]);
+    }
+  } else {
+    months = monthOptions;
+  }
+  return months;
+};
+
+export const reportTypes = [
+  { value: "Fake account", label: "Fake account" },
+  { value: "Harassment", label: "Harassment" },
+  {
+    value: "Inappropriate content",
+    label: "Inappropriate content",
+  },
+  { value: "Something else", label: "Something else" },
+];
+
+export const reportStatuses = [
+  { value: "Pending", label: "Pending" },
+  { value: "Skipped", label: "Skipped" },
+  { value: "Resolved", label: "Resolved" },
+];

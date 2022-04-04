@@ -1,10 +1,8 @@
 import React from "react";
 import Info from "../../assets/info.png";
+import { capitalizeFirstLetter } from "../../utils/helper";
 
 const CardFooter = ({ firstName, age, sex, hobbies, userID, textColor }) => {
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
   return (
     <div className="flex">
       <div className="w-5/6 m-0">

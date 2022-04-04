@@ -75,6 +75,15 @@ const Navbar = ({ handleLogOut }) => {
             >
               Chat
             </Link>
+            {token && decodedToken.role.includes("admin") && (
+              <Link
+                to={`/dashboard`}
+                className=" block mt-3 sm:mt-0 sm:ml-10 text-primary font-semibold text-lg lg:text-xl hover:underline"
+              >
+                Dashboard
+              </Link>
+            )}
+
             <RoundedButton
               btnName={"Log out"}
               fontSize={"text-lg lg:text-xl"}

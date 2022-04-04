@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 import RoundedButton from "../../components/Buttons/RoundedButton";
 import Logo from "../../assets/logo.png";
@@ -15,7 +16,12 @@ const LandingPage = ({ setIsLoggedIn, setUserToken }) => {
   const handleSignInModal = () => setShowSignInModal(false);
 
   const token = localStorage.getItem("token");
+
   if (token) {
+    const decodedToken = jwt_decode(token);
+    if (decodedToken.role.includes("admin")) {
+      return <Navigate to="/dashboard" replace />;
+    }
     return <Navigate to="/match" replace />;
   }
 
