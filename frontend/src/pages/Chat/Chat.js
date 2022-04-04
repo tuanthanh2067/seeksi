@@ -254,7 +254,7 @@ function Chat({
   };
 
   return (
-    <div className="h-screen">
+    <>
       {showConfirmation && (
         <div
           onClick={(e) => {
@@ -387,7 +387,7 @@ function Chat({
       )}
 
       {!roomsLoading && chatRooms && (
-        <section className="container mx-auto py-5 md:p-5 min-h-[85%] max-h-[85%] flex">
+        <section className="container mx-auto md:px-5 grid grid-cols-3">
           <ChatPartner
             data={chatRooms}
             onRoomSelect={handleRoomSelect}
@@ -407,7 +407,7 @@ function Chat({
           />
         </section>
       )}
-    </div>
+    </>
   );
 }
 

@@ -68,8 +68,8 @@ const ProfilePage = (props) => {
   return (
     <>
       <div className="container mx-auto px-4 py-5 sm:p-5">
-        <div className="flex flex-col lg:flex-row items-center justify-evenly">
-          <div className="w-36 h-36 sm:w-48 sm:h-48 overflow-hidden rounded-full">
+        <div className="grid grid-cols-1 lg:grid-cols-4 items-center justify-items-center">
+          <div className="w-36 h-36 sm:w-48 sm:h-48 overflow-hidden rounded-full lg:col-span-1">
             {props.isEdit ? (
               avt ? (
                 <OvalImage src={avt} handleRemove={handleAvtRemove} />
@@ -89,7 +89,7 @@ const ProfilePage = (props) => {
               />
             )}
           </div>
-          <div className="mt-4 lg:mt-0">
+          <div className="mt-4 lg:mt-0 lg:col-span-3">
             <div className="flex flex-col items-center justify-center lg:items-start">
               <p className="text-lg text-primary font-bold">
                 {props.user.firstName} {props.user.lastName}
