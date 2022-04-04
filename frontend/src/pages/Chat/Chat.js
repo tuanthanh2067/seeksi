@@ -17,6 +17,7 @@ import { SEND_GAME_REQUEST } from "../../graphql/mutations/Game";
 import { SEND_MESSAGE } from "../../graphql/mutations/Chat";
 import { GET_GAME_ROOM } from "../../graphql/queries/Game";
 import { GAME_ROOM_CREATED_SUBSCRIPTION } from "../../graphql/subscriptions/Chat";
+import { ANSWER_SUBMITTED } from "../../graphql/subscriptions/Game";
 
 function Chat({
   roomsLoading,
@@ -37,6 +38,7 @@ function Chat({
   const [showGameResults, setShowGameResults] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [showGameUI, setShowGameUI] = useState(false);
+  const [count, setCount] = useState(0);
 
   const [subscribedRoom, setSubscribedRoom] = useState("");
   const [partnerId, setPartnerId] = useState("");
@@ -64,11 +66,34 @@ function Chat({
       gameRoomId: gameRoomId,
     },
   });
+  useEffect(() => {
+    const unsubscribe = gameRoom.subscribeToMore({
+      document: ANSWER_SUBMITTED,
+      variables: { gameRoomId: gameRoomId },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) {
+          return prev;
+        }
+        const newData = subscriptionData.data.finalAnswersSubmitted;
+        setCount(count + 1);
+        return Object.assign({}, prev, {
+          getGameRoom: {
+            id: newData.id,
+            questions: newData.questions,
+            answers: newData.answers,
+          },
+        });
+      },
+    });
+
+    return () => unsubscribe();
+  }, [gameRoom, gameRoomId]);
 
   useEffect(() => {
     if (gameRoomCreated.data) {
       setShowGameRequestStatus(false);
       setShowGameUI(true);
+      setGameRoomId(gameRoomCreated.data.gameRoomCreated.gameRoomId);
     } else {
       setShowGameUI(false);
     }
@@ -329,6 +354,7 @@ function Chat({
         <Game
           gameRoomId={gameRoomCreated.data.gameRoomCreated.gameRoomId}
           handleClose={setShowGameUI}
+          handleResult={setShowGameResults}
         />
       )}
 
@@ -345,6 +371,7 @@ function Chat({
             data={gameRoom.data}
             error={gameRoom.error}
             loading={gameRoom.loading}
+            showStatus={count === 1 ? true : false}
             partnerId={partnerId}
             partnerName={partnerName}
           />
