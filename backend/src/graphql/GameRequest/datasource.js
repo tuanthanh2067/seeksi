@@ -91,7 +91,7 @@ class GameRequestAPI extends DataSource {
 
       return gameRequests.map((gr) => {
         return {
-          ...gr,
+          ...gr.toObject(),
           id: gr._id,
           sentBy: gr.pairID[0],
           sentTo: gr.pairID[1],
