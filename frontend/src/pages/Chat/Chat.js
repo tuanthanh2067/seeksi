@@ -38,7 +38,6 @@ function Chat({
   const [showGameResults, setShowGameResults] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [showGameUI, setShowGameUI] = useState(false);
-  const [count, setCount] = useState(0);
 
   const [subscribedRoom, setSubscribedRoom] = useState("");
   const [partnerId, setPartnerId] = useState("");
@@ -75,7 +74,6 @@ function Chat({
           return prev;
         }
         const newData = subscriptionData.data.finalAnswersSubmitted;
-        setCount(count + 1);
         return Object.assign({}, prev, {
           getGameRoom: {
             id: newData.id,
@@ -104,7 +102,9 @@ function Chat({
   const handleGame = () => {
     const room = chatRooms.find((room) => room.partner.id === partnerId);
     setPartnerName(room.partner.firstName);
-    if (room.gameRoom) {
+    if (gameRoomId) {
+      setShowGameResults(true);
+    } else if (room.gameRoom) {
       setGameRoomId(room.gameRoom);
       setShowGameResults(true);
     } else {
@@ -371,7 +371,6 @@ function Chat({
             data={gameRoom.data}
             error={gameRoom.error}
             loading={gameRoom.loading}
-            showStatus={count === 1 ? true : false}
             partnerId={partnerId}
             partnerName={partnerName}
           />

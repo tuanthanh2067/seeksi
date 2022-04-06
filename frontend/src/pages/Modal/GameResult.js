@@ -57,7 +57,6 @@ const GameResult = ({
   data,
   error,
   loading,
-  showStatus,
   partnerId,
   partnerName,
 }) => {
@@ -95,11 +94,11 @@ const GameResult = ({
             </span>
           </div>
         </div>
-        {showStatus && (
+        {/* {showStatus && (
           <span className="text-[#A2F5C3] underline underline-offset-2 font-semibold text-base text-center mb-3">
             Waiting for {partnerName} to finish the game!
           </span>
-        )}
+        )} */}
         {loading && <Spinner />}
         {error && (
           <div className="flex mb-5 mx-auto h-24">
