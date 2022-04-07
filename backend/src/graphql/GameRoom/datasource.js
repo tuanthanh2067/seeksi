@@ -63,7 +63,7 @@ class GameRoomAPI extends DataSource {
     }
   }
 
-  async submitAnswer(gameRoomId, userId, answers) {
+  async submitAnswer(gameRoomId, userId, answers, submitted_status) {
     try {
       const gameRoom = await GameRoom.findById(gameRoomId);
 
@@ -76,6 +76,7 @@ class GameRoomAPI extends DataSource {
       const index = firstUser === userId ? 0 : 1;
 
       gameRoom.answers[index].answers = answers;
+      gameRoom.answers[index].submitted_status = submitted_status;
 
       await gameRoom.save();
     } catch (err) {

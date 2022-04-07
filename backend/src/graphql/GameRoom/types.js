@@ -9,6 +9,7 @@ module.exports.types = `
     type Answer {
         user: ID!
         answers: [String!]!
+        submitted_status: Boolean!
     }
 
     type Question {
