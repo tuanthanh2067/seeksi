@@ -82,6 +82,28 @@ class GameRequestAPI extends DataSource {
       throw new ApolloError("Internal Server Error");
     }
   }
+
+  async getUserGameRequest(userId) {
+    try {
+      const gameRequests = await GameRequest.find({
+        pairID: { $in: [mongoose.Types.ObjectId(userId)] },
+      });
+
+      return gameRequests.map((gr) => {
+        return {
+          ...gr.toObject(),
+          id: gr._id,
+          sentBy: gr.pairID[0],
+          sentTo: gr.pairID[1],
+          sentByStatus: gr.status[0],
+          sentToStatus: gr.status[1],
+        };
+      });
+    } catch (err) {
+      console.error(err);
+      throw new ApolloError("Internal Server Error");
+    }
+  }
 }
 
 module.exports.GameRequestAPI = GameRequestAPI;
