@@ -47,7 +47,7 @@ const ReportItem = ({ report, index, page, handleGetReports }) => {
   return (
     <>
       <div
-        className="flex border-y-[1px] p-3 border-gray-100"
+        className="flex border-y-[1px] p-3 border-gray-100 bg-gray-50"
         key={report.id}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -83,7 +83,7 @@ const ReportItem = ({ report, index, page, handleGetReports }) => {
       </div>
 
       {isOpen && (
-        <div className="flex px-3 bg-gray-50">
+        <div className="flex px-3 ">
           <div className="w-10"></div>
           <div className="w-3/12">
             <div className="py-1 border-b-[1px] border-gray-50">
@@ -104,7 +104,7 @@ const ReportItem = ({ report, index, page, handleGetReports }) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                {report.reporterID.firstName} {report.reportedUserID.lastName}
+                {report.reporterID.firstName} {report.reporterID.lastName}
               </a>
             </div>
             <div className="py-1 mr-10 border-y-[1px] border-gray-50">

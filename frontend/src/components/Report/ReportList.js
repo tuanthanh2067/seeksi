@@ -34,6 +34,7 @@ const ReportList = ({
         <div className="wrapper">
           {reports.map((report, index) => (
             <ReportItem
+              key={report.id}
               report={report}
               index={index}
               page={page}
