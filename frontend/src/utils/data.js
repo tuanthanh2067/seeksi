@@ -157,6 +157,7 @@ export const getMonthOfYear = (selectedYear) => {
 };
 
 export const reportTypes = [
+  { value: "All", label: "All" },
   { value: "Fake account", label: "Fake account" },
   { value: "Harassment", label: "Harassment" },
   {
@@ -167,6 +168,7 @@ export const reportTypes = [
 ];
 
 export const reportStatuses = [
+  { value: "All", label: "All" },
   { value: "Pending", label: "Pending" },
   { value: "Skipped", label: "Skipped" },
   { value: "Resolved", label: "Resolved" },
