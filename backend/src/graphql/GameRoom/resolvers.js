@@ -25,13 +25,9 @@ const mutations = {
       req.user.userId
     );
 
-    await dataSources.gameRoomAPI.submitAnswer(
-      args.gameRoomId,
-      req.user.userId,
-      args.answers
-    );
-
+    let submitted_status = false;
     if (args.isFinal) {
+      submitted_status = true;
       const gameRoom = await dataSources.gameRoomAPI.getGameRoom(
         args.gameRoomId
       );
@@ -39,6 +35,13 @@ const mutations = {
         finalAnswersSubmitted: gameRoom,
       });
     }
+
+    await dataSources.gameRoomAPI.submitAnswer(
+      args.gameRoomId,
+      req.user.userId,
+      args.answers,
+      submitted_status
+    );
 
     return {
       success: true,
