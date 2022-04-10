@@ -18,6 +18,9 @@ const WebSocketProvider = ({ children }) => {
     const wsLink = new GraphQLWsLink(
       createClient({
         url: "ws://localhost:4000/",
+        connectionParams: {
+          authorization: getToken() ? `Bearer ${getToken()}` : "",
+        },
       })
     );
 
