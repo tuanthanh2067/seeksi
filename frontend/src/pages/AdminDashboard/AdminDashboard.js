@@ -5,7 +5,6 @@ import Input from "../../components/Input/Input";
 import Label from "../../components/Input/Label";
 import Dropdown from "../../components/Input/Dropdown";
 import RoundedButton from "../../components/Buttons/RoundedButton";
-import ReportDetails from "../Modal/ReportDetails";
 import ReportList from "../../components/Report/ReportList";
 
 import { useLazyQuery } from "@apollo/client";
@@ -21,16 +20,14 @@ const AdminDashboard = ({ handleLogOut }) => {
   const REPORTS_PER_PAGE = 10;
 
   const [page, setPage] = useState(1);
-  const [showReportDetails, setShowReportDetails] = useState(false);
-  const [reportId, setReportId] = useState("");
   const [fromYear, setFromYear] = useState(2022);
   const [fromMonth, setFromMonth] = useState("January");
   const [toYear, setToYear] = useState(new Date().getFullYear());
   const [toMonth, setToMonth] = useState(
     new Date().toLocaleString("default", { month: "long" })
   );
-  const [type, setType] = useState("");
-  const [status, setStatus] = useState("");
+  const [type, setType] = useState("All");
+  const [status, setStatus] = useState("Pending");
   const [searchInput, setSearchInput] = useState("");
 
   const [getReports, { data, error, loading }] = useLazyQuery(GET_REPORTS);
@@ -42,8 +39,8 @@ const AdminDashboard = ({ handleLogOut }) => {
         perPage: REPORTS_PER_PAGE,
         fromDate: `${fromYear}/${fromMonth}/01`,
         toDate: `${toYear}/${toMonth}/31`,
-        status: status.toLowerCase(),
-        problem: type.toLowerCase(),
+        status: status !== "All" ? status.toLowerCase() : "",
+        problem: type !== "All" ? type.toLowerCase() : "",
         name: searchInput.toLowerCase(),
       },
     });
@@ -60,22 +57,6 @@ const AdminDashboard = ({ handleLogOut }) => {
 
   return (
     <>
-      {showReportDetails && (
-        <div
-          onClick={(e) => {
-            if (e.currentTarget.firstChild === e.target) {
-              setShowReportDetails(false);
-            }
-          }}
-        >
-          <ReportDetails
-            reportId={reportId}
-            closeModal={() => setShowReportDetails(false)}
-            getReports={getReports}
-          />
-        </div>
-      )}
-
       <Navbar handleLogOut={handleLogOut} />
       <div className="container mx-auto px-4 py-5 md:p-5 mb-10 ">
         <p className="text-purple font-bold text-3xl mb-4 sticky top-0 z-5">
@@ -133,9 +114,7 @@ const AdminDashboard = ({ handleLogOut }) => {
                 <div className="my-2">
                   <Dropdown
                     options={reportTypes}
-                    placeholder="Type"
                     defaultValue={type}
-                    isClearable={true}
                     onChange={(e) => {
                       if (!e) setType("");
                       else setType(e.value);
@@ -148,9 +127,7 @@ const AdminDashboard = ({ handleLogOut }) => {
                 <div className="my-2">
                   <Dropdown
                     options={reportStatuses}
-                    placeholder="Status"
                     defaultValue={status}
-                    isClearable={true}
                     onChange={(e) => {
                       if (!e) setStatus("");
                       else setStatus(e.value);
@@ -196,8 +173,6 @@ const AdminDashboard = ({ handleLogOut }) => {
             <ReportList
               data={data.getReports}
               handleGetReports={handleGetReports}
-              setReportId={setReportId}
-              setShowReportDetails={setShowReportDetails}
               page={page}
               setPage={setPage}
             />
