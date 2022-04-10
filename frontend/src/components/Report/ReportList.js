@@ -24,11 +24,11 @@ const ReportList = ({
     <>
       <div className="w-full my-5">
         <div className="flex h-10 px-3 items-center bg-gray-100 font-bold ">
-          <div className="w-10">#</div>
-          <div className="w-3/12">Title</div>
-          <div className="w-4/12">Reporting</div>
-          <div className="w-2/12">Created on</div>
-          <div className="w-2/12">Status</div>
+          <div className="w-10 px-2">#</div>
+          <div className="w-3/12 px-2">Title</div>
+          <div className="w-4/12 px-2">Reporting</div>
+          <div className="w-2/12 px-2">Created on</div>
+          <div className="w-2/12 px-2">Status</div>
         </div>
 
         <div className="wrapper">

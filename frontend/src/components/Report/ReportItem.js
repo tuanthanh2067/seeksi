@@ -51,15 +51,15 @@ const ReportItem = ({ report, index, page, handleGetReports }) => {
         key={report.id}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="w-10">{(page - 1) * 10 + index + 1}</div>
-        <div className="w-3/12">{report.title}</div>
-        <div className="w-4/12">
+        <div className="w-10 px-2">{(page - 1) * 10 + index + 1}</div>
+        <div className="w-3/12 px-2 break-words">{report.title}</div>
+        <div className="w-4/12 px-2">
           {report.reportedUserID.firstName} {report.reportedUserID.lastName}
         </div>
-        <div className="w-2/12 break-all">
+        <div className="w-2/12 px-2 break-all">
           {new Date(report.createdAt * 1).toLocaleDateString()}
         </div>
-        <div className="w-2/12">
+        <div className="w-2/12 px-2">
           <div
             className={`px-1 max-w-max ${
               report.status === "pending"
@@ -86,19 +86,21 @@ const ReportItem = ({ report, index, page, handleGetReports }) => {
         <div className="flex px-3 ">
           <div className="w-10"></div>
           <div className="w-3/12">
-            <div className="py-1 border-b-[1px] border-gray-50">
+            <div className="px-2 py-1 border-b-[1px] border-gray-50">
               Reported by:
             </div>
-            <div className="py-1 border-y-[1px] border-gray-50">
+            <div className="px-2 py-1 border-y-[1px] border-gray-50">
               Reported user:
             </div>
-            <div className="py-1 border-y-[1px] border-gray-50">Problem:</div>
-            <div className="py-1 border-t-[1px] border-gray-50">
+            <div className="px-2 py-1 border-y-[1px] border-gray-50">
+              Problem:
+            </div>
+            <div className="px-2 py-1 border-t-[1px] border-gray-50">
               Description:
             </div>
           </div>
           <div className="w-6/12">
-            <div className="py-1 mr-10 border-b-[1px] border-gray-50">
+            <div className="px-2 py-1 mr-10 border-b-[1px] border-gray-50">
               <a
                 href={`/user/${report.reporterID.id}`}
                 target="_blank"
@@ -107,7 +109,7 @@ const ReportItem = ({ report, index, page, handleGetReports }) => {
                 {report.reporterID.firstName} {report.reporterID.lastName}
               </a>
             </div>
-            <div className="py-1 mr-10 border-y-[1px] border-gray-50">
+            <div className="px-2 py-1 mr-10 border-y-[1px] border-gray-50">
               <a
                 href={`/user/${report.reportedUserID.id}`}
                 target="_blank"
@@ -117,15 +119,15 @@ const ReportItem = ({ report, index, page, handleGetReports }) => {
                 {report.reportedUserID.lastName}
               </a>
             </div>
-            <div className="py-1 mr-10 border-y-[1px] border-gray-50">
+            <div className="px-2 py-1 mr-10 border-y-[1px] border-gray-50">
               {report.problem}
             </div>
-            <div className="py-1 mr-10 border-t-[1px] border-gray-50">
+            <div className="px-2 py-1 mr-10 border-t-[1px] border-gray-50 break-words">
               {report.description}
             </div>
           </div>
           {report.status === "pending" && (
-            <div className="flex flex-col gap-1 my-auto">
+            <div className="flex flex-col gap-1 my-auto px-2">
               <RoundedButton
                 btnName="Ban"
                 fontSize="text-sm"
