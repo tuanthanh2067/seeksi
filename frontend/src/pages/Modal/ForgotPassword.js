@@ -30,7 +30,7 @@ const ForgotPassword = () => {
           setMessage("No account is associated with this email.");
         },
         onCompleted: (data) => {
-          setStyle("text-green font-bold");
+          setStyle("text-dark-green font-bold");
           setMessage(data.requestResetPassword.message);
         },
       });

@@ -27,7 +27,7 @@ function ChatHeader(props) {
               {props.firstName}
             </span>
             {props.userStatus && (
-              <span className="h-3 w-3 bg-green inline-block rounded-full ml-1"></span>
+              <span className="h-3 w-3 bg-dark-green inline-block rounded-full ml-1"></span>
             )}
           </div>
         </div>
