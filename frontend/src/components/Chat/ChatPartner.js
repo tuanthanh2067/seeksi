@@ -92,7 +92,7 @@ const ChatPartner = ({ data, onRoomSelect, setPartnerId, userStatuses }) => {
                 <div className="col-span-3 self-center w-full pr-4 text-ellipsis">
                   <p>
                     {userStatuses[room.partnerId] && (
-                      <span className="h-3 w-3 bg-green inline-block rounded-full mr-2"></span>
+                      <span className="h-3 w-3 bg-dark-green inline-block rounded-full mr-2"></span>
                     )}
                     <span className="text-lg font-bold inline-block">
                       {room.partnerName}

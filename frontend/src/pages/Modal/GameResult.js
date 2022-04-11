@@ -28,7 +28,7 @@ const Slide = ({ questions, userAnswers, partnerAnswers, isSame }) => {
           </div>
           <div
             className={`col-start-2 col-span-5 border-[1px] rounded-md bg-white p-2 align-middle text-left leading-none font-medium  ${
-              isSame[index] ? "text-green" : "text-black"
+              isSame[index] ? "text-dark-green" : "text-black"
             }`}
           >
             {question.question}
