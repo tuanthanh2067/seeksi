@@ -354,7 +354,7 @@ function Chat({
       <Navbar handleLogOut={handleLogOut} />
       {roomsLoading && <Spinner />}
       {roomsError && (
-        <div className="italic place-self-center my-auto">
+        <div className="italic self-center my-auto">
           An error occurs, please try again later!
         </div>
       )}
