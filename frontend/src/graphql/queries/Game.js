@@ -11,6 +11,7 @@ export const GET_GAME_ROOM = gql`
       answers {
         user
         answers
+        submitted_status
       }
     }
   }

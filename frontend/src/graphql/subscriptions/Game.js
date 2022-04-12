@@ -11,6 +11,7 @@ export const ANSWER_SUBMITTED = gql`
       answers {
         user
         answers
+        submitted_status
       }
     }
   }
