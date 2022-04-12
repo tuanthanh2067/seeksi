@@ -12,6 +12,10 @@ const gameAnswerSchema = new Schema({
     type: [String],
     enum: [GameAnswerEnum.YES, GameAnswerEnum.NO, GameAnswerEnum.NOT_ANSWERED],
   },
+  submitted_status: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports.gameAnswerSchema = gameAnswerSchema;

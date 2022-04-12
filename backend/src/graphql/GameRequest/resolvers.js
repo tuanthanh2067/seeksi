@@ -4,7 +4,17 @@ const mongoose = require("mongoose");
 
 const pubsub = new PubSub();
 
-const queries = {};
+const queries = {
+  getUserGameRequests: async (
+    _,
+    args,
+    { dataSources, req, userAuthentication }
+  ) => {
+    userAuthentication(req.user);
+
+    return await dataSources.gameRequestAPI.getUserGameRequest(req.user.userId);
+  },
+};
 
 const mutations = {
   sendGameRequest: async (

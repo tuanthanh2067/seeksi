@@ -4,6 +4,8 @@ module.exports.types = `
         sentBy: String!
         sentTo: String!
         createdAt: String!
+        sentByStatus: String
+        sentToStatus: String
     }
 
     type GameRoomSubscription {

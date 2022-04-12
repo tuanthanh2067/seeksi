@@ -45,7 +45,7 @@ const ResetPassword = () => {
           setErr(error.graphQLErrors[0].message);
         },
         onCompleted: (data) => {
-          setStyle("text-green font-medium");
+          setStyle("text-dark-green font-medium");
           setErr(data.resetPassword.message);
         },
       });
