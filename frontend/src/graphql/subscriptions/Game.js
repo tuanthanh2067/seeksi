@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const GET_GAME_ROOM = gql`
-  query GetGameRoom($gameRoomId: String!) {
-    getGameRoom(gameRoomId: $gameRoomId) {
+export const ANSWER_SUBMITTED = gql`
+  subscription finalAnswersSubmitted($gameRoomId: String!) {
+    finalAnswersSubmitted(gameRoomId: $gameRoomId) {
       id
       questions {
         id

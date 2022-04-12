@@ -69,7 +69,9 @@ const Game = (props) => {
           onError: (error) => {
             console.log(error);
           },
-          onCompleted: (data) => {},
+          onCompleted: (data) => {
+            props.handleResult(true);
+          },
         });
       },
     });

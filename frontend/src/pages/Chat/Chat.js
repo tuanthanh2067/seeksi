@@ -17,6 +17,7 @@ import { SEND_GAME_REQUEST } from "../../graphql/mutations/Game";
 import { SEND_MESSAGE } from "../../graphql/mutations/Chat";
 import { GET_GAME_ROOM } from "../../graphql/queries/Game";
 import { GAME_ROOM_CREATED_SUBSCRIPTION } from "../../graphql/subscriptions/Chat";
+import { ANSWER_SUBMITTED } from "../../graphql/subscriptions/Game";
 
 function Chat({
   roomsLoading,
@@ -64,11 +65,33 @@ function Chat({
       gameRoomId: gameRoomId,
     },
   });
+  useEffect(() => {
+    const unsubscribe = gameRoom.subscribeToMore({
+      document: ANSWER_SUBMITTED,
+      variables: { gameRoomId: gameRoomId },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) {
+          return prev;
+        }
+        const newData = subscriptionData.data.finalAnswersSubmitted;
+        return Object.assign({}, prev, {
+          getGameRoom: {
+            id: newData.id,
+            questions: newData.questions,
+            answers: newData.answers,
+          },
+        });
+      },
+    });
+
+    return () => unsubscribe();
+  }, [gameRoom, gameRoomId]);
 
   useEffect(() => {
     if (gameRoomCreated.data) {
       setShowGameRequestStatus(false);
       setShowGameUI(true);
+      setGameRoomId(gameRoomCreated.data.gameRoomCreated.gameRoomId);
     } else {
       setShowGameUI(false);
     }
@@ -79,7 +102,9 @@ function Chat({
   const handleGame = () => {
     const room = chatRooms.find((room) => room.partner.id === partnerId);
     setPartnerName(room.partner.firstName);
-    if (room.gameRoom) {
+    if (gameRoomId) {
+      setShowGameResults(true);
+    } else if (room.gameRoom) {
       setGameRoomId(room.gameRoom);
       setShowGameResults(true);
     } else {
@@ -329,6 +354,7 @@ function Chat({
         <Game
           gameRoomId={gameRoomCreated.data.gameRoomCreated.gameRoomId}
           handleClose={setShowGameUI}
+          handleResult={setShowGameResults}
         />
       )}
 
