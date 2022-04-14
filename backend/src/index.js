@@ -111,11 +111,15 @@ async function startApolloSever() {
 
   // Modified server startup
   await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
-  console.log(`
+  if (process.env.NODE_ENV === "development") {
+    console.log(`
     🚀  Server ready at http://localhost:4000${server.graphqlPath}
     🔉  Listening on port 4000
     📭  Query at https://studio.apollographql.com/
   `);
+  } else {
+    console.log("Server is running on production");
+  }
 }
 
 startApolloSever();
