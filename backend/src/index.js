@@ -1,5 +1,9 @@
 const { ApolloServer } = require("apollo-server-express");
-const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
+const {
+  ApolloServerPluginDrainHttpServer,
+  ApolloServerPluginLandingPageDisabled,
+  ApolloServerPluginLandingPageLocalDefault,
+} = require("apollo-server-core");
 const express = require("express");
 const { createServer } = require("http");
 const { graphqlUploadExpress } = require("graphql-upload");
@@ -72,6 +76,11 @@ async function startApolloSever() {
 
   const serverCleanup = useServer({ schema }, wsServer);
 
+  const graphQLLandingPage =
+    process.env.NODE_ENV === "development"
+      ? ApolloServerPluginLandingPageLocalDefault()
+      : ApolloServerPluginLandingPageDisabled();
+
   const server = new ApolloServer({
     schema,
     dataSources,
@@ -79,6 +88,7 @@ async function startApolloSever() {
       return { ...middleware(req) };
     },
     plugins: [
+      graphQLLandingPage,
       ApolloServerPluginDrainHttpServer({ httpServer }),
       {
         async serverWillStart() {
