@@ -15,6 +15,8 @@ const { typeDefs, resolvers, datasources } = require("./graphql");
 // middleware
 const middleware = require("./middleware/index");
 
+const PORT = process.env.PORT || 4000;
+
 // set up data sources
 const dataSources = () => ({
   userAPI: new datasources.UserAPI(),
@@ -98,7 +100,7 @@ async function startApolloSever() {
   });
 
   // Modified server startup
-  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+  await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
   console.log(`
     🚀  Server ready at http://localhost:4000${server.graphqlPath}
     🔉  Listening on port 4000
