@@ -39,7 +39,7 @@ const EditInfo = ({ id, user, photos, avt, requiredAvt }) => {
   const [genderBias, setGenderBias] = useState("");
   const [longTerm, setLongTerm] = useState(false);
   const [shortTerm, setShortTerm] = useState(false);
-  const [distance, setDistance] = useState(0);
+  const [distance, setDistance] = useState(10);
   const [ageBias, setAgeBias] = useState([20, 30]);
   const [images, setImages] = useState(photos);
   const [bio, setBio] = useState("");
@@ -156,7 +156,7 @@ const EditInfo = ({ id, user, photos, avt, requiredAvt }) => {
       scrollToTop();
     } else if (
       (length === 0 && images.length === 0) ||
-      (!avt && !user.avatar.origin) ||
+      (!avt && !user.avatar) ||
       requiredAvt
     ) {
       setErr("Uploading your images helps attract your potential partners 😉");
@@ -209,7 +209,6 @@ const EditInfo = ({ id, user, photos, avt, requiredAvt }) => {
           shortTerm: shortTerm,
         },
         onError: (error) => {
-          // setErr(error.message);
           toast.error(error.message);
           scrollToTop();
         },
@@ -456,15 +455,17 @@ const EditInfo = ({ id, user, photos, avt, requiredAvt }) => {
       <section className="mt-16">
         <div className="container mx-auto mt-16 px-5">
           <div className="grid grid-cols-2 auto-cols-fr sm:grid-cols-3 gap-12">
-            {imgArr.map((num, key) => {
+            {imgArr.map((num) => {
               return (
-                <div className="block justify-self-center w-48 h-48 lg:w-72 lg:h-72">
+                <div
+                  className="block justify-self-center w-48 h-48 lg:w-72 lg:h-72"
+                  key={num}
+                >
                   {images[num] ? (
                     <RoundedImage
                       src={images[num]}
                       handleRemove={handleRemove}
                       idx={num}
-                      key={num}
                     />
                   ) : (
                     <EditImage handleChange={onChange} />
