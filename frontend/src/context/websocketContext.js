@@ -9,6 +9,9 @@ import { createUploadLink } from "apollo-upload-client";
 
 const WebSocketContext = createContext();
 
+const API_URI = process.env.REACT_APP_GRAPHQL_URI || "localhost:4000";
+const ENV = process.env.REACT_APP_ENV || "development";
+
 const WebSocketProvider = ({ children }) => {
   const getToken = () => {
     return localStorage.getItem("token");
@@ -17,12 +20,12 @@ const WebSocketProvider = ({ children }) => {
   const link = () => {
     const wsLink = new GraphQLWsLink(
       createClient({
-        url: "ws://localhost:4000/",
+        url: `wss://${API_URI}/`,
       })
     );
 
     const uploadLink = createUploadLink({
-      uri: process.env.REACT_APP_GRAPHQL_URI,
+      uri: ENV === "development" ? `http://${API_URI}` : `https://${API_URI}`,
     });
 
     const authLink = setContext((_, { headers }) => {
