@@ -1,5 +1,9 @@
 const { ApolloServer } = require("apollo-server-express");
-const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
+const {
+  ApolloServerPluginDrainHttpServer,
+  ApolloServerPluginLandingPageDisabled,
+  ApolloServerPluginLandingPageLocalDefault,
+} = require("apollo-server-core");
 const express = require("express");
 const { createServer } = require("http");
 const { graphqlUploadExpress } = require("graphql-upload");
@@ -14,6 +18,8 @@ const { typeDefs, resolvers, datasources } = require("./graphql");
 
 // middleware
 const middleware = require("./middleware/index");
+
+const PORT = process.env.PORT || 4000;
 
 // set up data sources
 const dataSources = () => ({
@@ -70,6 +76,11 @@ async function startApolloSever() {
 
   const serverCleanup = useServer({ schema }, wsServer);
 
+  const graphQLLandingPage =
+    process.env.NODE_ENV === "development"
+      ? ApolloServerPluginLandingPageLocalDefault()
+      : ApolloServerPluginLandingPageDisabled();
+
   const server = new ApolloServer({
     schema,
     dataSources,
@@ -77,6 +88,7 @@ async function startApolloSever() {
       return { ...middleware(req) };
     },
     plugins: [
+      graphQLLandingPage,
       ApolloServerPluginDrainHttpServer({ httpServer }),
       {
         async serverWillStart() {
@@ -98,12 +110,16 @@ async function startApolloSever() {
   });
 
   // Modified server startup
-  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-  console.log(`
+  await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
+  if (process.env.NODE_ENV === "development") {
+    console.log(`
     🚀  Server ready at http://localhost:4000${server.graphqlPath}
     🔉  Listening on port 4000
     📭  Query at https://studio.apollographql.com/
   `);
+  } else {
+    console.log("Server is running on production");
+  }
 }
 
 startApolloSever();
