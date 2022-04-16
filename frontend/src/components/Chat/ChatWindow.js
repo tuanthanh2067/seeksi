@@ -37,7 +37,7 @@ function ChatWindow({
       />
       {data.isDisabled ? (
         <div className="flex items-center justify-center">
-          <p className="font-medium place-self-center my-auto">
+          <p className="font-medium self-center my-auto">
             🔒 {data.partner.firstName} is unmatched. You are now unable to send
             message to {data.partner.firstName} 🔒
           </p>

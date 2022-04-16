@@ -10,10 +10,10 @@ import "lightgallery/css/lg-zoom.css";
 
 function ChatMessageItem({ message, partnerName }) {
   const currentUserId = jwt_decode(localStorage.getItem("token")).userId;
-  const adminStyle = "place-self-center text-center bg-white text-xs my-0";
-  const userStyle = "place-self-end text-right bg-slate-100 my-1 max-w-[40%]";
+  const adminStyle = "self-center text-center bg-white text-xs my-0";
+  const userStyle = "self-end text-right bg-slate-100 my-1 max-w-[40%]";
   const partnerStyle =
-    "place-self-start text-left border-[1px] border-slate-300 my-1 max-w-[40%]";
+    "self-start text-left border-[1px] border-slate-300 my-1 max-w-[40%]";
 
   const isGameRequest = message.content === "sent a game request";
   const isGameResponse =
