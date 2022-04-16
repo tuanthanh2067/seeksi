@@ -37,7 +37,11 @@ const ProfilePage = (props) => {
   };
 
   const handleAvtRemove = () => {
-    if (props.user.avatar.origin) {
+    if (
+      props.user.avatar &&
+      avt !== defaultAvt &&
+      avt === props.user.avatar.origin
+    ) {
       deleteAvatar({
         onError: (error) => {
           toast.error(error.message);
