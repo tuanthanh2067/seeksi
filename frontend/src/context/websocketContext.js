@@ -20,7 +20,7 @@ const WebSocketProvider = ({ children }) => {
   const link = () => {
     const wsLink = new GraphQLWsLink(
       createClient({
-        url: `wss://${API_URI}/`,
+        url: ENV === "development" ? `ws://${API_URI}` : `wss://${API_URI}/`,
       })
     );
 
