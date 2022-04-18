@@ -350,16 +350,11 @@ class PotentialMatchAPI extends DataSource {
   async getPotentialPartners(userId, options) {
     const potentialMatch = await this.getPotentialMatch(userId);
 
-    console.log(potentialMatch.potentialPartners.size, "size");
-    console.log(options.start, "start");
-
     if (potentialMatch.potentialPartners.size <= options.start) {
       potentialMatch.potentialPartners = await this.nextPotentialPartners(
         userId,
         options.limit
       );
-      console.log("353");
-      console.log(potentialMatch.potentialPartners, "pp");
       await potentialMatch.save();
 
       return await this.filterPotentialPartners(potentialMatch, options);
