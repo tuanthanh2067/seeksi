@@ -209,45 +209,53 @@ class PotentialMatchAPI extends DataSource {
    * @returns a JS Map of potential partners & their IDs
    */
   async nextPotentialPartners(userId, limit) {
-    const _id = mongoose.Types.ObjectId(userId);
-    const potentialMatch = await PotentialMatch.findOne({
-      user: _id,
-    })
-      .populate("user")
-      .populate("potentialPartners.$*.partner");
+    try {
+      const _id = mongoose.Types.ObjectId(userId);
+      const potentialMatch = await PotentialMatch.findOne({
+        user: _id,
+      })
+        .populate("user")
+        .populate("potentialPartners.$*.partner");
 
-    const potentialPartners = Array.from(
-      potentialMatch.potentialPartners.keys()
-    );
-    const query = this.buildQuery({ potentialPartners, userId: _id });
+      const potentialPartners = Array.from(
+        potentialMatch.potentialPartners.keys()
+      );
+      const query = this.buildQuery({ potentialPartners, userId: _id });
 
-    const cursor = User.find(query).sort({ _id: 1 }).cursor();
-    for (
-      let partner = await cursor.next(), count = 0;
-      count < limit && partner != null;
-      partner = await cursor.next()
-    ) {
-      if (this.isCompatible(potentialMatch.user, partner)) {
-        const partnerStatus = await this.getPartnerStatus(
-          potentialMatch.user._id,
-          partner._id
-        );
+      const cursor = User.find(query).sort({ _id: 1 }).cursor();
+      for (
+        let partner = await cursor.next(), count = 0;
+        count < limit && partner != null;
+        partner = await cursor.next()
+      ) {
+        if (
+          partner.preference &&
+          this.isCompatible(potentialMatch.user, partner)
+        ) {
+          const partnerStatus = await this.getPartnerStatus(
+            potentialMatch.user._id,
+            partner._id
+          );
 
-        potentialMatch.potentialPartners.set(partner._id.toString(), {
-          partner: partner._id,
-          status: MatchStatus.PENDING,
-          matchScore: MatchScore.calculateMatchScore({
-            user: potentialMatch.user,
-            partner,
-            partnerStatus,
-          }),
-        });
+          potentialMatch.potentialPartners.set(partner._id.toString(), {
+            partner: partner._id,
+            status: MatchStatus.PENDING,
+            matchScore: MatchScore.calculateMatchScore({
+              user: potentialMatch.user,
+              partner,
+              partnerStatus,
+            }),
+          });
 
-        count += 1;
+          count += 1;
+        }
       }
-    }
 
-    return potentialMatch.potentialPartners;
+      return potentialMatch.potentialPartners;
+    } catch (err) {
+      console.error(err);
+      throw new ApolloError("Internal server error");
+    }
   }
 
   async getPotentialMatch(userId) {
