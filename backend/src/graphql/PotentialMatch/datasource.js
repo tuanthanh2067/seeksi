@@ -223,12 +223,16 @@ class PotentialMatchAPI extends DataSource {
       const query = this.buildQuery({ potentialPartners, userId: _id });
 
       const cursor = User.find(query).sort({ _id: 1 }).cursor();
+
+      let partner = await cursor.next();
+
       for (
-        let partner = await cursor.next(), count = 0;
+        let count = 0;
         count < limit && partner != null;
         partner = await cursor.next()
       ) {
         if (
+          potentialMatch.user.preference &&
           partner.preference &&
           this.isCompatible(potentialMatch.user, partner)
         ) {
@@ -350,16 +354,11 @@ class PotentialMatchAPI extends DataSource {
   async getPotentialPartners(userId, options) {
     const potentialMatch = await this.getPotentialMatch(userId);
 
-    console.log(potentialMatch.potentialPartners.size, "size");
-    console.log(options.start, "start");
-
     if (potentialMatch.potentialPartners.size <= options.start) {
       potentialMatch.potentialPartners = await this.nextPotentialPartners(
         userId,
         options.limit
       );
-      console.log("353");
-      console.log(potentialMatch.potentialPartners, "pp");
       await potentialMatch.save();
 
       return await this.filterPotentialPartners(potentialMatch, options);
