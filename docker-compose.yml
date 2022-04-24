@@ -34,7 +34,7 @@ services:
     ports:
       - "4000:4000"
     environment:
-      MONGODB_CONNECTION: mongodb://mongo:27017/seeksi
+      MONGODB_CONNECTION:
       SALT_ROUND:
       TOKEN_SIZE:
       JWT_SECRET:

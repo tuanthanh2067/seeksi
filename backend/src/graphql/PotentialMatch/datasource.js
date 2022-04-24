@@ -223,12 +223,16 @@ class PotentialMatchAPI extends DataSource {
       const query = this.buildQuery({ potentialPartners, userId: _id });
 
       const cursor = User.find(query).sort({ _id: 1 }).cursor();
+
+      let partner = await cursor.next();
+
       for (
-        let partner = await cursor.next(), count = 0;
+        let count = 0;
         count < limit && partner != null;
         partner = await cursor.next()
       ) {
         if (
+          potentialMatch.user.preference &&
           partner.preference &&
           this.isCompatible(potentialMatch.user, partner)
         ) {
