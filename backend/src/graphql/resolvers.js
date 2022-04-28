@@ -10,7 +10,6 @@ const { GameRoom } = require("./GameRoom");
 const { GameRequest } = require("./GameRequest");
 const { UserStatus } = require("./UserStatus");
 const { OpeningLine } = require("./OpeningLine");
-const { Upload } = require("./Upload");
 const { Image } = require("./Image");
 
 const resolvers = {
@@ -27,7 +26,6 @@ const resolvers = {
     ...GameRequest.resolvers.queries,
     ...UserStatus.resolvers.queries,
     ...OpeningLine.resolvers.queries,
-    ...Upload.resolvers.queries,
     ...Image.resolvers.queries,
   },
   Mutation: {
@@ -41,7 +39,6 @@ const resolvers = {
     ...GameRequest.resolvers.mutations,
     ...UserStatus.resolvers.mutations,
     ...OpeningLine.resolvers.mutations,
-    ...Upload.resolvers.mutations,
     ...Image.resolvers.mutations,
   },
   Subscription: {
