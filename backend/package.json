@@ -24,7 +24,7 @@
   "dependencies": {
     "@graphql-tools/schema": "^8.3.3",
     "@sendgrid/mail": "^7.6.0",
-    "apollo-server-core": "^3.6.2",
+    "apollo-server-core": "^3.10.1",
     "apollo-server-express": "^3.6.2",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.28.1",
