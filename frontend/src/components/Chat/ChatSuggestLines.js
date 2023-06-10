@@ -66,7 +66,7 @@ const ChatSuggestLines = (props) => {
       </div>
       {loading && <Spinner />}
       {error && (
-        <div className="italic place-self-center text-xs my-auto mx-auto">
+        <div className="italic self-center text-xs my-auto mx-auto">
           An error occurs, please try again later!
         </div>
       )}
